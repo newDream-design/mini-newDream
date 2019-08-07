@@ -1,0 +1,19 @@
+.noorder {
+  padding: 30rpx;
+}
+
+.noorder image {
+  width: 360rpx;
+  height: 180rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.noorder text {
+  font-size: 28rpx;
+  color: #555;
+  display: block;
+  text-align: center;
+  margin-top: 40rpx;
+}
+

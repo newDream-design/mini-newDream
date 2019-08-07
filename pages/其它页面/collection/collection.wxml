@@ -1,0 +1,26 @@
+<view class='main'>
+  <view class='main-mid'>
+    <view class='nocollectios' wx:if="{{collections.length===0}}">
+      <image src='/images/utils/nogoods.png'></image>
+      <text>您还没有收藏任何的商品</text>
+    </view>
+
+
+    <view class='hot-wrap' wx:else>
+      <view class='hot'>
+        <view class='hot-list'>
+          <navigator url='/pages/goodsDetails/goodsDetails?id={{collectionsItem.productid}}' class='single-hot' hover-class='none' wx:for="{{collections}}" wx:for-index="collectionsIndex" wx:for-item="collectionsItem" wx:key="collectios" bindlongpress='bindCollectAct'
+            data-id="{{collectionsItem.productid}}">
+            <image src='{{collectionsItem.images}}'></image>
+            <text class='hot-name'>{{collectionsItem.productname}}</text>
+            <text class='hot-price'>￥{{collectionsItem.price}}</text>
+          </navigator>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='main-bot'>
+    <import src='/pages/template/support.wxml' />
+    <template is='support' />
+  </view>
+</view>

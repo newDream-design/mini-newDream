@@ -1,0 +1,89 @@
+<view class='container'>
+  <view class='detailsHeader'>
+    <view>订单状态:
+      <text class='red'>{{orderInfo.orderstatuname}}</text>
+    </view>
+    <view>订单编号:
+      <text>{{orderInfo.orderno}}</text>
+    </view>
+    <view>创建时间:
+      <text>{{orderInfo.adddate}}</text>
+    </view> 
+  </view>
+  <!-- <view class="weui-cells weui-cells_after-title">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">物流信息</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view> -->
+  <view class='addressInfo'>
+    <view class='detailsTit'>收货地址</view>
+    <view class='personalInfo'>{{orderInfo.ordercontact}}{{orderInfo.ordermobile}}</view>
+    <text class='addressDetails'>{{orderInfo.orderaddress}}</text>
+  </view>
+  <view class='order-list'>
+    <view class='order'>
+      <view class='order-mid' wx:for="{{orderInfo.promsg}}" wx:key="promsg" wx:for-index="proIndex" wx:for-item="proItem">
+        <image wx:if="{{proItem.proimage!=''}}" src='{{proItem.proimage}}'></image>
+        <image wx:if="{{proItem.proimage==''}}" src='/images/example.png'></image>
+        <view class='order-info'>
+          <view class='order-info-top'>
+            <view class='goods-name'>{{proItem.prescriptionname}}</view>
+            <view class='goods-price'>￥{{proItem.proprice}}</view>
+          </view>
+          <view class='order-info-bot'>
+            <text class='goods-spec'>{{proItem.prescription}}</text>
+            <text class='goods-amount'>x{{proItem.pronum}}</text>
+          </view>
+        </view>
+      </view>
+      <view class='money'>
+        <view>
+          <text>运费</text>
+          <text>￥{{orderInfo.trafficprice}}</text>
+        </view>
+        <view>
+          <text>实付款(含运费)</text>
+          <text>￥{{orderInfo.overprice}}</text>
+        </view>
+      </view>
+      <view class='order-bot'>
+        <block wx:if="{{orderInfo.orderstatu=='34001'}}">
+          <text bindtap='cancel' data-id='{{orderInfo.id}}'>取消订单</text>
+          <text bindtap='payNow' data-id='{{orderInfo.id}}'>去付款</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34002'}}">
+          <text bindtap='refund' data-id='{{orderInfo.id}}'>申请退款</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34003'}}">
+          <text bindtap='express' data-expno='{{orderInfo.trafficeno}}' data-exptype='{{orderInfo.trafficenote}}' data-expname='{{orderInfo.trafficename}}'>查看物流</text>
+          <text bindtap='receive' data-id='{{orderInfo.id}}'>确认收货</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34004'}}">
+          <text>已结束</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34005'}}">
+          <text bindtap='refund' data-id='{{orderInfo.id}}'>申请退款</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34006'}}">
+          <text>退款中</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34007'}}">
+          <text>退款结束</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34008'}}">
+          <text>退款驳回</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34009'}}">
+          <text>已取消订单</text>
+        </block>
+        <block wx:if="{{orderInfo.orderstatu=='34010'}}">
+          <text bindtap='express' data-expno='{{orderInfo.trafficeno}}' data-exptype='{{orderInfo.trafficenote}}' data-expname='{{orderInfo.trafficename}}'>查看物流</text>
+          <text bindtap='comment' data-orderid='{{orderInfo.id}}'>去评价</text>
+        </block>
+        <!-- <text>申请退款</text> -->
+      </view>
+    </view>
+
+  </view>
+</view>

@@ -1,0 +1,18 @@
+.nocollectios{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.nocollectios image{
+  width: 240rpx;
+  height: 320rpx;
+  display: block;
+  margin: 0 auto;
+}
+.nocollectios text{
+  color: #555;
+  display: block;
+  text-align: center;
+  font-size: 28rpx;
+}

@@ -1,0 +1,173 @@
+.section {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 140rpx);
+    overflow: hidden;
+}
+
+.left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 90px;
+    background: #f6f6f6;
+    text-align: center;
+    font-size: 28rpx;
+}
+
+.left::before {
+    content: "";
+    position: absolute;
+    background: #dcdcdc;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+
+.left view.active {
+    background: #fff;
+    position: relative;
+    z-index: 2;
+}
+
+.left view {
+    display: block;
+    border-bottom: 0px solid #dcdcdc;
+}
+
+.categoryImage {
+    width: 60px;
+    height: 60px;
+}
+
+.right {
+    margin-left: 90px;
+    height: 100%;
+    overflow: hidden;
+    width: auto;
+    background: #fff;
+}
+
+.right text {
+    /* font-size: 15px; */
+}
+
+.typeTree {
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.typeTree:after {
+    content: "";
+    flex: auto;
+}
+
+.typeTree .item {
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.typeTree .brand {
+    flex-wrap: wrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 33.33%;
+    align-self: flex-start;
+}
+
+.typeTree .title {
+    padding: 10px 0;
+    display: block;
+    color: #333;
+}
+
+.typeTree .brand image {
+    height: 160rpx;
+    width: 160rpx;
+    margin: 0 auto;
+}
+
+.item text {
+    padding-bottom: 10px;
+    display: block;
+}
+
+.typeName {
+    font-size: 28rpx;
+    color: #555;
+}
+
+.active .typeName {
+    font-size: 32rpx;
+    color: var(--color);
+}
+
+.search-wrap {
+    padding: 30rpx;
+    /* height: 80px; */
+}
+
+.search-wrap form {
+    width: 100%;
+}
+
+.inline-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30rpx;
+    height: 80rpx;
+    background-color: #e3e3e3;
+    border-radius: 40rpx;
+}
+
+.search-wrap form input {
+    flex-grow: 2;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 28rpx;
+    display: inline-block;
+}
+
+.text-search {
+    margin-left: 20rpx;
+    flex-shrink: 0;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding: 0 30rpx;
+    background-color: var(--bgcolor);
+    color: #fff;
+    font-size: 28rpx;
+    border-radius: 40rpx;
+}
+
+.brand .item {
+    width: 160rpx;
+    display: block;
+    margin: 0 auto;
+}
+
+.noType {
+    margin-top: 100px;
+    margin-left: 90px;
+}
+
+.noType image {
+    width: 240rpx;
+    height: 320rpx;
+    display: block;
+    margin: 0 auto;
+}
+
+.noType text {
+    margin-top: 40rpx;
+    display: block;
+    color: #555;
+    font-size: 28rpx;
+    text-align: center;
+}

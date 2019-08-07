@@ -1,0 +1,198 @@
+.scroll-banner {
+    background-color: #fff;
+    height: 12rem;
+}
+
+.recommend-wrap {
+    background-color: #fff;
+    padding: 30rpx;
+}
+
+.scroll-view_H {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    white-space: nowrap;
+}
+
+.recommend-view {
+    width: 190rpx;
+    display: inline-block;
+    margin-right: 20rpx;
+}
+
+.recommend-view image {
+    width: 190rpx;
+    height: 190rpx;
+    display: block;
+}
+
+.recommend-view-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.recommend-name {
+    display: -webkit-box !important;
+    word-break: break-all;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 28rpx;
+    color: #333;
+}
+
+/* 公告 */
+
+.notice-text {
+    height: 60rpx;
+    line-height: 60rpx;
+    color: #555;
+}
+
+.notice {
+    background-color: #fff;
+    margin: 20rpx 0;
+    padding: 0 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.notice-l {
+    flex-shrink: 0;
+    margin-right: 20rpx;
+    color: #555;
+}
+
+.notice-r {
+    flex-grow: 2;
+}
+
+/* 所有商品 */
+
+/*首页热门产品*/
+
+.index-tit {
+    font-size: 36rpx;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+	text-align: center;
+}
+
+.hot-wrap {
+    background-color: #fff;
+    padding: 30rpx;
+}
+
+.single-hot {
+    margin-bottom: 20rpx;
+    width: 330rpx;
+}
+
+.single-hot image {
+    width: 330rpx;
+    height: 300rpx;
+    display: block;
+}
+
+.hot-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 28rpx;
+    color: #333;
+}
+
+.hot-price {
+    display: block;
+    font-size: 28rpx;
+    color: var(--color);
+}
+
+.hot-list {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+}
+
+.all-wrap {
+    background-color: #fff;
+    padding: 30rpx;
+}
+
+.all-img {
+    display: block;
+    width: 330rpx;
+    height: 300rpx;
+}
+
+.all-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 28rpx;
+    color: #333;
+}
+
+.all-price {
+    display: block;
+    font-size: 28rpx;
+    color: var(--color);
+}
+
+.all-list {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+}
+
+/* 类别展示 */
+
+.family-wrap {
+    background-color: #fff;
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
+    padding: 20rpx 30rpx;
+}
+
+.faImg {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.faName {
+    font-size: 24rpx;
+    display: block;
+    color: #555;
+    text-align: center;
+}
+
+.family {
+    width: 120rpx;
+    display: inline-block;
+    margin-right: 20rpx;
+}
+
+.fa-scroll {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/* 视频 */
+
+#myVideo {
+    width: 100%;
+    height: 400rpx;
+}
+
+.videoPoster {
+    width: 100%;
+    height: 400rpx;
+}

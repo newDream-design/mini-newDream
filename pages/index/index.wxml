@@ -1,0 +1,77 @@
+<view class='main'>
+    <view class='main-mid'>
+        <view class='scroll-banner'>
+            <block wx:if="{{index.banners==''}}">
+                <image src='/images/utils/white.png' class='banner'></image>
+            </block>
+            <swiper indicator-dots autoplay circular interval="3000" duration="500" style="height:12rem;" class="{{index.banners==''?'hidden':''}}">
+                <swiper-item wx:for="{{index.banners}}" wx:for-item="banner" wx:key='b'>
+                    <!-- <navigator url='{{banner.linkurl}}'>-->
+                    <image src="{{index.banner.image}}" class="slide-image banner" />
+                    <!-- </navigator>-->
+                </swiper-item>
+            </swiper>
+        </view>
+        <view class='notice' hidden='{{index.notice.length==0}}'>
+            <text class='iconfont icon-gonggaoxiaolaba notice-l'></text>
+            <view class='notice-r'>
+                <swiper style='height:60rpx;' interval="3000" duration="1000" autoplay circular vertical>
+                    <swiper-item wx:for="{{index.notices}}" wx:key="n" wx:for-item="notice">
+                        <!-- <navigator url='{{notice.linkurl}}'>-->
+                        <view class='notice-text'>{{notice.content}}</view>
+                        <!-- </navigator>-->
+                    </swiper-item>
+                </swiper>
+            </view>
+        </view>
+        <!--
+		##小图##
+        <view class='family-wrap'>
+            <scroll-view class="scroll-view_H" scroll-x style="width: 100%">
+                <view class='fa-scroll'>
+                    <view class='family' wx:for="{{categories}}" wx:key="c" wx:for-item="category">
+                        <image wx:if="{{category.image==null||category.image==''}}" src='/images/noImg.jpg' class='faImg' lazy-load='true' mode='aspectFill'></image>
+                        <image wx:else src='{{category.image}}' class='faImg' lazy-load='true' mode='aspectFill'></image>
+                        <text class='faName'>{{category.name}}</text>
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+		##视频##
+        <view class='video-wrap' wx:if="{{!!video.url}}">
+            <video id="myVideo" src="{{video.url}}" poster='{{video.coverimage}}' controls>
+            </video>
+        </view>
+		##滑动图片##
+        <view class='recommend-wrap'>
+            <view class='index-tit'>滑动图片</view>
+            <view class='recommend-list'>
+                <scroll-view scroll-x>
+                    <view class='recommend-view-wrap'>
+                        <navigator url='/pages/goodsDetails/goodsDetails?id={{recItem.id}}' hover-class='none' class="recommend-view" wx:for="{{recommend}}" wx:for-index="recIndex" wx:for-item="recItem" wx:key="recIndex">
+                            <image src='{{recItem.images}}' lazy-load='true' mode='aspectFill'></image>
+                            <text class="recommend-name">{{recItem.productname}}</text>
+                        </navigator>
+                    </view>
+                </scroll-view>
+            </view>
+        </view>
+		-->
+        <view class='all-wrap' wx:for="{{index.blocks}}" wx:for-item="block" wx:key="bs">
+            <view class='all'>
+                <view class='index-tit'>{{block.title}}</view>
+                <view class='all-list'>
+                    <navigator url='/pages/shop/detail?id={{product.productID}}' hover-class='none' class='single-hot' wx:for="{{block.content}}" wx:key="b" wx:for-item="product">
+                        <image src='{{product.image}}' class='all-img' mode='aspectFill' lazy-load='true'></image>
+                        <text class='all-name'>{{product}}</text>
+                        <text class='all-price'>￥{{product.price}}</text>
+                    </navigator>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='main-bot'>
+        <import src='/pages/template/support.wxml' />
+        <template is='support' />
+    </view>
+</view>

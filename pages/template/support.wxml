@@ -1,0 +1,6 @@
+<template name='support'>
+    <view class='support-wrap'>
+        <!--<image src='/images/support.png'></image>
+        <text>美途提供技术支持</text>-->
+    </view>
+</template>

@@ -1,0 +1,52 @@
+.cPart {
+  background-color: #fff;
+  padding: 20rpx 0;
+  position: relative;
+}
+
+.cPart:not(:last-child) {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.cPart-tit {
+  margin-bottom: 10rpx;
+  padding: 0 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.line {
+  width: 6rpx;
+  height: 24rpx;
+  background-color: var(--bgcolor);
+  margin-right: 20rpx;
+}
+
+.cName {
+  font-size: 28rpx;
+  color: #555;
+  margin-right: 20rpx;
+}
+
+.eName {
+  font-size: 24rpx;
+  color: #838383;
+  font-style: italic;
+}
+
+.content {
+  padding: 0 35rpx;
+  font-size: 28rpx;
+  color: #555;
+}
+.act-icon{
+  position: absolute;
+  width: 40rpx;
+  height: 40rpx;
+  top: 50%;
+  right:30rpx;
+  transform: translateY(-50%);
+  color: var(--color);
+  font-size: 50rpx;
+}
