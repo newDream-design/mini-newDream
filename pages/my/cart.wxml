@@ -1,96 +1,95 @@
-<block wx:if="{{carts==''}}">
-  <view class='main'>
-    <view class='main-mid'>
-      <view class='noGoods'>
-        <image src='/images/emptyCart.png'></image>
-        <view class='goShopping' bindtap='goShopping'>去逛逛</view>
-      </view>
-      <view class='hot-wrap'>
-        <view class='hot'>
-          <view class='index-tit'>热门产品</view>
-          <view class='hot-list'>
-            <view class='single-hot' wx:for='{{hotprolist}}' wx:key='key' wx:for-index="key" wx:for-item="val">
-              <navigator url='/pages/goodsDetails/goodsDetails?id={{val.id}}'>
-                <image src='{{val.images}}'></image>
-                <text class='hot-name'>{{val.productname}}</text>
-                <text class='hot-price'>￥{{val.price}}</text>
-              </navigator>
+<wxs module="utils" src="../../utils/utils.wxs"></wxs>
+<block wx:if="{{carts.length>0}}">
+    <scroll-view scroll-y style="height:100%;" class='cart-goods-list'>
+        <view class='main'>
+            <view class='main-mid'>
+                <block wx:for="{{carts}}" wx:key="key" wx:for-index="index" wx:for-item="product">
+                    <view class='cart-goods' data-id="{{product.productID}}">
+                        <text class='iconfont icon-xuanze2 uncheck2' bindtap='onProductSelected' data-index="{{index}}" wx:if="{{utils.findInArr(index,selectedProducts)}}"></text>
+                        <text class='iconfont icon-choose uncheck2' bindtap='onProductSelected' data-index="{{index}}" wx:else></text>
+                        <!-- <image wx:if="{{product.ischeck=='1'}}" src='/images/check1.png' class='uncheck2' data-check='{{product.ischeck}}' data-id='{{product.id}}' bindtap='bindCheckbox' data-index="{{index}}"></image>
+            <image wx:if="{{product.ischeck=='0'}}" src='/images/uncheck1.png' class='uncheck2' data-check='{{product.ischeck}}' data-id='{{product.id}}' bindtap='bindCheckbox' data-index="{{index}}"></image> -->
+                        <view class='goods-info'>
+                            <navigator url="/pages/shop/product/product?productID={{product.productID}}" hover-class="none">
+                                <image src='{{product.image}}' class='goods-img' data-id='{{}}'></image>
+                            </navigator>
+                            <view class='goods-info1'>
+                                <navigator url="/pages/shop/product/product?productID={{product.productID}}" hover-class="none">
+                                    <text class='goods-name'>{{product.productName}}</text>
+                                </navigator>
+                                <view class='goods-info2'>
+                                    <text>￥{{product.price}}</text>
+                                    <view class='amount-wrap'>
+                                        <text class="{{product.count<=1?'disabled':''}}" data-index="{{index}}" data-id='{{product.id}}' data-delta='-1' bindtap='onProductCountChange'>-</text>
+                                        <text type='countber'>{{product.count}}</text>
+                                        <text class="{{product.count>=99?'disabled':''}}" data-index="{{index}}" data-id='{{product.id}}' data-delta='1' bindtap='onProductCountChange'>+</text>
+                                    </view>
+                                    <view class="del-cart">
+                                        <!-- <image src='/images/del.png' bindtap="delCart" data-id='{{product.id}}' data-index='{{index}}'></image> -->
+                                        <text class='iconfont icon-icon' bindtap="delCart" data-id='{{product.id}}' data-index='{{index}}'></text>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </block>
             </view>
-          </view>
+            <view class='main-bot'>
+                <import src='/pages/template/support.wxml' />
+                <template is='support' />
+            </view>
         </view>
-      </view>
+    </scroll-view>
+    <!-- 商品底部 -->
+    <view class='cart-footer'>
+        <view class='cart-footer-l'>
+            <view class='icon-allChoose'>
+                <text class='iconfont icon-xuanze2 uncheck2' wx:if="{{selectedProducts.length==carts.length}}" bindtap='onAllSelected' />
+                <text class='iconfont icon-choose uncheck2' wx:else bindtap='onAllSelected' />
+                <!-- <image wx:if="{{selectedAllStatus}}" src='/images/check1.png' class='uncheck2' bindtap='bindAllChoose'></image>
+        <image wx:if="{{!selectedAllStatus}}" src='/images/uncheck1.png' class='uncheck2' bindtap='bindAllChoose'></image> -->
+                <text class='text-allChoose' bindtap='onAllSelected'>全选</text>
+            </view>
+            <view class='total-price'>
+                <view class='total-wrap'>总计:
+                    <text>￥{{total}}</text>
+                </view>
+                <text class='fare'>不含运费</text>
+            </view>
+        </view>
+        <view class='cart-footer-r' bindtap='bindBalance'>
+            去结算
+        </view>
     </view>
-    <view class='main-bot'>
-      <import src='/pages/template/support.wxml' />
-      <template is='support' />
-    </view>
-  </view>
-
 </block>
 
-<block wx:if="{{carts!=''}}">
-  <scroll-view scroll-y style="height:{{winHeight}}px;" class='cart-goods-list'>
+<block wx:if="{{carts.length==0}}">
     <view class='main'>
-      <view class='main-mid'>
-        <block wx:for="{{carts}}" wx:key="key" wx:for-index="index" wx:for-item="val">
-          <view class='cart-goods' data-id="{{val.id}}">
-          <text class='iconfont icon-xuanze2 uncheck2' wx:if="{{val.ischeck=='1'}}" data-check='{{val.ischeck}}' data-id='{{val.id}}' bindtap='bindCheckbox' data-index="{{index}}"></text>
-          <text class='iconfont icon-choose uncheck2'wx:if="{{val.ischeck=='0'}}" data-check='{{val.ischeck}}' data-id='{{val.id}}' bindtap='bindCheckbox' data-index="{{index}}"></text>
-            <!-- <image wx:if="{{val.ischeck=='1'}}" src='/images/check1.png' class='uncheck2' data-check='{{val.ischeck}}' data-id='{{val.id}}' bindtap='bindCheckbox' data-index="{{index}}"></image>
-            <image wx:if="{{val.ischeck=='0'}}" src='/images/uncheck1.png' class='uncheck2' data-check='{{val.ischeck}}' data-id='{{val.id}}' bindtap='bindCheckbox' data-index="{{index}}"></image> -->
-            <view class='goods-info'>
-              <image src='{{val.images}}' class='goods-img' bindtap='bindGoods' data-id='{{val.productid}}'>
-              </image>
-              <view class='goods-info1'>
-                <text class='goods-name' bindtap='bindGoods' data-id='{{val.productid}}'>{{val.productname}}</text>
-                <view class='goods-info2'>
-                  <text>￥{{val.price}}</text>
-                  <view class='amount-wrap'>
-                    <text class="{{val.num<=1?'disabled':''}}" data-index="{{index}}" data-id='{{val.id}}' data-num='{{val.num}}' bindtap='bindMinus'>-
-									</text>
-                    <text type='number'>{{val.num}}</text>
-                    <text class="{{val.num>=99?'disabled':''}}" data-index="{{index}}" data-id='{{val.id}}' data-num='{{val.num}}' bindtap='bindPlus'>+
-									</text>
-                  </view>
-                  <view class="del-cart">
-                    <!-- <image src='/images/del.png' bindtap="delCart" data-id='{{val.id}}' data-index='{{index}}'></image> -->
-                    <text class='iconfont icon-icon' bindtap="delCart" data-id='{{val.id}}' data-index='{{index}}'></text>
-                  </view>
-                </view>
-              </view>
+        <view class='main-mid'>
+            <view class='noGoods'>
+                <image src='/images/utils/noCart.png'></image>
+                <view class='goShopping' bindtap='goShopping'>去逛逛</view>
             </view>
-          </view>
-        </block>
-      </view>
-      <view class='main-bot'>
-        <import src='/pages/template/support.wxml' />
-        <template is='support' />
-      </view>
-    </view>
-
-
-  </scroll-view>
-
-  <!-- 商品底部 -->
-  <view class='cart-footer'>
-    <view class='cart-footer-l'>
-      <view class='icon-allChoose'>
-        <text class='iconfont icon-choose uncheck2' wx:if="{{!selectedAllStatus}}" bindtap='bindAllChoose'></text>
-        <text class='iconfont icon-xuanze2 uncheck2' wx:if="{{selectedAllStatus}}" bindtap='bindAllChoose'></text>
-
-        <!-- <image wx:if="{{selectedAllStatus}}" src='/images/check1.png' class='uncheck2' bindtap='bindAllChoose'></image>
-        <image wx:if="{{!selectedAllStatus}}" src='/images/uncheck1.png' class='uncheck2' bindtap='bindAllChoose'></image> -->
-        <text class='text-allChoose' bindtap='bindAllChoose'>全选</text>
-      </view>
-      <view class='total-price'>
-        <view class='total-wrap'>总计:
-          <text>￥{{total}}</text>
+            <!--
+            <view class='hot-wrap'>
+                <view class='hot'>
+                    <view class='index-tit'>热门产品</view>
+                    <view class='hot-list'>
+                        <view class='single-hot' wx:for='{{hotprolist}}' wx:key='key' wx:for-index="key" wx:for-item="product">
+                            <navigator url='/pages/goodsDetails/goodsDetails?id={{product.id}}'>
+                                <image src='{{product.images}}'></image>
+                                <text class='hot-name'>{{product.productname}}</text>
+                                <text class='hot-price'>￥{{product.price}}</text>
+                            </navigator>
+                        </view>
+                    </view>
+                </view>
+            </view>
+			-->
         </view>
-        <text class='fare'>不含运费</text>
-      </view>
+        <view class='main-bot'>
+            <import src='/pages/template/support.wxml' />
+            <template is='support' />
+        </view>
     </view>
-    <view class='cart-footer-r' bindtap='bindBalance'>
-      去结算
-    </view>
-  </view>
 </block>

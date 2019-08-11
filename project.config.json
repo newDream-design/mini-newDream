@@ -49,10 +49,10 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
-					"name": "商品详情",
-					"pathName": "pages/shop/detail",
-					"query": "id=1",
+					"id": 0,
+					"name": "确认订单",
+					"pathName": "pages/shop/order/confirmOrder",
+					"query": "products=[{\"productID\":102,\"productName\":\"我是11条小青龙\",\"image\":\"/images/test/d2.jpg\",\"price\":1099.99,\"count\":10},{\"productID\":101,\"productName\":\"我是12条小青龙\",\"image\":\"/images/test/d2.jpg\",\"price\":1099.99,\"count\":10}]",
 					"scene": null
 				}
 			]

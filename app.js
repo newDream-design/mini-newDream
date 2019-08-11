@@ -1,36 +1,31 @@
-const app = getApp()
 App({
-    globalData: {
-        RequestUrl: 'https://newdreamer.cn:8080/',
-        userInfo: null
+    config: {
+        RequestUrl: 'https://newdreamer.cn:8080/api/'
     },
-
+    globalData: {
+        memberID: ""
+    },
     onLaunch: function() {
-		return
         var that = this
         wx.login({
             success: function(res) {
                 wx.request({
-                    url: that.globalData.RequestUrl + '',
-                    method: "POST",
+                    url: that.config.RequestUrl + 'login?',
+                    method: "GET",
                     header: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
                     data: {
-                        code: res.code
+                        sc_code: res.code
                     },
                     success: function(res) {
-                        console.log(res)
+                        that.globalData.memberID = res.data
                     },
                     fail: function(e) {
                         console.log(e.errMsg)
-                    },
-                    complete: function() {
-                        console.log(res.code)
                     }
                 })
             }
         })
-    },
-
+    }
 })

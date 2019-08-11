@@ -1,0 +1,144 @@
+.myBanner {
+    position: relative;
+    height: 300rpx;
+    overflow: hidden;
+}
+
+.whiteBanner {
+    background-color: #fff;
+}
+
+.userInfo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 30rpx;
+    display: flex;
+    align-items: center;
+}
+
+.userAvatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+}
+
+.userName {
+    color: #555;
+    font-size: 32rpx;
+    margin-left: 20rpx;
+    font-weight: bold;
+}
+
+.myBanner .my {
+    position: absolute;
+    left: 30rpx;
+    top: 0;
+    height: 300rpx;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+}
+
+.nickName {
+    font-size: 32rpx;
+    color: #fff;
+    margin-left: 20rpx;
+}
+
+.allOrder {
+    border-top: none 0;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.nav-wrap {
+    background-color: #fff;
+}
+
+.weui-cell__bd {
+    font-size: 32rpx;
+    color: #333;
+}
+
+.order-type {
+    height: 174rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.order-nav .iconfont {
+    /* width: 50rpx;
+  height: 50rpx; */
+    display: block;
+    margin: 0 auto;
+    font-size: 50rpx;
+}
+
+.order-nav text {
+    display: block;
+    text-align: center;
+    color: #555;
+    font-size: 28rpx;
+}
+
+.nav-wrap2 {
+    margin-top: 20rpx;
+}
+
+.order-type view {
+    position: relative;
+}
+
+.count {
+    position: absolute;
+    top: -0.4em;
+    right: 20rpx;
+    display: inline-block;
+    height: 1.6em;
+    min-width: 1.6em;
+    line-height: 1.6;
+    padding: 0 0.4em;
+    font-size: 20px;
+    border-radius: 0.8em;
+    background-color: var(--bgcolor);
+    color: #fff !important;
+    text-align: center;
+    white-space: nowrap;
+    transform: translateX(50%) scale(0.6);
+    transform-origin: center;
+    z-index: 10;
+    box-shadow: 0 0 0 2px #fff;
+    box-sizing: border-box;
+}
+
+.contact {
+    padding: 0;
+    margin: 0;
+    background: none !important;
+    font-size: 32rpx;
+    color: #333;
+    text-align: left;
+    line-height: normal;
+}
+
+.contact::after {
+    border: none 0;
+}
+
+.login-btn {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.login-btn::after {
+    border: 0;
+}

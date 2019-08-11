@@ -1,0 +1,76 @@
+<view class='main'>
+    <view class='main-mid'>
+        <view class="swiper-tab" style='height:88rpx;'>
+            <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">全部</view>
+            <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">待付款</view>
+            <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">待发货</view>
+            <view class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="swichNav">待收货</view>
+            <view class="swiper-tab-list {{currentTab==4 ? 'on' : ''}}" data-current="4" bindtap="swichNav">待评价</view>
+        </view>
+        <view class='orderList'>
+            <view class='noOrder' hidden="{{orderList.length===0?false:true}}">
+                <image src='/images/noOrder.png' class='noOrderImg'></image>
+                <text class='noOrderText'>无可用订单</text>
+            </view>
+            <view class='order' wx:for="{{orderList}}" wx:key="order" wx:for-index="orderIndex" wx:for-item="orderItem" hidden="{{orderList.length===0?true:false}}">
+                <view class='order-top'>
+                    <text class='order-date'>订单号:{{orderItem.orderno}}</text>
+                    <text class='order-statu'>{{orderItem.orderstatuname}}</text>
+                </view>
+                <view class='order-mid' bindtap='bindOrderDetails' data-id='{{orderItem.id}}' wx:for="{{orderItem.promsg}}" wx:key="promsg" wx:for-index="proIndex" wx:for-item="proItem">
+                    <image src='{{proItem.proimage}}'></image>
+                    <view class='order-info'>
+                        <view class='order-info-top'>
+                            <view class='goods-name'>{{proItem.prescriptionname}}</view>
+                            <view class='goods-price'>￥{{proItem.proprice}}</view>
+                        </view>
+                        <view class='order-info-bot'>
+                            <text class='goods-spec'>{{proItem.prescription}}</text>
+                            <text class='goods-amount'>x{{proItem.pronum}}</text>
+                        </view>
+                    </view>
+                </view>
+                <view class='order-bot'>
+                    <block wx:if="{{orderItem.orderstatu=='34001'}}">
+                        <text bindtap='cancel' data-id='{{orderItem.id}}'>取消订单</text>
+                        <text bindtap='payNow' data-id='{{orderItem.id}}'>去支付</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34002'}}">
+                        <text bindtap='refund' data-id='{{orderItem.id}}'>申请退款</text>
+                        <!-- <text>商家配货中</text> -->
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34003'}}">
+                        <text bindtap='express' data-expno='{{orderItem.trafficeno}}' data-exptype='{{orderItem.trafficenote}}' data-expname='{{orderItem.trafficename}}'>查看物流</text>
+                        <text bindtap='receive' data-id='{{orderItem.id}}'>确认收货</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34004'}}">
+                        <text>订单结束</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34005'}}">
+                        <text bindtap='refundDetails' data-id='{{orderItem.id}}'>查看详情</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34006'}}">
+                        <text>退款中</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34007'}}">
+                        <text>退款结束</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34008'}}">
+                        <text>退款驳回</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34009'}}">
+                        <text>订单已取消</text>
+                    </block>
+                    <block wx:if="{{orderItem.orderstatu=='34010'}}">
+                        <text bindtap='express' data-expno='{{orderItem.trafficeno}}' data-exptype='{{orderItem.trafficenote}}' data-expname='{{orderItem.trafficename}}'>查看物流</text>
+                        <text bindtap='comment' data-orderid='{{orderItem.id}}'>去评价</text>
+                    </block>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='main-bot'>
+        <import src='/pages/template/support.wxml' />
+        <template is='support' />
+    </view>
+</view>
