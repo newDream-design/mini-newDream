@@ -158,8 +158,6 @@
                 <text class='act-buy' bindtap='bindChooseSpec' data-buynow="2">立即购买</text>
             </view>
         </view>
-
         <view class="mask" catchtap="distpickerCancel" hidden="{{!showSpec}}"></view>
-
     </scroll-view>
 </view>

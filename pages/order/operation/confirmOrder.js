@@ -83,41 +83,55 @@ Page({
             })
             return;
         }
-		var that = this
-		wx.request({
-			url: app.config.RequestUrl + 'pay/get',
-			method: "GET",
-			header: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			data: {
-				memberID: app.globalData.memberID,
-				price: that.data.summary.price
-			},
-			success: function (res) {
-				if (res.data.result.status == 200) {
-					that.setData({
-						orderList: res.data.data.object
-					})
-				} else {
-					wx.showToast({
-						title: res.data.result.errMsg,
-						icon: 'none',
-						duration: 2000
-					})
-				}
-			},
-			fail: function (e) {
-				wx.showToast({
-					title: e.errMsg,
-					icon: 'none',
-					duration: 2000
-				})
-			},
-			complete: function (e) {
-				wx.hideNavigationBarLoading() //完成停止加载
-				wx.stopPullDownRefresh() //停止下拉刷新
-			}
-		})
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'pay/get',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID,
+                price: that.data.summary.price
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    var data = res.data.data.object
+                    wx.requestPayment({
+                        timeStamp: data.timeStamp,
+                        nonceStr: data.nonceStr,
+						package: data.package,
+                        signType: 'MD5',
+                        paySign: data.paySign,
+                        success: function(res) {
+                            console.log(res)
+                        },
+                        fail: function(e) {
+                            console.log(e)
+                        },
+                        complete: function(res) {
+                            console.log(res)
+                        }
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function(e) {
+                wx.hideNavigationBarLoading() //完成停止加载
+                wx.stopPullDownRefresh() //停止下拉刷新
+            }
+        })
     }
 })

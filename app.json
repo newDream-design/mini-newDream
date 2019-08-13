@@ -2,6 +2,7 @@
 	"pages": [
 		"pages/index/index",
 		"pages/shop/category/categories",
+		"pages/shop/category/classify",
 		"pages/shop/product/product",
 		"pages/my/my",
 		"pages/my/cart",
@@ -29,7 +30,7 @@
 				"selectedIconPath": "images/menu/menu1-sel.png"
 			},
 			{
-				"pagePath": "pages/shop/category/categories",
+				"pagePath": "pages/shop/category/classify",
 				"text": "分类",
 				"iconPath": "images/menu/menu2.png",
 				"selectedIconPath": "images/menu/menu2-sel.png"

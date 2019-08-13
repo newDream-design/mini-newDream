@@ -69,7 +69,7 @@
                     <text>￥{{summary.allPrice}}</text>
                 </view>
                 <view class='total-list2'>
-                    <text>运费（顺丰包邮）</text>
+                    <text>运费</text>
                     <text>￥{{summary.deliverPrice}}</text>
                 </view>
                 <view class='total-list3'>
