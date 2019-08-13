@@ -1,0 +1,68 @@
+.swiper-tab {
+    width: 100%;
+    border-bottom: 2rpx solid #eee;
+    text-align: center;
+    line-height: 40px;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.c60 {
+    height: 1px;
+    padding-top: 48px;
+}
+
+.swiper-tab-list {
+    font-size: 12px;
+    display: inline-block;
+    width: 16.5%;
+    color: #666;
+    height: 85rpx;
+    line-height: 85rpx;
+    /* line-height:  */
+}
+
+.on {
+    color: var(--color);
+    border-bottom: 5rpx solid var(--color);
+}
+
+.swiper-box {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.noOrder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.noOrderImg {
+    width: 360rpx;
+    height: 180rpx;
+    display: block;
+    margin: 0 auto;
+}
+
+.noOrderText {
+    font-size: 28rpx;
+    color: #555;
+    display: block;
+    text-align: center;
+    margin-top: 40rpx;
+}
+
+.search_no {
+    padding-top: 120rpx;
+}
+
+.orderList {
+    box-sizing: border-box;
+    padding-top: 45px;
+}

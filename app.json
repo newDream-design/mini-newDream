@@ -5,14 +5,16 @@
 		"pages/shop/product/product",
 		"pages/my/my",
 		"pages/my/cart",
-		"pages/my/order/confirmOrder",
-		"pages/my/order/allOrders"
+		"pages/my/collection",
+		"pages/order/allOrders",
+		"pages/order/express",
+		"pages/order/operation/confirmOrder",
+		"pages/saler/index"
 	],
 	"window": {
-		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#fff",
-		"navigationBarTitleText": "新梦想家西服",
-		"navigationBarTextStyle": "black"
+		"navigationBarBackgroundColor": "#1F4E79",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "新梦想家西服"
 	},
 	"tabBar": {
 		"color": "#555",
@@ -31,6 +33,12 @@
 				"text": "分类",
 				"iconPath": "images/menu/menu2.png",
 				"selectedIconPath": "images/menu/menu2-sel.png"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"text": "量体",
+				"iconPath": "images/menu/menu4.png",
+				"selectedIconPath": "images/menu/menu4-sel.png"
 			},
 			{
 				"pagePath": "pages/my/cart",

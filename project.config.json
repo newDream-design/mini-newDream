@@ -50,9 +50,9 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "确认订单",
-					"pathName": "pages/shop/order/confirmOrder",
-					"query": "products=[{\"productID\":102,\"productName\":\"我是11条小青龙\",\"image\":\"/images/test/d2.jpg\",\"price\":1099.99,\"count\":10},{\"productID\":101,\"productName\":\"我是12条小青龙\",\"image\":\"/images/test/d2.jpg\",\"price\":1099.99,\"count\":10}]",
+					"name": "pages/shop/product/product",
+					"pathName": "pages/shop/product/product",
+					"query": "productID=mx-1",
 					"scene": null
 				}
 			]

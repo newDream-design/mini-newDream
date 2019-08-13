@@ -3,7 +3,7 @@ const app = getApp()
 Page({
     data: {
         tabID: 0,
-        cartCount: 5, //购物车商品数量
+        cart: [], //购物车
         productDetails: {
             "images": [
                 "/images/test/p.jpg", "/images/test/p1.jpg", "/images/test/p2.jpg"
@@ -11,7 +11,6 @@ Page({
             "productName": "纯黑全棉七彩白衬衫",
             "price": 100,
             "sale": 0,
-            "stock": 5,
             "posts": [
                 "/images/test/d1.jpg", "/images/test/d2.jpg", "/images/test/d3.jpg", "/images/test/d4.jpg"
             ],
@@ -35,36 +34,84 @@ Page({
         },
         //选择规格
         count: 1,
-        showSpec: false,
-        specText: '请选择规格',
+        showSpec: 0,
+        specText: '点击选择量体数据',
         //默认属性
-        defaultproperty: 1,
-        evaType: [{
-            tit: "好评"
+        comments: [{
+            "userName": "王小明",
+            "userAvatar": "",
+            "createTime": "2019-01-01 12:00:00",
+            "content": "这什么神仙西装，我好喜欢啊！"
         }, {
-            tit: "中评"
+            "userName": "王小明",
+            "userAvatar": "",
+            "createTime": "2019-01-01 12:00:00",
+            "content": "这什么神仙西装，我好喜欢啊！"
         }, {
-            tit: "差评"
-        }],
-        etActiveIndex: 0,
-        evaInfo: [], //评论
+            "userName": "王小明",
+            "userAvatar": "",
+            "createTime": "2019-01-01 12:00:00",
+            "content": "这什么神仙西装，我好喜欢啊！"
+        }], //评论
         isFixedTap: false,
     },
-    onLoad: function(option) {
+    onLoad: function(options) {
+        this.getProduct(options.productID)
+        this.getCart()
+    },
+    onHide: function() {
+        this.setData({
+            showSpec: 0,
+        });
+    },
+    bindScrollListen: function(e) {
+        let scrollTop = e.detail.scrollTop;
+        if (scrollTop >= height) {
+            this.setData({
+                isFixedTap: true
+            });
+        } else {
+            this.setData({
+                isFixedTap: false
+            });
+        }
+    },
+    navTap: function(e) {
+        this.setData({
+            tabID: e.currentTarget.dataset.tab
+        });
+    },
+    bindChooseSpec: function(e) {
+        this.setData({
+            showSpec: e.currentTarget.dataset.buynow
+        })
+    },
+    //获取商品
+    getProduct: function(productID) {
         var that = this
         wx.request({
-            url: app.config.RequestUrl + 'shangpin',
+            url: app.config.RequestUrl + 'shangpin/get',
             method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             data: {
-                tiaoma: option.productID
+                memberID: app.globalData.memberID,
+                productID: productID
             },
             success: function(res) {
-                that.setData({
-                    productDetails: res.data
-                })
+                if (res.data.result.status == 200) {
+                    var productDetails = res.data.data.object
+                    that.setData({
+                        productDetails: productDetails
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
             },
             fail: function(e) {
                 wx.showToast({
@@ -79,81 +126,122 @@ Page({
             }
         })
     },
-    onHide: function() {
-        this.setData({
-            showSpec: false,
-        });
-    },
-    navTap: function(e) {
-        this.setData({
-            tabID: e.currentTarget.dataset.tab
-        });
-    },
-    bindChooseSpec: function(e) {
-        this.setData({
-            showSpec: true
-        })
-    },
-    //获取购物车商品数量
-    //获取产品详情
-    requestProductDetails: function(e) {
-        that.setData({
-            productDetails: "",
-        })
-        wx.setNavigationBarTitle({
-            title: "名称",
+    //获取购物车信息
+    getCart: function() {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'gouwuche/get',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    that.setData({
+                        cart: JSON.parse(res.data.data.object)
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function(e) {
+                wx.hideNavigationBarLoading() //完成停止加载
+                wx.stopPullDownRefresh() //停止下拉刷新
+            }
         })
     },
     //获取产品规格
     requestProductSpec: function(e) {},
     //点击收藏产品
-    bindCollect: function(e) {},
+    bindCollect: function(e) {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'shoucangjia/' + (this.data.productDetails.isCollect ? "delete" : "add"),
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID,
+                productID: that.data.productDetails.productID
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    var productDetails = that.data.productDetails
+                    productDetails.isCollect = !productDetails.isCollect
+                    that.setData({
+                        productDetails: productDetails
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function(e) {
+                wx.hideNavigationBarLoading() //完成停止加载
+                wx.stopPullDownRefresh() //停止下拉刷新
+            }
+        })
+    },
     //点击购物车
     bindCart: function() {
-        wx.switchtab({
-            url: '/pages/cart/cart',
+        wx.switchTab({
+            url: '/pages/my/cart',
         })
     },
     //选择评论
     swichNav: function(e) {},
     //选择规格商品加减
-    countMinus: function(e) {
-        var that = this;
-        var count = that.data.count;
-        if (count == 1) {
-            that.setData({
-                count: 1
-            })
-        } else {
-            count--;
-            that.setData({
-                count: count
-            })
-        }
-    },
-    countAdd: function(e) {
-        var that = this;
-        let stock = that.data.productDetails.stock;
-        var count = that.data.count;
-        if (count < stock) {
-            count++;
-            that.setData({
-                count: count
-            })
-        } else {
+    onProductCountChange: function(e) {
+        var delta = parseInt(e.currentTarget.dataset.delta);
+        var count = this.data.count
+        if (count <= 1 && delta < 0) {
             wx.showToast({
-                title: '超过库存限制',
-                icon: 'none'
+                title: "数量已到达下限",
+                icon: 'none',
+                duration: 3000
             })
-            that.setData({
-                count: stock
-            });
+        } else if (count >= 99 && delta > 0) {
+            wx.showToast({
+                title: "数量已到达上限",
+                icon: 'none',
+                duration: 3000
+            })
+        } else {
+            count = count + delta
         }
+        this.setData({
+			count: count
+        })
     },
     //点击遮罩层，选择规格隐藏
     distpickerCancel: function(e) {
         this.setData({
-            showSpec: false
+            showSpec: 0
         })
     },
     //选择属性
@@ -189,8 +277,52 @@ Page({
     },
     //添加到购物车
     addshopcart: function() {
-        app.checkLogin();
-        //获取数据
+        var cart = this.data.cart
+        var product = {
+            "productID": this.data.productDetails.productID,
+            "productName": this.data.productDetails.productName,
+            "image": this.data.productDetails.image[0],
+            "price": this.data.productDetails.price,
+            "count": this.data.count
+        }
+        cart.push(product)
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'gouwuche/update',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID,
+                cart: JSON.stringify(cart)
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    that.setData({
+                        cart: cart,
+                        showSpec: 0
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function(e) {
+                wx.hideNavigationBarLoading() //完成停止加载
+                wx.stopPullDownRefresh() //停止下拉刷新
+            }
+        })
     },
     //获取评论
     getComments: function() {},

@@ -1,9 +1,9 @@
 <wxs module="utils" src="../../utils/utils.wxs"></wxs>
-<block wx:if="{{carts.length>0}}">
+<block wx:if="{{cart.length>0}}">
     <scroll-view scroll-y style="height:100%;" class='cart-goods-list'>
         <view class='main'>
             <view class='main-mid'>
-                <block wx:for="{{carts}}" wx:key="key" wx:for-index="index" wx:for-item="product">
+                <block wx:for="{{cart}}" wx:key="key" wx:for-index="index" wx:for-item="product">
                     <view class='cart-goods' data-id="{{product.productID}}">
                         <text class='iconfont icon-xuanze2 uncheck2' bindtap='onProductSelected' data-index="{{index}}" wx:if="{{utils.findInArr(index,selectedProducts)}}"></text>
                         <text class='iconfont icon-choose uncheck2' bindtap='onProductSelected' data-index="{{index}}" wx:else></text>
@@ -26,7 +26,7 @@
                                     </view>
                                     <view class="del-cart">
                                         <!-- <image src='/images/del.png' bindtap="delCart" data-id='{{product.id}}' data-index='{{index}}'></image> -->
-                                        <text class='iconfont icon-icon' bindtap="delCart" data-id='{{product.id}}' data-index='{{index}}'></text>
+                                        <text class='iconfont icon-icon' bindtap="deleteCart" data-id='{{product.id}}' data-index='{{index}}'></text>
                                     </view>
                                 </view>
                             </view>
@@ -63,9 +63,10 @@
     </view>
 </block>
 
-<block wx:if="{{carts.length==0}}">
+<block wx:if="{{cart.length==0}}">
     <view class='main'>
         <view class='main-mid'>
+            <view style="height:30%;" />
             <view class='noGoods'>
                 <image src='/images/utils/noCart.png'></image>
                 <view class='goShopping' bindtap='goShopping'>去逛逛</view>

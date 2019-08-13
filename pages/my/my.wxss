@@ -1,6 +1,6 @@
 .myBanner {
     position: relative;
-    height: 300rpx;
+    height: 4rem;
     overflow: hidden;
 }
 
@@ -15,18 +15,25 @@
     left: 30rpx;
     display: flex;
     align-items: center;
+    background-color: #fff;
+}
+
+.userInfo::after {
+    border: none;
 }
 
 .userAvatar {
     width: 80rpx;
     height: 80rpx;
     border-radius: 50%;
+    display: flex;
+    overflow: hidden;
 }
 
 .userName {
     color: #555;
     font-size: 32rpx;
-    margin-left: 20rpx;
+    margin-left: 1rem;
     font-weight: bold;
 }
 
@@ -141,4 +148,18 @@
 
 .login-btn::after {
     border: 0;
+}
+
+.AddressButtonCover {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: left;
+    line-height: 1;
+    border-radius: 0;
+    background-color: #fff;
+	padding: 4.5px 0;
+}
+
+.AddressButtonCover::after {
+    border: none;
 }

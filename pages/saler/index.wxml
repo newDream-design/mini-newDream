@@ -1,0 +1,63 @@
+<view class='main'>
+    <view class='main-mid'>
+        <view class='myBanner colorBanner'>
+            <view class='userInfo'>
+                <open-data class="userAvatar" type="userAvatarUrl"></open-data>
+                <view class='userName'>
+                    <open-data class="text" type="userNickName"></open-data>
+                    <text>当前等级：<text class="g">金牌分销员</text></text>
+                </view>
+            </view>
+        </view>
+        <view class="container">
+            <view class="row">
+                <view style="width:7rem;">
+                    <text class="num" style="font-weight:700;">0.00</text>
+                    <text class="des">累计收益(元)</text>
+                    <text class="des" style="color: #555;font-weight:700;">含待结算 0.00 元</text>
+                </view>
+                <view>
+                    <text class="num">0</text>
+                    <text class="des">累计订单</text>
+                </view>
+                <view>
+                    <text class="num">0</text>
+                    <text class="des">累计客户</text>
+                </view>
+            </view>
+            <navigator style="border-top: solid 1px #DDD;margin:0 0.25rem;padding:0.5rem 0;">
+                <text class="title">可提现金额(元)</text>
+                <view class="title-right">
+                    <view class="row">
+                        <text>0.00</text>
+                        <text class="arrow-right"></text>
+                    </view>
+                </view>
+            </navigator>
+        </view>
+        <view class="container">
+            <view class="row">
+                <view style="width:7rem;">
+                    <text class="num">0.00</text>
+                    <text class="des">今日收益(元)</text>
+                </view>
+                <view>
+                    <text class="num">0</text>
+                    <text class="des">今日订单</text>
+                </view>
+                <view>
+                    <text class="num">0</text>
+                    <text class="des">今日新增客户</text>
+                </view>
+            </view>
+        </view>
+        <view class="container">
+            <view class="row" style="flex-wrap:wrap;">
+                <view style="align-items:center;width:20%;" wx:for="{{[1,2,3,4]}}">
+                    <icon type="success" size="40" />
+                    <text class="des" style="color:#555;font-weight:700;margin:5px 0;">任务中心</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

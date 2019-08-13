@@ -11,15 +11,33 @@ Page({
             "toReceive": 0,
             "toComment": 0,
             "toRefund": 0
-        }
+        },
+        AddressAccess: true
     },
     onShow: function() {
-
+        this.checkAddressAccess()
     },
-    login: function(e) {
-
+    checkAddressAccess: function() {
+        var that = this
+        wx.getSetting({
+            success(res) {
+                var AddressAccess = res.authSetting['scope.address'] == undefined ? true : res.authSetting['scope.address']
+                that.setData({
+                    AddressAccess: AddressAccess
+                })
+            }
+        })
     },
-    address: function(e) {
-        wx.chooseAddress()
+    chooseAddress: function(e) {
+        var that = this
+        wx.chooseAddress({
+            fail() {
+                if (e.errMsg == "chooseAddress:fail auth deny") {
+                    that.setData({
+                        AddressAccess: false
+                    })
+                }
+            }
+        })
     },
 })

@@ -75,3 +75,8 @@
         <template is='support' />
     </view>
 </view>
+<view class="fixed-icon">
+    <navigator wx:for="{{index.icon}}" wx:for-item="icon" wx:key="i" url="{{icon.linkUrl}}">
+        <image src="{{icon.image}}" mode="aspectFit" />
+    </navigator>
+</view>

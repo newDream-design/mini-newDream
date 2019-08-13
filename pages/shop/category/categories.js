@@ -13,7 +13,7 @@ Page({
     request: function() {
         var that = this
         wx.request({
-			url: app.config.RequestUrl + 'fenlei',
+			url: app.config.RequestUrl + 'fenlei/get',
             method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -23,7 +23,7 @@ Page({
             },
             success: function(res) {
                 that.setData({
-                    categories: res.data
+                    categories: res.data.data.object
                 })
             },
             fail: function(e) {

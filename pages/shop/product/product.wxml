@@ -1,35 +1,65 @@
 <view class='container'>
-    <scroll-view scroll-y="true" style="height:100%;">
+    <scroll-view scroll-y="true" style="height:100%;" bindScroll="bindScrollListen" enable-back-to-top>
         <view class='goods-gallery'>
-            <swiper indicator-dots autoplay circular interval="3000" duration="500" style='height:750rpx;'>
+            <swiper indicator-dots autoplay circular interval="3000" duration="500" style='height:12rem;'>
                 <swiper-item wx:for="{{productDetails.images}}" wx:key="key">
                     <image src="{{item}}" class='goods-gallery-img' lazy-load='true' />
                 </swiper-item>
             </swiper>
+            <text class="swiperCount">1/5</text>
         </view>
         <view class='goods-info'>
-            <text class='goods-name'>{{productDetails.productName}}</text>
+            <view class='goods-info0'>
+                <text class='goods-name'>{{productDetails.productName}}</text>
+                <view class="share">
+                    <image class="icon-share" src="/images/icon/share.png"></image>
+                    <text>分享</text>
+                </view>
+            </view>
             <view class='goods-info1'>
-                <view class='goods-price'>价格:
+                <view class='goods-price'>
                     <text>￥{{productDetails.price}}</text>
                 </view>
-                <view class='goods-sales'>销量 : {{productDetails.sale}}</view>
+                <view class='goods-sales'>月销量：{{productDetails.sale}}</view>
+            </view>
+        </view>
+        <view class='goods-specInfo'>
+            <view>
+                <text class="title">产品款号：</text>
+                <text class="value">{{productDetails.productID}}</text>
+            </view>
+            <view>
+                <text class="title">面料成分：</text>
+                <text class="value">？</text>
+            </view>
+            <view>
+                <text class="title">面料厚度：</text>
+                <text class="value">？</text>
+            </view>
+            <view>
+                <text class="title">面料弹力：</text>
+                <text class="value">？</text>
+            </view>
+            <view>
+                <text class="title">面料克重：</text>
+                <text class="value">？</text>
+            </view>
+            <view>
+                <text class="title">适合季节：</text>
+                <text class="value">？</text>
             </view>
         </view>
         <view class='chooseSpec' bindtap='bindChooseSpec' data-buynow="3">
             <view>
-                <text>规格：{{specText}}</text>
+                <text>尺寸：{{specText}}</text>
             </view>
             <image src='/images/arrow-right.png' class='arrow'></image>
         </view>
         <view class="mid-nav {{isFixedTap===true?'fixed':''}}">
             <view class="swiper-tab">
-                <view class="swiper-tab-list {{tabID==0?'on':''}}" data-tab="0" bindtap="navTap">详情
-                </view>
-                <view class="swiper-tab-list {{tabID==1?'on':''}}" data-tab="1" bindtap="navTap">规格
-                </view>
-                <view class="swiper-tab-list {{tabID==2?'on':''}}" data-tab="2" bindtap="navTap">评价
-                </view>
+                <view class="swiper-tab-list {{tabID==0?'on':''}}" data-tab="0" bindtap="navTap">详情</view>
+                <view class="swiper-tab-list {{tabID==1?'on':''}}" data-tab="1" bindtap="navTap">评价</view>
+                <view class="swiper-tab-list {{tabID==2?'on':''}}" data-tab="2" bindtap="navTap">常见问题</view>
             </view>
         </view>
         <view class="product-box">
@@ -40,30 +70,24 @@
                             <image src="{{item}}" mode="widthFix" style="width:100%;margin:0;" lazy-load='true' />
                         </block>
                     </view>
-                    <!-- 规格 -->
-                    <view class='goods-specInfo' wx:if="{{tabID==1}}">
-                        <view>品牌:{{productDetails.brandsname}}</view>
-                        <view>产品编码:{{productDetails.productno}}</view>
-                        <view>库存:{{productDetails.stock}}</view>
-                        <view>重量:{{productDetails.weight}}kg</view>
-                        <view wx:if="{{productDetails.sizelength!='0'}}">
-                            尺寸:{{productDetails.sizelength}}*{{productDetails.sizeheight}}*{{productDetails.sizewidth}}(单位:cm)
+                    <view class="goods-comment" wx:if="{{tabID==1}}">
+                        <!--
+						<view class='commentType'>
+                            <text wx:for="{{commentType}}" class="{{etActiveIndex==etIndex?'active':''}}" wx:key="commentType" wx:for-index="etIndex" wx:for-item="etItem" bindtap='etActive' id='{{etIndex}}'>{{etItem.tit}}</text>
                         </view>
-                    </view>
-                    <view class="goods-comment" wx:if="{{tabID==2}}">
-                        <view class='evaType'>
-                            <text wx:for="{{evaType}}" class="{{etActiveIndex==etIndex?'active':''}}" wx:key="evaType" wx:for-index="etIndex" wx:for-item="etItem" bindtap='etActive' id='{{etIndex}}'>{{etItem.tit}}
-					</text>
-                        </view>
-                        <view class='evaList'>
-                            <text class='noeva' wx:if="{{evaInfo.length==0}}">暂无评价</text>
-                            <view class='eva' wx:for="{{evaInfo}}" wx:key="id" wx:for-item="val">
-                                <view class='eva-user'>
-                                    <image src='{{val.userimg}}' class='avatar'></image>
-                                    <text class='nickname'>{{val.author}}</text>
+						-->
+                        <view class='commentList'>
+                            <text class='nocomment' wx:if="{{comments.length==0}}">暂无评价</text>
+                            <view class='comment' wx:for="{{comments}}" wx:key="id" wx:for-item="comment">
+                                <view class='comment-user'>
+                                    <view style="display:flex;align-items:center;margin-bottom:5px;">
+                                        <image class='avatar' src='{{comment.userAvatar}}'></image>
+                                        <text class='nickname'>{{comment.userName}}</text>
+                                    </view>
+                                    <text class='comment-time'>{{comment.createTime}}</text>
                                 </view>
-                                <text class='eva-time'>{{val.addtime}}</text>
-                                <text class='eva-content'>{{val.content}}</text>
+                                <text class='comment-content'>{{comment.content}}</text>
+                                <view style="height:15px;" />
                             </view>
                         </view>
                     </view>
@@ -75,15 +99,15 @@
             </view>
         </view>
         <!--规格-->
-        <view class="spec-wrap {{showSpec? '' : 'hidden'}}">
+        <view class="spec-wrap {{showSpec==0?'hidden':''}}">
             <view class='goods-house-wrap'>
                 <view class='goods-house'>
                     <image src='{{productDetails.images[0]}}' class='goods-img'></image>
                     <view class='goods-house1'>
                         <text class='goods-price'>￥{{productDetails.price}}</text>
                         <view class='goods-house2'>
-                            <text>库存:{{productDetails.stock}}</text>
-                            <text>已选:{{defaultproperty}}</text>
+                            <text></text>
+                            <text>已选：{{defaultproperty}}</text>
                         </view>
                     </view>
                 </view>
@@ -99,9 +123,9 @@
                 <view class='amount-wrap'>
                     <text>数量</text>
                     <view class='amount-box'>
-                        <text class='amount-minus' bindtap='countMinus'>-</text>
+                        <text class='amount-minus' bindtap='onProductCountChange' data-delta="-1">-</text>
                         <text class='amount-num'>{{count}}</text>
-                        <text class='amount-add' bindtap='countAdd'>+</text>
+                        <text class='amount-add' bindtap='onProductCountChange' data-delta="1">+</text>
                     </view>
                 </view>
             </view>
@@ -113,14 +137,15 @@
             <view class='footer-l'>
                 <view>
                     <button class='consult' open-type='contact' style="background-color:#FFF;">
-                        <text class='iconfont icon-xiaoxi'></text>
-                        <text>咨询</text>
+                        <!--<text class='iconfont icon-xiaoxi' style="margin:3px 0 3px 0;"></text>-->
+                        <image class="iconfont" src="/images/icon/contact.png" style="margin-bottom:2px;"></image>
+                        <text style="margin-top:4px;">咨询</text>
                     </button>
                 </view>
                 <view bindtap='bindCart' class='cartWrap'>
                     <text class='iconfont icon-gouwuche1'></text>
                     <text>购物车</text>
-                    <text class='cartCount'>{{cartCount?cartCount:0}}</text>
+                    <text class='cartCount' wx:if="{{cart.length>0}}">{{cart.length}}</text>
                 </view>
                 <view bindtap='bindCollect'>
                     <text class='iconfont icon-shoucangxing' wx:if="{{productDetails.isCollect==0}}"></text>
@@ -129,8 +154,8 @@
                 </view>
             </view>
             <view class='footer-r'>
-                <text class='act-cart' bindtap='bindChooseSpec' data-buynow="2">加入购物车</text>
-                <text class='act-buy' bindtap='bindChooseSpec' data-buynow="1">立即购买</text>
+                <text class='act-cart' bindtap='bindChooseSpec' data-buynow="1">加入购物车</text>
+                <text class='act-buy' bindtap='bindChooseSpec' data-buynow="2">立即购买</text>
             </view>
         </view>
 

@@ -16,7 +16,7 @@ Page({
     request: function() {
         var that = this
         wx.request({
-            url: app.config.RequestUrl + 'shouye',
+            url: app.config.RequestUrl + 'shouye/get',
             method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -25,8 +25,25 @@ Page({
                 //OpenID: app.globalData.OpenID
             },
             success: function(res) {
+                var index = res.data.data.object
+                index["icon"] = [{
+                    "image": "/images/example.png",
+                    "linkUrl": ""
+                }, {
+                    "image": "/images/example.png",
+                    "linkUrl": ""
+                }, {
+                    "image": "/images/example.png",
+                    "linkUrl": ""
+                }, {
+                    "image": "/images/example.png",
+                    "linkUrl": ""
+                }, {
+                    "image": "/images/example.png",
+                    "linkUrl": ""
+                }]
                 that.setData({
-                    index: res.data
+                    index: index
                 })
             },
             fail: function(e) {

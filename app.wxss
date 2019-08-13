@@ -17,6 +17,8 @@ page {
     --color: #ff8623;
     --bgblack: #000;
     --bggrey: #555;
+    --tabColorA: #1f4e79;
+    --tabColorB: #cba362;
 }
 
 /*banner*/
@@ -104,6 +106,17 @@ page {
     color: var(--color);
     line-height: 50rpx;
     padding: 0 20rpx;
+}
+
+.order-bot .nav {
+    font-size: 28rpx;
+    height: 50rpx;
+    border: 1px solid var(--color);
+    border-radius: 50px;
+    color: var(--color);
+    line-height: 50rpx;
+    padding: 0 20rpx;
+    margin: 0 10px;
 }
 
 .goods-name {
@@ -198,4 +211,44 @@ page {
 
 .main-bot {
     flex-shrink: 0;
+}
+
+.fixed-icon {
+    display: flex;
+    flex-direction: column-reverse;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.fixed-icon navigator {
+    margin: 5px 0;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #fff;
+    border: solid 0.1rem rgb(255, 255, 255);
+    z-index: 999;
+}
+
+.fixed-icon image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.arrow-right:after {
+    margin-left: 6px;
+    margin-right: 6px;
+    content: " ";
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color: #c8c8cd;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -.71, 0.71, 0, 0);
+    position: relative;
+    top: -2px;
 }
