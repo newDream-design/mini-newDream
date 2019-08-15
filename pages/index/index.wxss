@@ -196,3 +196,29 @@
     width: 100%;
     height: 400rpx;
 }
+
+.classify-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #fff;
+}
+
+.classify-wrap .classify {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+	margin-bottom: 0.5rem;
+}
+
+.classify-wrap .classify image {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0.75rem;
+}
+
+.classify-wrap .classify text {
+    text-align: center;
+}

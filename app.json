@@ -43,7 +43,7 @@
 				"selectedIconPath": "images/menu/menu2-sel.png"
 			},
 			{
-				"pagePath": "pages/yltmeasure/index",
+				"pagePath": "pages/yltmeasure/pages/yltmeasure/measure",
 				"text": "量体",
 				"iconPath": "images/menu/menu4.png",
 				"selectedIconPath": "images/menu/menu4-sel.png"

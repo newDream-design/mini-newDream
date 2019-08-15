@@ -20,7 +20,8 @@ App({
                         sc_code: res.code
                     },
                     success: function(res) {
-                        that.globalData.memberID = res.data.toString()
+                        var memberID = res.data
+                        that.globalData.memberID = memberID
                     },
                     fail: function(e) {
                         console.log(e.errMsg)
@@ -33,7 +34,7 @@ App({
         setTimeout(function() {
             yltplugin.getConfig(wx.getStorageSync('appKey'), wx.getStorageSync('appSecret')).then(function(res) {
                 if (res.statusCode == 60100) {
-					console.log("ylt插件连接成功")
+                    console.log("ylt插件连接成功")
                     // var appList = res.data;
                     // wx.setStorageSync('sdkDataGetAPI', appList.sdkDataGet);
                     // wx.setStorageSync('sdkImgProcessAPI', appList.sdkImgProcess);

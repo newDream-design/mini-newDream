@@ -28,6 +28,19 @@ Page({
                     "image": "/images/example.png",
                     "linkUrl": "/pages/shop/product/product?productID=ND1M621T"
                 }]
+                index["classify"] = [{
+                    "id": 0,
+                    "text": "西服"
+                }, {
+                    "id": 1,
+                    "text": "衬衫"
+                }, {
+                    "id": 2,
+                    "text": "裤子"
+                }, {
+                    "id": 4,
+                    "text": "配饰"
+                }]
                 that.setData({
                     index: index
                 })
@@ -49,6 +62,18 @@ Page({
         var url = e.currentTarget.dataset.url
         wx.navigateTo({
             url: url,
+        })
+    },
+    bindClassifyIconTap: function(e) {
+        var currentCategory = e.currentTarget.dataset.id
+        wx.setStorage({
+            key: "currentCategory",
+            data: currentCategory,
+            success: function() {
+                wx.switchTab({
+                    url: '/pages/shop/category/classify',
+                })
+            }
         })
     }
 })

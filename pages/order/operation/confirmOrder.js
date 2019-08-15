@@ -7,10 +7,10 @@ Page({
             "provinceName": "选择地址后才可以进行结算"
         },
         summary: {
-            allCount: 0,		//总件数
-            allPrice: 0,		//商品总价
-            deliverPrice: 0,	//运费
-            price: 0			//用户需要支付的价格
+            allCount: 0, //总件数
+            allPrice: 0, //商品总价
+            deliverPrice: 0, //运费
+            price: 0 //用户需要支付的价格
         },
         remark: "",
         AddressAccess: true
@@ -41,6 +41,8 @@ Page({
         var summary = this.data.summary
         for (var i in products) {
             products[i]["price"] = parseFloat(products[i]["price"]).toFixed(2)
+			products[i]["measureID"] = 10001
+			products[i]["color"] = "黑色"
             summary.allCount += products[i]["count"]
             summary.allPrice += products[i]["count"] * products[i]["price"]
         }
@@ -97,10 +99,12 @@ Page({
             data: {
                 memberID: app.globalData.memberID,
                 price: that.data.summary.price * 100,
-                products: that.data.products,
-                address: that.data.address,
-                summary: that.data.summary,
-                remark: that.data.remark
+                order: {
+                    products: that.data.products,
+                    address: that.data.address,
+                    summary: that.data.summary,
+                    remark: that.data.remark
+                }
             },
             success: function(res) {
                 if (res.data.result.status == 200) {

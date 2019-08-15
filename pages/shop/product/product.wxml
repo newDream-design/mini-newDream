@@ -3,7 +3,7 @@
         <view class='goods-gallery'>
             <swiper indicator-dots autoplay circular interval="3000" duration="500" style='height:20rem;' bindchange="bindSwiper">
                 <swiper-item wx:for="{{products[mainProduct].image}}" wx:key="key" wx:for-item="img">
-                    <image src="https://cdn.newdreamer.cn/products/{{products[mainProduct].productID}}/%E4%B8%BB%E5%9B%BE/{{img}}.jpg" class='goods-gallery-img' lazy-load='true' />
+                    <image src='{{products[mainProduct].productID==undefined?"":("https://cdn.newdreamer.cn/products/"+products[mainProduct].productID+"/%E4%B8%BB%E5%9B%BE/"+img+".jpg")}}' class='goods-gallery-img' lazy-load='true' />
                 </swiper-item>
             </swiper>
             <text class="swiperCount">{{currentImage}}/{{products[mainProduct].image.length}}</text>
@@ -66,7 +66,7 @@
             <view class='main'>
                 <view class='main-mid'>
                     <view wx:if="{{tabID==0}}">
-                        <image src="https://cdn.newdreamer.cn/products/{{products[mainProduct].productID}}/%E8%AF%A6%E6%83%85%E5%9B%BE/1.jpg" mode="widthFix" style="width:100%;margin:0;" lazy-load='true' />
+                        <image src='{{products[mainProduct].productID==undefined?"":("https://cdn.newdreamer.cn/products/"+products[mainProduct].productID+"/%E8%AF%A6%E6%83%85%E5%9B%BE/1.jpg")}}' mode="widthFix" style="width:100%;margin:0;" lazy-load='true' />
                     </view>
                     <view class="goods-comment" wx:if="{{tabID==1}}">
                         <!--

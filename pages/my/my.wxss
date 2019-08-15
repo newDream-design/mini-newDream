@@ -185,7 +185,7 @@ Page {
     flex-wrap: wrap;
 }
 
-.server-warp navigator, .server-warp button {
+.server-warp navigator, .server-warp view button {
     width: 5rem;
     display: flex;
     flex-direction: column;
@@ -193,13 +193,13 @@ Page {
     margin-bottom: 0.5rem;
 }
 
-.server-warp navigator image {
+.server-warp image {
     width: 3rem;
     height: 3rem;
     margin-bottom: 0.25rem;
 }
 
-.server-warp navigator text {
+.server-warp text {
     font-size: 14px;
     color: #666;
     line-height: 1;
@@ -211,6 +211,8 @@ Page {
     line-height: 1;
     border-radius: 0;
     background-color: #fff;
+    width: 5rem;
+    height: 5rem;
 }
 
 .AddressButtonCover::after {

@@ -22,7 +22,8 @@ Page({
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
-                    var cart = JSON.parse(res.data.data.object)
+                    var cart = res.data.data.object
+                    cart = cart == "" ? [] : JSON.parse(cart)
                     for (var i in cart) {
                         cart[i]["price"] = parseFloat(cart[i]["price"]).toFixed(2)
                     }

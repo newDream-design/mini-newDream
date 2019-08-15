@@ -111,44 +111,48 @@ Page({
             }
         })
     },
-    //获取购物车信息
-    getCart: function() {
-        var that = this
-        wx.request({
-            url: app.config.RequestUrl + 'gouwuche/get',
-            method: "GET",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: {
-                memberID: app.globalData.memberID
-            },
-            success: function(res) {
-                if (res.data.result.status == 200) {
-                    that.setData({
-                        cart: JSON.parse(res.data.data.object)
-                    })
-                } else {
-                    wx.showToast({
-                        title: res.data.result.errMsg,
-                        icon: 'none',
-                        duration: 2000
-                    })
-                }
-            },
-            fail: function(e) {
-                wx.showToast({
-                    title: e.errMsg,
-                    icon: 'none',
-                    duration: 2000
-                })
-            },
-            complete: function(e) {
-                wx.hideNavigationBarLoading() //完成停止加载
-                wx.stopPullDownRefresh() //停止下拉刷新
-            }
-        })
-    },
+	getCart: function () {
+		var that = this
+		wx.request({
+			url: app.config.RequestUrl + 'gouwuche/get',
+			method: "GET",
+			header: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			data: {
+				memberID: app.globalData.memberID
+			},
+			success: function (res) {
+				if (res.data.result.status == 200) {
+					var cart = res.data.data.object
+					cart = cart == "" ? [] : JSON.parse(cart)
+					for (var i in cart) {
+						cart[i]["price"] = parseFloat(cart[i]["price"]).toFixed(2)
+					}
+					that.setData({
+						cart: cart
+					})
+				} else {
+					wx.showToast({
+						title: res.data.result.errMsg,
+						icon: 'none',
+						duration: 2000
+					})
+				}
+			},
+			fail: function (e) {
+				wx.showToast({
+					title: e.errMsg,
+					icon: 'none',
+					duration: 2000
+				})
+			},
+			complete: function (e) {
+				wx.hideNavigationBarLoading() //完成停止加载
+				wx.stopPullDownRefresh() //停止下拉刷新
+			}
+		})
+	},
     //获取产品规格
     requestProductSpec: function(e) {},
     //点击收藏产品

@@ -22,7 +22,19 @@ Page({
         sortOrder: 1
     },
     onLoad: function(options) {
-        if (options.currentCategory != undefined) this.data.currentCategory = options.currentCategory
+        //if (options.currentCategory != undefined) this.data.currentCategory = options.currentCategory
+        var that = this
+        wx.getStorage({
+            key: "currentCategory",
+            success(res) {
+                that.setData({
+                    currentCategory: res.data
+                })
+                wx.removeStorage({
+                    key: "currentCategory"
+                })
+            }
+        })
     },
     onShow: function() {
         this.request()

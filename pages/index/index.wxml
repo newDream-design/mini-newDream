@@ -25,6 +25,12 @@
                 </swiper>
             </view>
         </view>
+        <view class="classify-wrap">
+            <view class="classify" wx:for="{{index.classify}}" wx:for-item="class" wx:key="cs" bindtap="bindClassifyIconTap" data-id="{{class.id}}">
+                <image src="https://cdn.newdreamer.cn/category/{{class.text}}.png"></image>
+                <text>{{class.text}}</text>
+            </view>
+        </view>
         <!--
 		##小图##
         <view class='family-wrap'>
@@ -63,7 +69,7 @@
                 <view class='index-tit'>{{block.title}}</view>
                 <view class='all-list'>
                     <navigator url='/pages/shop/product/product?productID={{product.tiaoma}}' hover-class='none' class='single-hot' wx:for="{{block.content}}" wx:key="b" wx:for-item="product">
-                        <image src='https://cdn.newdreamer.cn/products/{{product.tiaoma}}/%E4%B8%BB%E5%9B%BE/{{utils.split(product.tupian," ")[0]}}.jpg' class='all-img' mode='aspectFill' lazy-load='true'></image>
+                        <image src='{{product.tiaoma==undefined?"":("https://cdn.newdreamer.cn/products/"+product.tiaoma+"/%E4%B8%BB%E5%9B%BE/"+utils.split(product.tupian," ")[0]+".jpg")}}' class='all-img' mode='aspectFill' lazy-load='true'></image>
                         <text class='all-name'>{{product.shangpin_mingcheng}}</text>
                         <text class='all-price'>￥{{product.lingshoujia}}</text>
                     </navigator>
