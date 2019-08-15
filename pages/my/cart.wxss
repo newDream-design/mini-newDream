@@ -1,36 +1,40 @@
+Page {
+    background-color: #f8f8f8;
+}
+
 .noGoods image {
-    width: 255rpx;
-    height: 205rpx;
+    width: 120px;
+    height: 120px;
     display: block;
-    margin: 40rpx auto 0;
+    margin: 20px auto 0;
 }
 
 .goShopping {
     display: block;
     height: 80rpx;
-    font-size: 28rpx;
+    font-size: 14px;
     color: #fff;
     background-color: var(--bgcolor);
     line-height: 80rpx;
     text-decoration: none;
-    width: 160rpx;
-    border-radius: 40rpx;
+    width: 80px;
+    border-radius: 20px;
     text-align: center;
-    margin: 40rpx auto;
+    margin: 20px auto;
 }
 
 .cart-goods-list {
     box-sizing: border-box;
     background-color: #fff;
-    padding-bottom: 102rpx;
+    padding-bottom: 50px;
 }
 
 /*购物车底部*/
 
 .cart-footer {
-    border-top: 2rpx solid #dbdbdb;
+    border-top: 1px solid #dbdbdb;
     width: 100%;
-    height: 100rpx;
+    height: 50px;
     position: fixed;
     /* position: absolute; */
     z-index: 99;
@@ -40,8 +44,8 @@
 
 .cart-footer-l {
     background-color: #fff;
-    padding-left: 30rpx;
-    padding-right: 15rpx;
+    padding-left: 15px;
+    padding-right: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,7 +54,7 @@
 
 .cart-footer-r {
     height: 100rpx;
-    width: 240rpx;
+    width: 8rem;
     line-height: 100rpx;
     text-align: center;
     font-size: 36rpx;
@@ -84,11 +88,20 @@
     padding: 30rpx;
     display: flex;
     align-items: center;
+    margin: 0.25rem 0 0.25rem 0;
+    background-color: #fff;
 }
 
 .goods-info {
     flex-grow: 2;
     display: flex;
+}
+
+.goods-title {
+	width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .goods-img {
@@ -118,6 +131,7 @@
     font-size: 28rpx;
     color: #333;
     flex-shrink: 0;
+    margin-left: 0;
 }
 
 .goods-info2 {
@@ -130,16 +144,23 @@
 }
 
 .amount-wrap {
-    border: 1px solid #ccc;
     display: flex;
 }
 
 .amount-wrap text {
-    width: 40rpx;
-    height: 60rpx;
-    line-height: 60rpx;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
     display: inline-block;
+    border: 1px solid #ccc;
+    background: #f3f3f3;
+}
+
+.countber {
+    background: #fff !important;
+    border: none !important;
+    width: 40px !important;
 }
 
 .amount-wrap input {
@@ -176,11 +197,11 @@
 }
 
 .del-cart .iconfont {
-    font-size: 40rpx;
-    color: var(--color);
+    font-size: 20px;
+    color: var(--tabColorA);
 }
 
 .icon-choose, .icon-xuanze2 {
-    font-size: 40rpx;
+    font-size: 20px;
     color: var(--color);
 }

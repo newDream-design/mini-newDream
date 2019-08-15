@@ -22,8 +22,12 @@ Page({
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
+                    var cart = JSON.parse(res.data.data.object)
+                    for (var i in cart) {
+                        cart[i]["price"] = parseFloat(cart[i]["price"]).toFixed(2)
+                    }
                     that.setData({
-                        cart: JSON.parse(res.data.data.object)
+                        cart: cart
                     })
                 } else {
                     wx.showToast({
@@ -193,7 +197,7 @@ Page({
         var cart = this.data.cart;
         var products = [];
         for (var i in selectedProducts) {
-            products.push(cart[i]);
+            products.push(cart[selectedProducts[i]]);
         }
         if (products.length <= 0) {
             wx.showToast({

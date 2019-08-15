@@ -4,35 +4,14 @@ Page({
     data: {
         tabID: 0,
         cart: [], //购物车
-        productDetails: {
-            "images": [
-                "/images/test/p.jpg", "/images/test/p1.jpg", "/images/test/p2.jpg"
-            ],
-            "productName": "纯黑全棉七彩白衬衫",
-            "price": 100,
-            "sale": 0,
-            "posts": [
-                "/images/test/d1.jpg", "/images/test/d2.jpg", "/images/test/d3.jpg", "/images/test/d4.jpg"
-            ],
-            "productSpec": [{
-                "name": "123",
-                "subproperty": [{
-                    "propertyid": 1,
-                    "nametrue": "类别1",
-                    "ischosein": 1
-                }, {
-                    "propertyid": 2,
-                    "nametrue": "类别2",
-                    "ischosein": 0
-                }, {
-                    "propertyid": 3,
-                    "nametrue": "类别3",
-                    "ischosein": 0
-                }]
-            }],
-            "isCollect": 0
+        products: {},
+        price: {
+            "min": 0,
+            "max": 0
         },
-        //选择规格
+        mainProduct: 0,
+        selectProduct: 0,
+        currentImage: 1,
         count: 1,
         showSpec: 0,
         specText: '点击选择量体数据',
@@ -53,7 +32,7 @@ Page({
             "createTime": "2019-01-01 12:00:00",
             "content": "这什么神仙西装，我好喜欢啊！"
         }], //评论
-        isFixedTap: false,
+        isFixedTap: false
     },
     onLoad: function(options) {
         this.getProduct(options.productID)
@@ -64,17 +43,10 @@ Page({
             showSpec: 0,
         });
     },
-    bindScrollListen: function(e) {
-        let scrollTop = e.detail.scrollTop;
-        if (scrollTop >= height) {
-            this.setData({
-                isFixedTap: true
-            });
-        } else {
-            this.setData({
-                isFixedTap: false
-            });
-        }
+    bindSwiper: function(e) {
+        this.setData({
+            currentImage: e.detail.current + 1
+        })
     },
     navTap: function(e) {
         this.setData({
@@ -101,9 +73,22 @@ Page({
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
-                    var productDetails = res.data.data.object
+                    var products = res.data.data.object
+                    var mainProduct = 0
+                    var price = {
+                        "min": undefined,
+                        "max": undefined
+                    }
+                    for (var i in products) {
+                        if (productID == products[i]["productID"]) mainProduct = i
+                        products[i]["image"] = products[i]["image"].split(" ")
+                        if (price.min == undefined || products[i]["price"] < price.min) price.min = products[i]["price"]
+                        if (price.max == undefined || products[i]["price"] > price.max) price.max = products[i]["price"]
+                    }
                     that.setData({
-                        productDetails: productDetails
+                        mainProduct: mainProduct,
+                        products: products,
+                        price: price
                     })
                 } else {
                     wx.showToast({
@@ -170,21 +155,21 @@ Page({
     bindCollect: function(e) {
         var that = this
         wx.request({
-            url: app.config.RequestUrl + 'shoucangjia/' + (this.data.productDetails.isCollect ? "delete" : "add"),
+			url: app.config.RequestUrl + 'shoucangjia/' + (that.data.products[that.data.mainProduct].isCollect ? "delete" : "add"),
             method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             data: {
                 memberID: app.globalData.memberID,
-                productID: that.data.productDetails.productID
+                productID: that.data.products[that.data.mainProduct].productID
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
-                    var productDetails = that.data.productDetails
-                    productDetails.isCollect = !productDetails.isCollect
+                    var products = that.data.products
+                    products[that.data.mainProduct].isCollect = !products[that.data.mainProduct].isCollect
                     that.setData({
-                        productDetails: productDetails
+                        products: products
                     })
                 } else {
                     wx.showToast({
@@ -235,13 +220,19 @@ Page({
             count = count + delta
         }
         this.setData({
-			count: count
+            count: count
         })
     },
     //点击遮罩层，选择规格隐藏
     distpickerCancel: function(e) {
         this.setData({
             showSpec: 0
+        })
+    },
+    //选择子产品
+    choseProduct: function(e) {
+        this.setData({
+            selectProduct: e.currentTarget.dataset.pid
         })
     },
     //选择属性
@@ -279,10 +270,11 @@ Page({
     addshopcart: function() {
         var cart = this.data.cart
         var product = {
-            "productID": this.data.productDetails.productID,
-            "productName": this.data.productDetails.productName,
-            "image": this.data.productDetails.image[0],
-            "price": this.data.productDetails.price,
+            "productID": this.data.products[this.data.selectProduct].productID,
+            "productID_Main": this.data.products[this.data.mainProduct].productID,
+            "productName": this.data.products[this.data.selectProduct].productName,
+            "image": this.data.products[this.data.selectProduct].image[0],
+            "price": this.data.products[this.data.selectProduct].price,
             "count": this.data.count
         }
         cart.push(product)

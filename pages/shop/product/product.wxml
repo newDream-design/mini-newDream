@@ -1,32 +1,32 @@
 <view class='container'>
     <scroll-view scroll-y="true" style="height:100%;" bindScroll="bindScrollListen" enable-back-to-top>
         <view class='goods-gallery'>
-            <swiper indicator-dots autoplay circular interval="3000" duration="500" style='height:12rem;'>
-                <swiper-item wx:for="{{productDetails.images}}" wx:key="key">
-                    <image src="{{item}}" class='goods-gallery-img' lazy-load='true' />
+            <swiper indicator-dots autoplay circular interval="3000" duration="500" style='height:20rem;' bindchange="bindSwiper">
+                <swiper-item wx:for="{{products[mainProduct].image}}" wx:key="key" wx:for-item="img">
+                    <image src="https://cdn.newdreamer.cn/products/{{products[mainProduct].productID}}/%E4%B8%BB%E5%9B%BE/{{img}}.jpg" class='goods-gallery-img' lazy-load='true' />
                 </swiper-item>
             </swiper>
-            <text class="swiperCount">1/5</text>
+            <text class="swiperCount">{{currentImage}}/{{products[mainProduct].image.length}}</text>
         </view>
         <view class='goods-info'>
             <view class='goods-info0'>
-                <text class='goods-name'>{{productDetails.productName}}</text>
-                <view class="share">
+                <text class='goods-name'>{{products[mainProduct].productName}}</text>
+                <button class="ButtonCover share" open-type="share">
                     <image class="icon-share" src="/images/icon/share.png"></image>
-                    <text>分享</text>
-                </view>
+                    <text style="font-size:14px;color:#AAA;">分享</text>
+                </button>
             </view>
             <view class='goods-info1'>
                 <view class='goods-price'>
-                    <text>￥{{productDetails.price}}</text>
+                    <text>￥{{price.min}}-{{price.max}}</text>
                 </view>
-                <view class='goods-sales'>月销量：{{productDetails.sale}}</view>
+                <view class='goods-sales'>月销量：{{products[mainProduct].sale}}</view>
             </view>
         </view>
         <view class='goods-specInfo'>
             <view>
                 <text class="title">产品款号：</text>
-                <text class="value">{{productDetails.productID}}</text>
+                <text class="value">{{products[mainProduct].productID}}</text>
             </view>
             <view>
                 <text class="title">面料成分：</text>
@@ -66,9 +66,7 @@
             <view class='main'>
                 <view class='main-mid'>
                     <view wx:if="{{tabID==0}}">
-                        <block wx:for="{{productDetails.posts}}" wx:key="key">
-                            <image src="{{item}}" mode="widthFix" style="width:100%;margin:0;" lazy-load='true' />
-                        </block>
+                        <image src="https://cdn.newdreamer.cn/products/{{products[mainProduct].productID}}/%E8%AF%A6%E6%83%85%E5%9B%BE/1.jpg" mode="widthFix" style="width:100%;margin:0;" lazy-load='true' />
                     </view>
                     <view class="goods-comment" wx:if="{{tabID==1}}">
                         <!--
@@ -98,66 +96,72 @@
                 </view>
             </view>
         </view>
-        <!--规格-->
-        <view class="spec-wrap {{showSpec==0?'hidden':''}}">
-            <view class='goods-house-wrap'>
-                <view class='goods-house'>
-                    <image src='{{productDetails.images[0]}}' class='goods-img'></image>
-                    <view class='goods-house1'>
-                        <text class='goods-price'>￥{{productDetails.price}}</text>
-                        <view class='goods-house2'>
-                            <text></text>
-                            <text>已选：{{defaultproperty}}</text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-            <view>
-                <view class='type' wx:for="{{productDetails.productSpec}}" wx:key="productSpec" wx:for-item="specItem">
-                    <text>{{specItem.name}}:</text>
-                    <view class='type-list'>
-                        <text wx:for="{{specItem.subproperty}}" wx:for-item="subpropertyItem" class="{{subpropertyItem.ischosein==1?'sel':''}}" bindtap='choseProperty' data-propertyid="{{subpropertyItem.propertyid}}" data-subpropertyid='{{subpropertyItem.id}}' wx:key="subpropertyKey">{{subpropertyItem.nametrue}}
-						</text>
-                    </view>
-                </view>
-                <view class='amount-wrap'>
-                    <text>数量</text>
-                    <view class='amount-box'>
-                        <text class='amount-minus' bindtap='onProductCountChange' data-delta="-1">-</text>
-                        <text class='amount-num'>{{count}}</text>
-                        <text class='amount-add' bindtap='onProductCountChange' data-delta="1">+</text>
-                    </view>
-                </view>
-            </view>
-            <view class='act-spec-sure'>
-                <button bindtap='addshopcart' class='spec-sure'>确定</button>
-            </view>
-        </view>
-        <view class='goodsDetails-footer'>
-            <view class='footer-l'>
-                <view>
-                    <button class='consult' open-type='contact' style="background-color:#FFF;">
-                        <!--<text class='iconfont icon-xiaoxi' style="margin:3px 0 3px 0;"></text>-->
-                        <image class="iconfont" src="/images/icon/contact.png" style="margin-bottom:2px;"></image>
-                        <text style="margin-top:4px;">咨询</text>
-                    </button>
-                </view>
-                <view bindtap='bindCart' class='cartWrap'>
-                    <text class='iconfont icon-gouwuche1'></text>
-                    <text>购物车</text>
-                    <text class='cartCount' wx:if="{{cart.length>0}}">{{cart.length}}</text>
-                </view>
-                <view bindtap='bindCollect'>
-                    <text class='iconfont icon-shoucangxing' wx:if="{{productDetails.isCollect==0}}"></text>
-                    <text class='iconfont icon-shoucangxing2' wx:if="{{productDetails.isCollect==1}}"></text>
-                    <text>收藏</text>
-                </view>
-            </view>
-            <view class='footer-r'>
-                <text class='act-cart' bindtap='bindChooseSpec' data-buynow="1">加入购物车</text>
-                <text class='act-buy' bindtap='bindChooseSpec' data-buynow="2">立即购买</text>
-            </view>
-        </view>
-        <view class="mask" catchtap="distpickerCancel" hidden="{{!showSpec}}"></view>
     </scroll-view>
+    <!--规格-->
+    <view class="spec-wrap {{showSpec==0?'hidden':''}}">
+        <view class='goods-house-wrap'>
+            <view class='goods-house'>
+                <image src='{{products[mainProduct].images[0]}}' class='goods-img'></image>
+                <view class='goods-house1'>
+                    <text class='goods-price'>￥{{products[selectProduct].price}}</text>
+                    <view class='goods-house2'>
+                        <text></text>
+                        <text>已选：{{defaultproperty}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view>
+            <view class='type'>
+                <text>产品:</text>
+                <view class='type-list'>
+                    <text wx:for="{{products}}" wx:for-item="product" wx:for-index="pid" class="{{pid==selectProduct?'sel':''}}" bindtap='choseProduct' data-pid='{{pid}}' wx:key="ps">{{product.productName}}</text>
+                </view>
+            </view>
+            <view class='type' wx:for="{{products[mainProduct].productSpec}}" wx:key="productSpec" wx:for-item="specItem">
+                <text>{{specItem.name}}:</text>
+                <view class='type-list'>
+                    <text wx:for="{{specItem.subproperty}}" wx:for-item="subpropertyItem" class="{{subpropertyItem.ischosein==1?'sel':''}}" bindtap='choseProperty' data-propertyid="{{subpropertyItem.propertyid}}" data-subpropertyid='{{subpropertyItem.id}}' wx:key="subpropertyKey">{{subpropertyItem.nametrue}}
+						</text>
+                </view>
+            </view>
+            <view class='amount-wrap'>
+                <text>数量</text>
+                <view class='amount-box'>
+                    <text class='amount-minus' bindtap='onProductCountChange' data-delta="-1">-</text>
+                    <text class='amount-num'>{{count}}</text>
+                    <text class='amount-add' bindtap='onProductCountChange' data-delta="1">+</text>
+                </view>
+            </view>
+        </view>
+        <view class='act-spec-sure'>
+            <button bindtap='addshopcart' class='spec-sure'>确定</button>
+        </view>
+    </view>
+    <view class="mask" catchtap="distpickerCancel" hidden="{{!showSpec}}"></view>
+    <view class='goodsDetails-footer'>
+        <view class='footer-l'>
+            <view>
+                <button class='consult' open-type='contact' style="background-color:#FFF;" session-from="新梦想家商场（微信小程序）" show-message-card>
+                    <!--<text class='iconfont icon-xiaoxi' style="margin:3px 0 3px 0;"></text>-->
+                    <image class="iconfont" src="/images/icon/contact.png" style="margin-bottom:2px;"></image>
+                    <text style="margin-top:4px;">咨询</text>
+                </button>
+            </view>
+            <view bindtap='bindCart' class='cartWrap'>
+                <text class='iconfont icon-gouwuche1'></text>
+                <text>购物车</text>
+                <text class='cartCount' wx:if="{{cart.length>0}}">{{cart.length}}</text>
+            </view>
+            <view bindtap='bindCollect'>
+                <text class='iconfont icon-shoucangxing' wx:if="{{products[mainProduct].isCollect==0}}"></text>
+                <text class='iconfont icon-shoucangxing2' wx:if="{{products[mainProduct].isCollect==1}}"></text>
+                <text>收藏</text>
+            </view>
+        </view>
+        <view class='footer-r'>
+            <text class='act-cart' bindtap='bindChooseSpec' data-buynow="1">加入购物车</text>
+            <text class='act-buy' bindtap='bindChooseSpec' data-buynow="2">立即购买</text>
+        </view>
+    </view>
 </view>

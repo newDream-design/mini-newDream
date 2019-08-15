@@ -1,7 +1,7 @@
 <wxs module="utils" src="../../utils/utils.wxs"></wxs>
 <block wx:if="{{cart.length>0}}">
     <scroll-view scroll-y style="height:100%;" class='cart-goods-list'>
-        <view class='main'>
+        <view class='main' style="background-color: #f8f8f8;">
             <view class='main-mid'>
                 <block wx:for="{{cart}}" wx:key="key" wx:for-index="index" wx:for-item="product">
                     <view class='cart-goods' data-id="{{product.productID}}">
@@ -10,23 +10,25 @@
                         <!-- <image wx:if="{{product.ischeck=='1'}}" src='/images/check1.png' class='uncheck2' data-check='{{product.ischeck}}' data-id='{{product.id}}' bindtap='bindCheckbox' data-index="{{index}}"></image>
             <image wx:if="{{product.ischeck=='0'}}" src='/images/uncheck1.png' class='uncheck2' data-check='{{product.ischeck}}' data-id='{{product.id}}' bindtap='bindCheckbox' data-index="{{index}}"></image> -->
                         <view class='goods-info'>
-                            <navigator url="/pages/shop/product/product?productID={{product.productID}}" hover-class="none">
-                                <image src='{{product.image}}' class='goods-img' data-id='{{}}'></image>
+                            <navigator url="/pages/shop/product/product?productID={{product.productID_Main}}" hover-class="none">
+                                <image src='https://cdn.newdreamer.cn/products/{{product.productID_Main}}/%E4%B8%BB%E5%9B%BE/{{product.image}}.jpg' class='goods-img'></image>
                             </navigator>
                             <view class='goods-info1'>
-                                <navigator url="/pages/shop/product/product?productID={{product.productID}}" hover-class="none">
-                                    <text class='goods-name'>{{product.productName}}</text>
-                                </navigator>
-                                <view class='goods-info2'>
-                                    <text>￥{{product.price}}</text>
-                                    <view class='amount-wrap'>
-                                        <text class="{{product.count<=1?'disabled':''}}" data-index="{{index}}" data-id='{{product.id}}' data-delta='-1' bindtap='onProductCountChange'>-</text>
-                                        <text type='countber'>{{product.count}}</text>
-                                        <text class="{{product.count>=99?'disabled':''}}" data-index="{{index}}" data-id='{{product.id}}' data-delta='1' bindtap='onProductCountChange'>+</text>
-                                    </view>
+                                <view class="goods-title">
+                                    <navigator url="/pages/shop/product/product?productID={{product.productID}}" hover-class="none">
+                                        <text class='goods-name'>{{product.productName}}</text>
+                                    </navigator>
                                     <view class="del-cart">
                                         <!-- <image src='/images/del.png' bindtap="delCart" data-id='{{product.id}}' data-index='{{index}}'></image> -->
                                         <text class='iconfont icon-icon' bindtap="deleteCart" data-id='{{product.id}}' data-index='{{index}}'></text>
+                                    </view>
+                                </view>
+                                <view class='goods-info2'>
+                                    <text>￥{{product.price}}</text>
+                                    <view class='amount-wrap'>
+                                        <text class="{{product.count<=1?'disabled':''}}" data-index="{{index}}" data-delta='-1' bindtap='onProductCountChange'>-</text>
+                                        <text type='countber' class="countber">{{product.count}}</text>
+                                        <text class="{{product.count>=99?'disabled':''}}" data-index="{{index}}" data-delta='1' bindtap='onProductCountChange'>+</text>
                                     </view>
                                 </view>
                             </view>
@@ -52,7 +54,7 @@
             </view>
             <view class='total-price'>
                 <view class='total-wrap'>总计:
-                    <text>￥{{total}}</text>
+                    <text>￥{{total==0?"0.00":total}}</text>
                 </view>
                 <text class='fare'>不含运费</text>
             </view>
@@ -69,7 +71,10 @@
             <view style="height:30%;" />
             <view class='noGoods'>
                 <image src='/images/utils/noCart.png'></image>
-                <view class='goShopping' bindtap='goShopping'>去逛逛</view>
+                <view style="text-align:center;color:#888;">
+                    <text>空荡荡的购物车，怎能安抚你的心</text>
+                </view>
+                <navigator class='goShopping' url="/pages/shop/category/classify" open-type="switchTab">去逛逛</navigator>
             </view>
             <!--
             <view class='hot-wrap'>

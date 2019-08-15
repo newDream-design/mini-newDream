@@ -61,8 +61,8 @@
 }
 
 .category-block .category {
-    width: 4.25rem;
-    margin: 0 0 0.5rem 0.5rem;
+    width: 20%;
+    margin: 0 2% 0.5rem 2%;
     text-align: center;
     font-size: 14px;
     line-height: 36px;
@@ -176,8 +176,8 @@
 .goods-img {
     flex-shrink: 0;
     width: 100%;
-    min-height: 12rem;
-    height: auto;
+    height: 8.4rem;
+	margin-bottom: 0.5rem;
 }
 
 .goods-info {

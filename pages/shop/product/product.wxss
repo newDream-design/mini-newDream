@@ -8,7 +8,7 @@
 
 .goods-gallery-img {
     width: 20rem;
-    height: 12rem;
+    height: 20rem;
 }
 
 .swiperCount {
@@ -22,7 +22,7 @@
     opacity: 0.2;
     position: absolute;
     right: 15px;
-    top: 10rem;
+    top: 18rem;
 }
 
 .goods-info {
@@ -136,10 +136,7 @@
     width: 100%;
     background-color: #fff;
     z-index: 999;
-}
-
-.spec-wrap {
-    min-height: 0;
+	min-height: 0;
 }
 
 .swiper-box {

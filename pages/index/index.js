@@ -8,11 +8,6 @@ Page({
         this.request()
     },
 
-    onPullDownRefresh() {
-        wx.showNavigationBarLoading() //在标题栏中显示加载
-        this.request()
-    },
-
     request: function() {
         var that = this
         wx.request({
@@ -28,19 +23,10 @@ Page({
                 var index = res.data.data.object
                 index["icon"] = [{
                     "image": "/images/example.png",
-                    "linkUrl": ""
+                    "linkUrl": "客服"
                 }, {
                     "image": "/images/example.png",
-                    "linkUrl": ""
-                }, {
-                    "image": "/images/example.png",
-                    "linkUrl": ""
-                }, {
-                    "image": "/images/example.png",
-                    "linkUrl": ""
-                }, {
-                    "image": "/images/example.png",
-                    "linkUrl": ""
+                    "linkUrl": "/pages/shop/product/product?productID=ND1M621T"
                 }]
                 that.setData({
                     index: index
@@ -57,6 +43,12 @@ Page({
                 wx.hideNavigationBarLoading() //完成停止加载
                 wx.stopPullDownRefresh() //停止下拉刷新
             }
+        })
+    },
+    fixedIconTap: function(e) {
+        var url = e.currentTarget.dataset.url
+        wx.navigateTo({
+            url: url,
         })
     }
 })

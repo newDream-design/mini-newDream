@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "ylt-contour": "plugin://yltplugin/contour"
+  }
+}

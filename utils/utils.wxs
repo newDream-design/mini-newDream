@@ -3,6 +3,12 @@ var findInArr = function(obj, arr) {
     return result
 }
 
+var split = function(str, key) {
+    if (str == "" || str == undefined) return ""
+    return str.split(key)
+}
+
 module.exports = {
-	findInArr: findInArr
+    findInArr: findInArr,
+    split: split
 }

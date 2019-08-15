@@ -10,7 +10,14 @@
 		"pages/order/allOrders",
 		"pages/order/express",
 		"pages/order/operation/confirmOrder",
-		"pages/saler/index"
+		"pages/saler/index",
+		"pages/yltmeasure/pages/yltmeasure/measure",
+		"pages/yltmeasure/pages/yltcontour-front/contour",
+		"pages/yltmeasure/pages/yltcontour-side/contour",
+		"pages/yltmeasure/pages/client-index/index",
+		"pages/yltmeasure/pages/client-privacy/privacy",
+		"pages/yltmeasure/pages/client-result/result",
+		"pages/yltmeasure/index"
 	],
 	"window": {
 		"navigationBarBackgroundColor": "#1F4E79",
@@ -36,7 +43,7 @@
 				"selectedIconPath": "images/menu/menu2-sel.png"
 			},
 			{
-				"pagePath": "pages/my/my",
+				"pagePath": "pages/yltmeasure/index",
 				"text": "量体",
 				"iconPath": "images/menu/menu4.png",
 				"selectedIconPath": "images/menu/menu4-sel.png"
@@ -60,6 +67,12 @@
 		"downloadFile": 20000,
 		"connectSocket": 20000,
 		"uploadFile": 20000
+	},
+	"plugins": {
+		"yltplugin": {
+			"version": "2.0.0",
+			"provider": "wxc1e175fa631e8881"
+		}
 	},
 	"debug": true,
 	"sitemapLocation": "sitemap.json"

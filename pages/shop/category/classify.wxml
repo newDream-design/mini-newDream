@@ -1,3 +1,4 @@
+<wxs module="utils" src="../../../utils/utils.wxs"></wxs>
 <view class='main'>
     <view class='main-mid'>
         <view class="classify-box" id="classifyBox">
@@ -32,10 +33,10 @@
             <view class='sort-wrap'>
                 <view class="sort-type {{activeSort==sortIndex?'active':''}}" wx:for="{{sortType}}" wx:for-index='sortIndex' wx:for-item='sortItem' wx:key='sortIndex' id='{{sortIndex}}' bindtap='active' data-key='{{sortItem.key}}'>
                     {{sortItem.title}}
-                    <view class='sort-arrow' wx:if="{{sortItem.key=='price'}}">
+                    <view class='sort-arrow' wx:if="{{sortIndex!=0}}">
                         <image src='/images/icon/price-default.png' wx:if="{{activeSort!=sortIndex}}"></image>
-                        <image src='/images/icon/price-up.png' wx:if="{{activeSort==sortIndex&&sortOrder==0}}"></image>
-                        <image src='/images/icon/price-down.png' wx:if="{{activeSort==sortIndex&&sortOrder==1}}"></image>
+                        <image src='/images/icon/price-up.png' wx:if="{{activeSort==sortIndex&&sortOrder==1}}"></image>
+                        <image src='/images/icon/price-down.png' wx:if="{{activeSort==sortIndex&&sortOrder==-1}}"></image>
                     </view>
                 </view>
             </view>
@@ -48,7 +49,7 @@
             <view class='goods-list-wrap'>
                 <view class='goods-list'>
                     <navigator url='/pages/shop/product/product?productID={{product.productID}}' class='goods' wx:for="{{products}}" wx:key="ps" wx:for-item="product">
-                        <image src='{{product.image}}' class='goods-img'></image>
+                        <image src='https://cdn.newdreamer.cn/products/{{product.productID}}/%E4%B8%BB%E5%9B%BE/{{utils.split(product.image," ")[0]}}.jpg' class='goods-img'></image>
                         <view class='goods-info'>
                             <text class='goods-name'>{{product.productName}}</text>
                             <text class='goods-desb'>200%羊毛，300%猪毛</text>

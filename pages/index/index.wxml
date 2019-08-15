@@ -1,10 +1,11 @@
+<wxs module="utils" src="../../utils/utils.wxs"></wxs>
 <view class='main'>
     <view class='main-mid'>
         <view class='scroll-banner'>
             <block wx:if="{{index.banners==''}}">
                 <image src='/images/utils/white.png' class='banner'></image>
             </block>
-            <swiper indicator-dots autoplay circular interval="3000" duration="500" style="height:12rem;" class="{{index.banners==''?'hidden':''}}">
+            <swiper indicator-dots autoplay circular interval="3000" duration="500" class="scroll-banner {{index.banners==''?'hidden':''}}">
                 <swiper-item wx:for="{{index.banners}}" wx:for-item="banner" wx:key='b'>
                     <!-- <navigator url='{{banner.linkurl}}'>-->
                     <image src="{{index.banner.image}}" class="slide-image banner" />
@@ -62,7 +63,7 @@
                 <view class='index-tit'>{{block.title}}</view>
                 <view class='all-list'>
                     <navigator url='/pages/shop/product/product?productID={{product.tiaoma}}' hover-class='none' class='single-hot' wx:for="{{block.content}}" wx:key="b" wx:for-item="product">
-                        <image src='{{product.tupian}}' class='all-img' mode='aspectFill' lazy-load='true'></image>
+                        <image src='https://cdn.newdreamer.cn/products/{{product.tiaoma}}/%E4%B8%BB%E5%9B%BE/{{utils.split(product.tupian," ")[0]}}.jpg' class='all-img' mode='aspectFill' lazy-load='true'></image>
                         <text class='all-name'>{{product.shangpin_mingcheng}}</text>
                         <text class='all-price'>￥{{product.lingshoujia}}</text>
                     </navigator>
@@ -76,7 +77,12 @@
     </view>
 </view>
 <view class="fixed-icon">
-    <navigator wx:for="{{index.icon}}" wx:for-item="icon" wx:key="i" url="{{icon.linkUrl}}">
-        <image src="{{icon.image}}" mode="aspectFit" />
-    </navigator>
+    <block wx:for="{{index.icon}}" wx:for-item="icon" wx:key="i">
+        <button class="ButtonCover" open-type='contact' session-from="新梦想家商场（微信小程序）" show-message-card wx:if="{{icon.linkUrl=='客服'}}">
+            <image src="{{icon.image}}" mode="aspectFit" />
+        </button>
+        <button class="ButtonCover" bindtap="fixedIconTap" data-url="{{icon.linkUrl}}" wx:else>
+            <image src="{{icon.image}}" mode="aspectFit" />
+        </button>
+    </block>
 </view>

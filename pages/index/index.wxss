@@ -1,6 +1,6 @@
 .scroll-banner {
     background-color: #fff;
-    height: 12rem;
+    height: 24rem;
 }
 
 .recommend-wrap {
@@ -94,8 +94,8 @@
 }
 
 .single-hot image {
-    width: 330rpx;
-    height: 300rpx;
+    width: 9rem;
+    height: 9rem;
     display: block;
 }
 

@@ -15,25 +15,25 @@
             </view>
             <view class='order' wx:for="{{orderList}}" wx:key="order" wx:for-index="orderIndex" wx:for-item="order" hidden="{{orderList.length===0?true:false}}">
                 <view class='order-top'>
-                    <text class='order-date'>订单号:{{order.orderID}}</text>
-                    <text class='order-statu'>{{order.status}}</text>
+                    <text class='order-date'>订单号：{{order.orderID}}</text>
+                    <text class="copy" bindtap="setClipboardData" data-data="{{order.orderID}}">复制</text>
                 </view>
                 <view class='order-mid' bindtap='bindOrderDetails' data-id='{{order.orderID}}' wx:for="{{order.products}}" wx:key="ps" wx:for-item="product">
                     <image src='{{product.image}}'></image>
                     <view class='order-info'>
                         <view class='order-info-top'>
-                            <view class='goods-name'>{{product.productName}}</view>
-                            <view class='goods-price'>￥{{product.priceFinal}}</view>
+                            <view class='product-name'>{{product.productName}}</view>
+                            <text class='product-amount'>x{{product.count}}</text>
                         </view>
                         <view class='order-info-bot'>
-                            <text class='goods-spec'>{{product.prescription}}</text>
-                            <text class='goods-amount'>x{{product.count}}</text>
+                            <view class='product-price'>￥{{product.priceFinal}}</view>
                         </view>
                     </view>
                 </view>
-                <view class='order-info'>
-                    <view class='goods-name'>实付金额</view>
-                    <view class='goods-price'>￥{{order.pricePay}}</view>
+                <view class='order-info' style="justify-content:flex-end;">
+                    <view class='product-desb'>
+                        <text space="nbsp" style="text-align:right;">共计{{order.products.length}}件商品   合计:￥{{order.pricePay}}</text>
+                    </view>
                 </view>
                 <view class='order-bot'>
                     <block wx:if="{{order.status=='34001'}}">
@@ -66,7 +66,7 @@
                     <block wx:if="{{order.status=='34009'}}">
                         <text>订单已取消</text>
                     </block>
-                    <block wx:if="{{order.status=='1'}}">
+                    <block wx:if="{{order.status=='34010'}}">
                         <navigator class="nav" url="express?deliverID={{order.deliverID}}">查看物流</navigator>
                         <navigator class="nav" url="operation/comment?orderID={{order.orderID}}">去评价</navigator>
                     </block>

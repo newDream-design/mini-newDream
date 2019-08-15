@@ -6,13 +6,11 @@ Page({
             "userName": "请选择地址",
             "provinceName": "选择地址后才可以进行结算"
         },
-        addressMsg: {},
-        productsmsg: {}, //购物车结算产品信息
         summary: {
-            allCount: 0,
-            allPrice: 0,
-            deliverPrice: 0,
-            price: 0
+            allCount: 0,		//总件数
+            allPrice: 0,		//商品总价
+            deliverPrice: 0,	//运费
+            price: 0			//用户需要支付的价格
         },
         remark: "",
         AddressAccess: true
@@ -20,6 +18,7 @@ Page({
     onLoad: function(options) {
         this.setData({
             products: JSON.parse(options.products),
+
         })
         this.summary()
     },
@@ -41,11 +40,16 @@ Page({
         var products = this.data.products
         var summary = this.data.summary
         for (var i in products) {
+            products[i]["price"] = parseFloat(products[i]["price"]).toFixed(2)
             summary.allCount += products[i]["count"]
             summary.allPrice += products[i]["count"] * products[i]["price"]
         }
         summary.price = summary.allPrice + summary.deliverPrice
+        for (var p in summary) {
+            if (p != "allCount") summary[p] = summary[p].toFixed(2)
+        }
         this.setData({
+            products: products,
             summary: summary
         })
     },
@@ -92,7 +96,11 @@ Page({
             },
             data: {
                 memberID: app.globalData.memberID,
-                price: that.data.summary.price
+                price: that.data.summary.price * 100,
+                products: that.data.products,
+                address: that.data.address,
+                summary: that.data.summary,
+                remark: that.data.remark
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
@@ -100,7 +108,7 @@ Page({
                     wx.requestPayment({
                         timeStamp: data.timeStamp,
                         nonceStr: data.nonceStr,
-						package: data.package,
+                        package: data.package,
                         signType: 'MD5',
                         paySign: data.paySign,
                         success: function(res) {

@@ -1,0 +1,99 @@
+<view class="page" wx:if="{{!camOn&&!privacyOn}}">
+    <!--性别、身高、体重  -->
+    <!-- <view class='userinfo-container'>
+    <view class=''>
+      <picker value="{{userGender}}" range="{{genderList}}">
+        <view class='flex-row-center-center'>
+          <view class="userinfo-input flex-row-center-center" style='width:80rpx;'>
+            {{genderList[0]}}
+          </view>
+          <view class='userinfo-unit flex-row-center-center'>
+            <image class='gendericon' src="{{userGender==1?'../../assets/img/male.png':'../../assets/img/female.png'}}" mode='aspectFit'></image>
+          </view>
+        </view>
+        
+      </picker>
+    </view>
+    
+    <view class='flex-row-start-start'>
+      <input class='userinfo-input' type='number' value="{{userHeight>0?userHeight:''}}" placeholder='净身高' bindblur='updateInfo' id='userheight'></input>
+      <view class='userinfo-unit flex-row-center-center'>
+        <text class='ylt-c-white'>CM</text>
+      </view>
+    </view>
+
+    <view class='flex-row-start-start'>
+      <input class='userinfo-input' type='number' value="{{userWeight>0?userWeight:''}}" placeholder='净体重' placeholder-class='userinfo-placeholder' bindblur='updateInfo' id='userweight'></input>
+      <view class='userinfo-unit flex-row-center-center'>
+        <text class='ylt-c-white'>KG</text>
+      </view>
+    </view>
+  </view> -->
+    <view class='h2 c-darkblue title'>拍摄正/侧面照片</view>
+
+    <!--照片框  -->
+    <view class='cam-container flex-row-between-center'>
+        <view class='prev-img-container' bindtap='cameraActivate' data-imgdir="front">
+            <image class='prev-img' src="{{frontImgSrc!=''?frontImgSrc:frontPoseSrc}}" mode='aspectFit'></image>
+        </view>
+        <view class='prev-img-container' bindtap='cameraActivate' data-imgdir="side">
+            <image class='prev-img' src="{{sideImgSrc!=''?sideImgSrc:sidePoseSrc}}" mode='aspectFit'></image>
+        </view>
+    </view>
+    <!--用户条款  -->
+    <view class='privacy-container flex-row-center-center'>
+        <view class='flex-row-center-center'>
+            <checkbox checked="{{checkboxStatus}}" bindtap="checkboxChange" data-status="{{checkboxStatus}}" />
+            <view class='flex-row-center-center' bindtap='navToPrivacy'>
+                <view class='h5 c-darkgray'>同意</view>
+                <view class='h5 c-darkgray'>《用户条款》</view>
+            </view>
+        </view>
+    </view>
+
+    <!--拍照提示  -->
+    <view wx:if="{{!error}}" class='tips-wrapper flex-row-center-center'>
+        <view class='tips-container h4 c-darkgray flex-row-start-center'>
+            <view class='h3'>拍摄提示：</view>
+            <view>1.尽量穿贴身、轻薄衣物</view>
+            <view>2.拍摄距离3-4米</view>
+            <view>3.拍摄时保持手机垂直</view>
+            <view>4.阅读教程再操作，结果更精确</view>
+        </view>
+    </view>
+
+    <!--错误警告  -->
+    <view wx:if="{{error}}" class='tips-wrapper flex-row-start-start'>
+        <icon class='warn-icon' type='warn' size='40' color='red'></icon>
+        <view class='text-container flex-column-start-start'>
+            <view wx:for="{{errText}}" wx:key="id">
+                <view class='h4 c-darkgray'>{{index+1}}{{'. '+item.textCn}}</view>
+            </view>
+        </view>
+    </view>
+
+    <!--按钮  -->
+    <view class='btn-container flex-row-center-center'>
+        <view class='btn btn-secondary h3' bindtap='navToTutorial'>量体教程</view>
+        <view class='btn btn-primary h3' bindtap='navToNext'>下一步</view>
+    </view>
+</view>
+
+
+<!--相机组件  -->
+<block wx:for="{{camList}}" wx:key="dir">
+    <view class='camera-container'>
+        <!-- 如果navigationstyle设为default，则需传入navigationbarbackgroundcolor值，否则默认为#ffffff -->
+        <ylt-camera bindclosecam="closecam" bindgetphoto="getPhoto" camdir="{{item.dir}}" navigationstyle="default" navigationbarbackgroundcolor="#ffffff" enableupload="{{true}}">
+        </ylt-camera>
+    </view>
+</block>
+
+<!--教程组件  -->
+<block wx:for="{{tutorialList}}" wx:key="id">
+    <view class='tutorial-wrapper'></view>
+    <view class='tutorial-container'>
+        <ylt-tutorial bindclosetutorial="closeTutorial" width="{{tutorialW}}" height="{{tutorialH}}" />
+        <icon class='clearIcon' type='clear' size='20' color='gray' bindtap='closeTutorial'></icon>
+    </view>
+</block>

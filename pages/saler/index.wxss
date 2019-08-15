@@ -7,7 +7,7 @@
 }
 
 .colorBanner {
-    background-color: #333;
+    background-color: var(--tabColorA);
 }
 
 .userInfo {

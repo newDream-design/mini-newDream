@@ -58,6 +58,19 @@ Page({
         });
         this.getOrder(currentTab);
     },
+	setClipboardData:function(e){
+		var data = e.target.dataset.data
+		wx.setClipboardData({
+			data: data,
+			success(res) {
+				wx.showToast({
+					title: '已复制到剪贴板',
+					icon: 'success',
+					duration: 2000
+				})
+			}
+		})
+	},
     //取消订单
     cancel: function(e) {
         var that = this;

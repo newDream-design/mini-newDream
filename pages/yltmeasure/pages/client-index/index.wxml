@@ -1,0 +1,12 @@
+<!-- webview网页中使用wx.miniProgram.navigateTo跳转至yltmeasure/measure页面进行量体，并通过wx.setStorageSync传递参数
+corpId // String，易量体提供 如'40e8l0nizjng1wgm5'
+userId // String，客户提供的每个用户唯一的识别码
+brandId // String，易量体提供 如'0001'
+clothId // String，易量体提供 如'0001'
+userGender // Integer, 0=female, 1=male
+userHeight  // Integer, in cm
+userWeight  // Integer, in kg
+
+具体请参考小程序官方教程：https://developers.weixin.qq.com/miniprogram/dev/component/web-view.html
+-->
+<web-view src="https://www.emtailor.com"></web-view>

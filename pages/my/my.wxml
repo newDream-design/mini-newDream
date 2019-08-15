@@ -8,8 +8,8 @@
         </view>
         <view class='nav-wrap'>
             <navigator url='/pages/order/allOrders?currentTab=0' class='weui-cell weui-cell_access allOrder' hover-class='weui-cell_active'>
-                <view class='weui-cell__bd'>全部订单</view>
-                <view class='weui-cell__ft weui-cell__ft_in-access'></view>
+                <view class='weui-cell__bd'>我的订单</view>
+                <view class='weui-cell__ft weui-cell__ft_in-access'>查看全部</view>
             </navigator>
         </view>
         <view class='order-type'>
@@ -55,40 +55,55 @@
             </view>
         </view>
 
-        <view class='nav-wrap nav-wrap2'>
-            <view class='weui-cell weui-cell_access' hover-class='weui-cell_active' bindtap='chooseAddress' wx:if="{{AddressAccess}}">
-                <view class='weui-cell__bd'>收货地址</view>
-                <view class='weui-cell__ft weui-cell__ft_in-access'></view>
+        <view class="ticket">
+            <view>
+                <image class="icon" src="/images/icon/ticket.png" mode="aspectFit"></image>
+                <text>我的优惠券</text>
             </view>
-            <!--因为现在不支持wx.openSetting，迫不得已出此下策-->
-            <button class="AddressButtonCover" open-type="openSetting" wx:else>
-                <view class='weui-cell weui-cell_access' hover-class='weui-cell_active' bindtap='chooseAddress'>
-                    <view class='weui-cell__bd'>收货地址</view>
-                    <view class='weui-cell__ft weui-cell__ft_in-access'></view>
-                </view>
-            </button>
+            <view>
+                <text>查看全部</text>
+                <text class="arrow-right" />
+            </view>
         </view>
 
-        <view class='nav-wrap nav-wrap2'>
-            <navigator url='collection' class='weui-cell weui-cell_access' hover-class='weui-cell_active'>
-                <view class='weui-cell__bd'>我的收藏</view>
-                <view class='weui-cell__ft weui-cell__ft_in-access'></view>
+        <view class='nav-wrap'>
+            <view class='weui-cell weui-cell_access allOrder' hover-class='weui-cell_active'>
+                <view class='weui-cell__bd'>我的服务</view>
+            </view>
+        </view>
+
+        <view class="server-warp">
+            <navigator>
+                <image src="/images/icon/mySize.png" />
+                <text>我的尺寸</text>
             </navigator>
-        </view>
-
-        <view class='nav-wrap nav-wrap2'>
-            <view class='weui-cell weui-cell_access' hover-class='weui-cell_active'>
-                <view class='weui-cell__bd'>
-                    <button open-type='contact' class='contact'>联系客服</button>
-                </view>
-                <view class='weui-cell__ft weui-cell__ft_in-access'></view>
-            </view>
-        </view>
-
-        <view class='nav-wrap nav-wrap2'>
-            <navigator url='/pages/aboutUs/aboutUs' class='weui-cell weui-cell_access' hover-class='weui-cell_active'>
-                <view class='weui-cell__bd'>关于我们</view>
-                <view class='weui-cell__ft weui-cell__ft_in-access'></view>
+            <navigator>
+                <button class="AddressButtonCover" bindtap='chooseAddress' wx:if="{{AddressAccess}}">
+                    <image src="/images/icon/myAddress.png" />
+                    <text>我的地址</text>
+                </button>
+                <button class="AddressButtonCover" open-type="openSetting" wx:else>
+                    <image src="/images/icon/myAddress.png" />
+                    <text>我的地址</text>
+                </button>
+            </navigator>
+            <navigator>
+                <image src="/images/icon/myGroup.png" />
+                <text>我的拼团</text>
+            </navigator>
+            <navigator url='collection'>
+                <image src="/images/icon/myContact.png" />
+                <text>我的收藏</text>
+            </navigator>
+            <navigator url='/pages/saler/index'>
+                <image src="/images/icon/myContact.png" />
+                <text>分销员中心</text>
+            </navigator>
+            <navigator>
+                <button class="AddressButtonCover" open-type='contact'>
+                    <image src="/images/icon/myContact.png" />
+                    <text>客服中心</text>
+                </button>
             </navigator>
         </view>
 

@@ -1,7 +1,8 @@
 const app = getApp();
 Page({
     data: {
-        collection: []
+        collection: [],
+        products: {}
     },
     onLoad: function(option) {
         this.getCollection()
@@ -20,8 +21,16 @@ Page({
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
+                    var data = res.data.data.object
+                    var products = data.products
+                    var productsObject = {}
+                    for (var product in products) {
+                        product = products[product]
+                        productsObject[product["productID"]] = product
+                    }
                     that.setData({
-                        collection: JSON.parse(res.data.data.object)
+                        //collection: data.collection,
+                        products: productsObject
                     })
                 } else {
                     wx.showToast({
