@@ -5,7 +5,7 @@ Page({
      */
     data: {
         userInfo: [],
-        count: {
+        orderCount: {
             "toPay": 0,
             "toDeliver": 0,
             "toReceive": 0,
@@ -16,6 +16,32 @@ Page({
     },
     onShow: function() {
         this.checkAddressAccess()
+        this.getOrderCount()
+    },
+    getOrderCount: function() {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'dingdan/count/get',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID
+            },
+            success: function(res) {
+                that.setData({
+                    orderCount: res.data.data.object
+                })
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
+        })
     },
     checkAddressAccess: function() {
         var that = this

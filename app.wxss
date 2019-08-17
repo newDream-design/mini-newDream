@@ -95,7 +95,6 @@ page {
 .order-bot {
     display: flex;
     justify-content: flex-end;
-    padding: 20rpx 30rpx;
 }
 
 .order-bot text {

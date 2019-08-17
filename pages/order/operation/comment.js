@@ -1,133 +1,125 @@
 const app = getApp();
 Page({
-  data: {
-    orderInfo: [],
-    nickname: '',
-    orderid: '',
-    commentgrade: '1',
-    evatype: []
-  },
-  onLoad: function (options) {
-   
-    var that = this;
-    var orderid = options.orderid;
-    that.setData({
-      orderid: orderid
-    })
-
-    that.getOrder(orderid);
-  },
-  onReady: function () {
-    
-  },
-  //获取订单信息
-  getOrder: function (orderid) {
-    let that = this;
-    let evatype = [];
-    let url = '/OrderAPI/sinByI';
-    let datain = {
-      id: orderid
-    }
-    app.postRequestU(url, datain, function (res) {
-      wx.hideLoading();
-      if (res.data.code == 0) {
-       
-        let orderInfo = res.data.msg;
-        for (let i = 0; i < orderInfo.promsg.length; i++) {
-          orderInfo.promsg[i].commentType = '1';
-        }
-        that.setData({
-          orderInfo: orderInfo
+    data: {
+        orderItemID: 10001,
+        product: {
+            "productID": "ND1M621T",
+            "productID_Main": "ND1M621T",
+            "productName": "男士西服",
+            "image": "1",
+            "price": "0.01",
+            "count": 1,
+            "measureID": 10001,
+            "color": "黑色"
+        },
+        commentList: [{
+            "commentKey": "尺寸",
+            "commentType": "face",
+            "commentTips": ["很小", "偏小", "合身", "偏大", "很大"]
+        }, {
+            "commentKey": "面料",
+            "commentType": "star",
+            "commentTips": ["辣鸡玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
+        }, {
+            "commentKey": "做工",
+            "commentType": "star",
+            "commentTips": ["辣鸡玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
+        }, {
+            "commentKey": "物流",
+            "commentType": "star",
+            "commentTips": ["辣鸡玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
+        }, {
+            "commentKey": "您有多大可能再次使用新梦想家商场？",
+            "commentType": "score",
+            "commentTips": ["再也不来了", "真香", "我是铁杆粉"]
+        }, {
+            "commentKey": "文字评价",
+            "commentType": "textArea",
+            "commentTips": ["面料不满意？可以反馈给我们"]
+        }, {
+            "commentKey": "图片评价",
+            "commentType": "image"
+        }],
+        comment: {}
+    },
+    onLoad: function(options) {
+        var orderItemID = options.orderItemID;
+        this.setData({
+            orderItemID: orderItemID
         })
-      }
-    });
-  },
-  //选择评价类型
-  selCommentType: function (e) {
-    let orderInfo = this.data.orderInfo;
-    let index = parseInt(e.currentTarget.dataset.index);
-    orderInfo.promsg[index].commentType = e.currentTarget.dataset.type;
-    this.setData({
-      orderInfo: orderInfo
-    });
-  },
-  //保存评价
-  saveContent: function (e) {
-    console.log(e);
-    let that = this;
-    let orderInfo = that.data.orderInfo;
-    let index = e.currentTarget.dataset.index;
-    orderInfo.promsg[index].content = e.detail.value;
-    that.setData({
-      orderInfo: orderInfo
-    });
-
-  },
-
-
-  //提交评价
-  evaSubmit: function (e) {
-    let that = this;
-    let commentList = [];
-    let userInfo = wx.getStorageSync(
-      'userInfo'
-    );
-    let author = userInfo.nickName;
-    let orderid = that.data.orderid;
-    let orderInfo = that.data.orderInfo;
-    for (let i = 0; i < orderInfo.promsg.length; i++) { 
-      commentList.push({
-        productid: orderInfo.promsg[i].proid,
-        commentgrade: orderInfo.promsg[i].commentType,
-        content: orderInfo.promsg[i].content,
-        orderid:orderid,
-        author:author
-      })
-    }
-   
-    let url = '/CommentsAPI/add';
-    app.postRequestU(url, { datanew: JSON.stringify(commentList) }, function (res) {
-      wx.hideLoading();
-      wx.showToast({
-        title: res.data.msg,
-        success: function () {
-          wx.redirectTo({ url: '/pages/allOrders/allOrders?currentTab=0&otype=1'});
+        //this.getOrderItem(orderItemID);
+        this.initComments()
+    },
+    //自动生成评价页
+    initComments: function() {
+        var commentList = this.data.commentList
+        var comment = this.data.comment
+        for (var id in commentList) {
+            comment[commentList[id]["commentKey"]] = 0
         }
-      });
-    });
-  },
+        this.setData({
+            comment: comment
+        })
+    },
+    //获取订单信息
+    getOrderItem: function(orderItemID) {},
+    //提交评价
+    submitComment: function(e) {},
 
-
-  // evaSubmit: function (e) {
-  // 	var that = this;
-  // 	var author = app.globalData.userInfo.nickName;
-  // 	var orderid = that.data.orderid;
-  //   var datanew=[];
-  //   let evatype = that.data.evatype;
-
-  //   for (let index in that.data.orderInfo.promsg){
-  //     let dataonein = {};
-  //     dataonein.productid = that.data.orderInfo.promsg[index].proid;
-  //     dataonein.orderid = orderid;
-  //     for (let inindex in evatype[index]){
-  //       if (evatype[index][inindex].sel==1){
-  //         dataonein.commentgrade = parseInt(inindex)+1;
-  //       }
-  //     };
-  //     dataonein.author = author;
-  //     dataonein.content = e.detail.value['content-' + index];
-  //     datanew.push(dataonein);
-  //   }
-
-  //   let url = '/CommentsAPI/add';
-  //   app.postRequestU(url, { datanew: JSON.stringify(datanew)}, function (res) {
-  //     wx.showToast({
-  //       title: res.data.msg,
-  //       success: function () {
-  //         wx.redirectTo({ url: '/pages/allOrders/allOrders?currentTab=0&otype=1' });
-  //       }
-  //     });
-  //   });
-
-  // },
+    //选择评价
+    bindCommentSelect: function(e) {
+        var key = e.currentTarget.dataset.key
+        var id = e.currentTarget.dataset.id
+        var comment = this.data.comment
+        comment[key] = id
+        this.setData({
+            comment: comment
+        })
+    },
+    //输入评价
+    bindCommentInput: function(e) {
+        var key = e.currentTarget.dataset.key
+        var text = e.detail.value == "" ? 0 : e.detail.value
+        var comment = this.data.comment
+        comment[key] = text
+        this.setData({
+            comment: comment
+        })
+    },
+    bindAddImage: function(e) {
+        var that = this
+        wx.chooseImage({
+            count: 1,
+            sizeType: ['original'],
+            sourceType: ['album', 'camera'],
+            success(res) {
+                var image = res.tempFilePaths[0]
+                var comment = that.data.comment
+                var key = e.currentTarget.dataset.key
+                if (comment[key] == 0) comment[key] = []
+                comment[key].push(image)
+                that.setData({
+                    comment: comment
+                })
+            }
+        })
+    },
+    bindDeleteImage: function(e) {
+        var that = this
+        wx.showModal({
+            title: '提示',
+            content: '是否确认删除？',
+            success(res) {
+                if (res.confirm) {
+                    var key = e.currentTarget.dataset.key
+                    var id = e.currentTarget.dataset.id
+                    var comment = that.data.comment
+                    comment[key].splice(id, 1)
+                    that.setData({
+                        comment: comment
+                    })
+                }
+            }
+        })
+    }
 });

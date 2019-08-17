@@ -10,6 +10,7 @@
 		"pages/order/allOrders",
 		"pages/order/express",
 		"pages/order/operation/confirmOrder",
+		"pages/order/operation/comment",
 		"pages/saler/index",
 		"pages/yltmeasure/pages/yltmeasure/measure",
 		"pages/yltmeasure/pages/yltcontour-front/contour",

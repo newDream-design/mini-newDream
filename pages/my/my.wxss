@@ -154,12 +154,12 @@ Page {
 /* 自定义 */
 
 .ticket {
+	width: 19rem;
+    margin: 0.5rem;
+	height: 3.5rem;
     background: linear-gradient(to right, #f8f3eb, #d9c39a);
     display: flex;
     align-items: center;
-    height: 3.5rem;
-    width: 19rem;
-    margin: 0.5rem;
     border-radius: 5px;
     justify-content: space-between;
 }
@@ -181,6 +181,7 @@ Page {
 }
 
 .server-warp {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
 }

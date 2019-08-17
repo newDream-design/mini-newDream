@@ -13,6 +13,7 @@ App({
                 wx.request({
                     url: that.config.RequestUrl + 'login',
                     method: "GET",
+                    dataType: "String",	//熊伟不encode，对于纯数字数据一定要加不解析JSON
                     header: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },

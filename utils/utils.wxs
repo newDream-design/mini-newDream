@@ -8,7 +8,26 @@ var split = function(str, key) {
     return str.split(key)
 }
 
+var defineArray = function(length) {
+    var arr = []
+    for (var i = 0; i < length; i++) {
+        arr.push(i + 1)
+    }
+    return arr
+}
+
+var round = function(num) {
+    return Math.round(num)
+}
+
+var abs = function (num) {
+	return Math.abs(num)
+}
+
 module.exports = {
     findInArr: findInArr,
-    split: split
+    split: split,
+    defineArray: defineArray,
+    round: round,
+	abs: abs
 }

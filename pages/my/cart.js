@@ -28,8 +28,10 @@ Page({
                         cart[i]["price"] = parseFloat(cart[i]["price"]).toFixed(2)
                     }
                     that.setData({
+                        selectedProducts: [],
                         cart: cart
                     })
+					that.sum()
                 } else {
                     wx.showToast({
                         title: res.data.result.errMsg,
@@ -208,7 +210,7 @@ Page({
             return;
         }
         wx.navigateTo({
-            url: '/pages/order/operation/confirmOrder?products=' + JSON.stringify(products)
+            url: '/pages/order/operation/confirmOrder?from=cart&products=' + JSON.stringify(products) + "&cart=" + JSON.stringify(cart) + "&selectedProducts=" + JSON.stringify(selectedProducts)
         })
     }
 });

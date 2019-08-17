@@ -19,14 +19,12 @@
             </view>
             <button class="AddressButtonCover" open-type="openSetting" wx:else>
                 <view class='confirm-header'>
-                    <view class='personal-info'>
+                    <view class='personal-info' style="align-content:center;">
                         <view class='personal-wrap'>
-                            <view class='personal-name'>收货人：
-                                <text>{{address.userName}}</text>
+                            <view class='personal-name'>
+                                <text>我们需要您的授权以访问您的收货地址</text>
                             </view>
-                            <view class='personal-phone'>{{address.telNumber}}</view>
                         </view>
-                        <view class='personal-address'>{{address.provinceName}} {{address.cityName}} {{address.countyName}} {{address.detailInfo}}</view>
                     </view>
                     <view>
                         <view class='arrow'>

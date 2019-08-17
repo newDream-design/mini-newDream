@@ -7,14 +7,14 @@
             </button>
         </view>
         <view class='nav-wrap'>
-            <navigator url='/pages/order/allOrders?currentTab=0' class='weui-cell weui-cell_access allOrder' hover-class='weui-cell_active'>
+            <navigator url='/pages/order/allOrders?currentTab=全部' class='weui-cell weui-cell_access allOrder' hover-class='weui-cell_active'>
                 <view class='weui-cell__bd'>我的订单</view>
                 <view class='weui-cell__ft weui-cell__ft_in-access'>查看全部</view>
             </navigator>
         </view>
         <view class='order-type'>
             <view>
-                <navigator url='/pages/order/allOrders?currentTab=1' class='order-nav' hover-class='none'>
+                <navigator url='/pages/order/allOrders?currentTab=待支付' class='order-nav' hover-class='none'>
                     <text class='iconfont icon-daizhifu'></text>
                     <!-- <image src='/images/state1.png'></image> -->
                     <text>待支付</text>
@@ -22,7 +22,7 @@
                 </navigator>
             </view>
             <view>
-                <navigator url='/pages/order/allOrders?currentTab=2' class='order-nav' hover-class='none'>
+                <navigator url='/pages/order/allOrders?currentTab=待发货' class='order-nav' hover-class='none'>
                     <!-- <image src='/images/state2.png'></image> -->
                     <text class='iconfont icon-daifahuo'></text>
                     <text>待发货</text>
@@ -30,7 +30,7 @@
                 </navigator>
             </view>
             <view>
-                <navigator url='/pages/order/allOrders?currentTab=3' class='order-nav' hover-class='none'>
+                <navigator url='/pages/order/allOrders?currentTab=待收货' class='order-nav' hover-class='none'>
                     <!-- <image src='/images/state3.png'></image> -->
                     <text class='iconfont icon-daishouhuo'></text>
                     <text>待收货</text>
@@ -38,7 +38,7 @@
                 </navigator>
             </view>
             <view>
-                <navigator url='/pages/order/allOrders?currentTab=4' class='order-nav' hover-class='none'>
+                <navigator url='/pages/order/allOrders?currentTab=待评价' class='order-nav' hover-class='none'>
                     <!-- <image src='/images/state4.png'></image> -->
                     <text class='iconfont icon-weibiaoti2fuzhi06'></text>
                     <text>待评价</text>
@@ -46,10 +46,10 @@
                 </navigator>
             </view>
             <view>
-                <navigator url='/pages/order/allOrders?currentTab=5' class='order-nav' hover-class='none'>
+                <navigator url='/pages/order/allOrders?currentTab=售后' class='order-nav' hover-class='none'>
                     <!-- <image src='/images/state5.png'></image> -->
                     <text class='iconfont icon-tuikuan'></text>
-                    <text>退款</text>
+                    <text>售后</text>
                     <text class='count' wx:if="{{orderCount.toRefund>0}}">{{orderCount.toRefund}}</text>
                 </navigator>
             </view>

@@ -49,16 +49,18 @@
                 <text class="value">？</text>
             </view>
         </view>
+		<!--
         <view class='chooseSpec' bindtap='bindChooseSpec' data-buynow="3">
             <view>
-                <text>尺寸：{{specText}}</text>
+                <text>定制西装：{{specText}}</text>
             </view>
             <image src='/images/arrow-right.png' class='arrow'></image>
         </view>
+		-->
         <view class="mid-nav {{isFixedTap===true?'fixed':''}}">
             <view class="swiper-tab">
                 <view class="swiper-tab-list {{tabID==0?'on':''}}" data-tab="0" bindtap="navTap">详情</view>
-                <view class="swiper-tab-list {{tabID==1?'on':''}}" data-tab="1" bindtap="navTap">评价</view>
+                <view class="swiper-tab-list {{tabID==1?'on':''}}" data-tab="1" bindtap="navTap">评价({{comments.length}})</view>
                 <view class="swiper-tab-list {{tabID==2?'on':''}}" data-tab="2" bindtap="navTap">常见问题</view>
             </view>
         </view>
@@ -135,7 +137,7 @@
             </view>
         </view>
         <view class='act-spec-sure'>
-            <button bindtap='addshopcart' class='spec-sure'>确定</button>
+            <button bindtap='submit' class='spec-sure'>确定</button>
         </view>
     </view>
     <view class="mask" catchtap="distpickerCancel" hidden="{{!showSpec}}"></view>

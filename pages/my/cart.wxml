@@ -46,7 +46,7 @@
     <view class='cart-footer'>
         <view class='cart-footer-l'>
             <view class='icon-allChoose'>
-                <text class='iconfont icon-xuanze2 uncheck2' wx:if="{{selectedProducts.length==carts.length}}" bindtap='onAllSelected' />
+                <text class='iconfont icon-xuanze2 uncheck2' wx:if="{{selectedProducts.length==cart.length}}" bindtap='onAllSelected' />
                 <text class='iconfont icon-choose uncheck2' wx:else bindtap='onAllSelected' />
                 <!-- <image wx:if="{{selectedAllStatus}}" src='/images/check1.png' class='uncheck2' bindtap='bindAllChoose'></image>
         <image wx:if="{{!selectedAllStatus}}" src='/images/uncheck1.png' class='uncheck2' bindtap='bindAllChoose'></image> -->

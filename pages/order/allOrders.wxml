@@ -1,12 +1,13 @@
+<wxs module="utils" src="../../utils/utils.wxs"></wxs>
 <view class='main'>
     <view class='main-mid'>
         <view class="swiper-tab" style='height:88rpx;'>
-            <view class="swiper-tab-list {{currentTab==0?'on':''}}" data-tab="0" bindtap="swichNav">全部</view>
-            <view class="swiper-tab-list {{currentTab==1?'on':''}}" data-tab="1" bindtap="swichNav">待付款</view>
-            <view class="swiper-tab-list {{currentTab==2?'on':''}}" data-tab="2" bindtap="swichNav">待发货</view>
-            <view class="swiper-tab-list {{currentTab==3?'on':''}}" data-tab="3" bindtap="swichNav">待收货</view>
-            <view class="swiper-tab-list {{currentTab==4?'on':''}}" data-tab="4" bindtap="swichNav">待评价</view>
-            <view class="swiper-tab-list {{currentTab==5?'on':''}}" data-tab="5" bindtap="swichNav">退款中</view>
+            <view class="swiper-tab-list {{currentTab=='全部'?'on':''}}" data-tab="全部" bindtap="swichNav">全部</view>
+            <view class="swiper-tab-list {{currentTab=='待支付'?'on':''}}" data-tab="待支付" bindtap="swichNav">待付款</view>
+            <view class="swiper-tab-list {{currentTab=='待发货'?'on':''}}" data-tab="待发货" bindtap="swichNav">待发货</view>
+            <view class="swiper-tab-list {{currentTab=='待收货'?'on':''}}" data-tab="待收货" bindtap="swichNav">待收货</view>
+            <view class="swiper-tab-list {{currentTab=='待评价'?'on':''}}" data-tab="待评价" bindtap="swichNav">待评价</view>
+            <view class="swiper-tab-list {{currentTab=='售后'?'on':''}}" data-tab="售后" bindtap="swichNav">售后</view>
         </view>
         <view class='orderList'>
             <view class='noOrder' hidden="{{orderList.length===0?false:true}}">
@@ -16,10 +17,10 @@
             <view class='order' wx:for="{{orderList}}" wx:key="order" wx:for-index="orderIndex" wx:for-item="order" hidden="{{orderList.length===0?true:false}}">
                 <view class='order-top'>
                     <text class='order-date'>订单号：{{order.orderID}}</text>
-                    <text class="copy" bindtap="setClipboardData" data-data="{{order.orderID}}">复制</text>
+                    <text class="copy" bindtap="setClipboardData" data-data="订单号：{{order.orderID}}">复制</text>
                 </view>
                 <view class='order-mid' bindtap='bindOrderDetails' data-id='{{order.orderID}}' wx:for="{{order.products}}" wx:key="ps" wx:for-item="product">
-                    <image src='{{product.image}}'></image>
+                    <image src='{{product.productID_Main==undefined?"":("https://cdn.newdreamer.cn/products/"+product.productID_Main+"/%E4%B8%BB%E5%9B%BE/"+utils.split(product.image," ")[0]+".jpg")}}'></image>
                     <view class='order-info'>
                         <view class='order-info-top'>
                             <view class='product-name'>{{product.productName}}</view>
@@ -36,37 +37,18 @@
                     </view>
                 </view>
                 <view class='order-bot'>
-                    <block wx:if="{{order.status=='34001'}}">
-                        <text bindtap='cancel' data-id='{{order.id}}'>取消订单</text>
-                        <text bindtap='payNow' data-id='{{order.id}}'>去支付</text>
+                    <block wx:if="{{order.status=='待支付'}}">
+                        <text bindtap='bindCancel' data-id='{{order.orderID}}'>取消订单</text>
+                        <text bindtap='bindPay' data-id='{{orderIndex}}'>去支付</text>
                     </block>
-                    <block wx:if="{{order.status=='34002'}}">
+                    <block wx:if="{{order.status=='待发货'}}">
                         <text bindtap='refund' data-id='{{order.id}}'>申请退款</text>
-                        <!-- <text>商家配货中</text> -->
                     </block>
-                    <block wx:if="{{order.status=='34003'}}">
+                    <block wx:if="{{order.status=='待收货'}}">
                         <text bindtap='express' data-expno='{{order.trafficeno}}' data-exptype='{{order.trafficenote}}' data-expname='{{order.trafficename}}'>查看物流</text>
                         <text bindtap='receive' data-id='{{order.id}}'>确认收货</text>
                     </block>
-                    <block wx:if="{{order.status=='34004'}}">
-                        <text>订单结束</text>
-                    </block>
-                    <block wx:if="{{order.status=='34005'}}">
-                        <text bindtap='refundDetails' data-id='{{order.id}}'>查看详情</text>
-                    </block>
-                    <block wx:if="{{order.status=='34006'}}">
-                        <text>退款中</text>
-                    </block>
-                    <block wx:if="{{order.status=='34007'}}">
-                        <text>退款结束</text>
-                    </block>
-                    <block wx:if="{{order.status=='34008'}}">
-                        <text>退款驳回</text>
-                    </block>
-                    <block wx:if="{{order.status=='34009'}}">
-                        <text>订单已取消</text>
-                    </block>
-                    <block wx:if="{{order.status=='34010'}}">
+                    <block wx:if="{{order.status=='待评价'}}">
                         <navigator class="nav" url="express?deliverID={{order.deliverID}}">查看物流</navigator>
                         <navigator class="nav" url="operation/comment?orderID={{order.orderID}}">去评价</navigator>
                     </block>

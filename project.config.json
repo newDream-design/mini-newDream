@@ -50,9 +50,9 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "pages/shop/product/product",
-					"pathName": "pages/shop/product/product",
-					"query": "productID=mx-1",
+					"name": "测试界面",
+					"pathName": "pages/order/operation/comment",
+					"query": "orderItemID=1",
 					"scene": null
 				}
 			]

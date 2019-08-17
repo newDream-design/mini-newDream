@@ -29,7 +29,7 @@ Page({
                         productsObject[product["productID"]] = product
                     }
                     that.setData({
-                        //collection: data.collection,
+                        collection: data.collection,
                         products: productsObject
                     })
                 } else {

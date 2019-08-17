@@ -41,11 +41,11 @@
                 </view>
             </view>
         </view>
-        <view class='nogoods' wx:if="{{goods.length==0}}">
+		<view class='nogoods' wx:if="{{products.length==0}}">
             <image src='/images/utils/noProduct.png'></image>
             <text>暂无商品</text>
         </view>
-        <scroll-view wx:if="{{products.length>0}}" scroll-y class="classify-content" enable-back-to-top>
+        <scroll-view wx:else scroll-y class="classify-content" enable-back-to-top>
             <view class='goods-list-wrap'>
                 <view class='goods-list'>
                     <navigator url='/pages/shop/product/product?productID={{product.productID}}' class='goods' wx:for="{{products}}" wx:key="ps" wx:for-item="product">

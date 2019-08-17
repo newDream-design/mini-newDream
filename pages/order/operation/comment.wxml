@@ -1,47 +1,142 @@
-<view class='main'>
-  <view class='main-mid'>
-    <form bindsubmit="evaSubmit">
-      <block wx:for="{{orderInfo.promsg}}" wx:key="promsg" wx:for-index="proIndex" wx:for-item="proItem">
-        <view class='eva-header'>
-          <view class='eva-type-wrap'>
-            <image src='{{proItem.proimage}}' class='eva-avatar'></image>
-            <view class='eva-type'>
-              <text class="{{proItem.commentType=='1'?'active':''}}" bindtap='selCommentType' data-type='1' data-index='{{proIndex}}'>好评</text>
-              <text class="{{proItem.commentType=='2'?'active':''}}" bindtap='selCommentType' data-type='2' data-index='{{proIndex}}'>中评</text>
-              <text class="{{proItem.commentType=='3'?'active':''}}" bindtap='selCommentType' data-type='3' data-index='{{proIndex}}'>差评</text>
+<wxs module="utils" src="../../../utils/utils.wxs"></wxs>
+<form bindsubmit="submit">
+    <view class="product-wrap">
+        <image class="product-image" src='{{product.productID_Main==undefined?"":("https://cdn.newdreamer.cn/products/"+product.productID_Main+"/%E4%B8%BB%E5%9B%BE/"+product.image+".jpg")}}' />
+        <view class="product-info">
+            <view class="row">
+                <text class="productName">{{product.productName}}</text>
             </view>
-          </view>
+            <view class="row">
+                <text class="productData">￥{{product.price}}</text>
+                <text class="productData">x{{product.count}}</text>
+            </view>
         </view>
-        <view class='eva-textarea-wrap'>
-          <textarea class='eva-textarea' name='content-{{proIndex}}' bindblur="saveContent" data-index='{{proIndex}}' placeholder='宝贝满足你的期待吗？说说它的优点和美中不足的地方吧'></textarea>
-        </view>
-      </block>
-      <view class='eva-image-wrap hide'>
-        <view class="weui-uploader__hd">
-          <view class="weui-uploader__title">添加图片</view>
-          <view class="weui-uploader__info">{{files.length}}/5</view>
-        </view>
-        <view class="weui-uploader__bd">
-          <view class="weui-uploader__files" id="uploaderFiles">
-            <block wx:for="{{files}}" wx:key="*this">
-              <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-              </view>
-            </block>
-          </view>
-          <view class="weui-uploader__input-box">
-            <view class="weui-uploader__input" bindtap="chooseImage"></view>
-          </view>
-        </view>
-      </view>
-      <view class='eva-sub-wrap'>
-        <button form-type='submit' class='eva-sub'>提交</button>
-      </view>
-    </form>
+    </view>
+    <template is="comment-{{commentObject.commentType}}" data="{{comment:comment,...commentObject}}" wx:for="{{commentList}}" wx:for-item="commentObject" wx:key="c-{{commentKey}}" />
+    <button form-type='submit' class='submit'>提交</button>
+</form>
 
-  </view>
-  <view class='main-bot'>
-    <import src='/pages/template/support.wxml' />
-    <template is='support' />
-  </view>
-</view>
+<template name="comment-face">
+    <!--{{comment}} {{commentType}} {{commentKey}} {{commentTips}}-->
+    <view class="comment-wrap" id="{{commentKey}}">
+        <view class="comment">
+            <view class="block widen3">
+                <view class="title">
+                    <text>{{commentKey}}</text>
+                </view>
+            </view>
+            <view class="block" wx:for='{{[[commentTips[0],0],[commentTips[1],1],[commentTips[2],2],[commentTips[3],1],[commentTips[4],0]]}}' wx:for-index="id" wx:for-item="ci" wx:key="c-{{commentKey}}-face{{id+1}}" bindtap="bindCommentSelect" data-key="{{commentKey}}"
+                data-id="{{(ci[1]+1)*2-1+(id==2?0:((id-2)/utils.abs(id-2))/10)}}">
+                <view class="tip">{{ci[0]}}</view>
+                <image class="icon" src="/images/icon/comment/comment {{ci[1]}}{{comment[commentKey]==id+1?' active':''}}.png" mode="aspectFit"></image>
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="comment-star">
+    <!--{{comment}} {{commentType}} {{commentKey}} {{commentTips}}-->
+    <view class="comment-wrap" id="{{commentKey}}">
+        <view class="comment">
+            <view class="block widen3">
+                <view class="title">
+                    <text>{{commentKey}}</text>
+                </view>
+            </view>
+            <view class="block" wx:for="{{utils.defineArray(comment[commentKey])}}" wx:for-index="id" wx:key="c-{{commentKey}}-star{{id+1}}" bindtap="bindCommentSelect" data-key="{{commentKey}}" data-id="{{id+1}}">
+                <view class="tip">{{ci[0]}}</view>
+                <image class="icon" src="/images/icon/comment/comment star active.png" mode="aspectFit"></image>
+            </view>
+            <view class="block" wx:for="{{utils.defineArray(5-comment[commentKey])}}" wx:for-index="id" wx:key="c-{{commentKey}}-star{{comment[commentKey]+id+1}}" bindtap="bindCommentSelect" data-key="{{commentKey}}" data-id="{{comment[commentKey]+id+1}}">
+                <view class="tip">{{ci[0]}}</view>
+                <image class="icon" src="/images/icon/comment/comment star.png" mode="aspectFit"></image>
+            </view>
+            <view class="block widen4">
+                <view class="tip">
+                    <text>{{commentTips[comment[commentKey]-1]}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="comment-score">
+    <!--{{comment}} {{commentType}} {{commentKey}} {{commentTips}}-->
+    <view class="comment-wrap" id="{{commentKey}}">
+        <view class="comment vertical">
+            <view class="block widen100">
+                <view class="title">
+                    <text>{{commentKey}}</text>
+                </view>
+            </view>
+            <view class="block widen100 horizontal">
+                <view class="tip" wx:for="{{commentTips}}" wx:for-item="commentTip" wx:for-index="id" wx:key="c-{{commentKey}}-tip{{id+1}}">
+                    <text>{{commentTip}}</text>
+                </view>
+            </view>
+            <view class="bubble-wrap">
+                <view class="tip-bubble bottom" style="left:{{(comment[commentKey]-1)*1.8-0.75}}rem;" wx:if="{{comment[commentKey]>0}}">
+                    <text>{{commentTips[utils.round((commentTips.length-1)*(comment[commentKey]-1)/9)]}}</text>
+                </view>
+            </view>
+            <view class="score-bar">
+                <view class="score{{comment[commentKey]>=id?' active':''}}" wx:for="{{utils.defineArray(10)}}" wx:for-item="id" wx:key="c-{{commentKey}}-score{{id+1}}" bindtap="bindCommentSelect" data-key="{{commentKey}}" data-id="{{id}}">{{id}}</view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="comment-textArea">
+    <!--{{comment}} {{commentType}} {{commentKey}} {{commentTips}}-->
+    <view class="comment-wrap" id="{{commentKey}}">
+        <view class="comment vertical">
+            <view class="block widen100">
+                <view class="title">
+                    <text>{{commentKey}}</text>
+                </view>
+            </view>
+            <view class="block widen100">
+                <textarea class="textarea" maxlength="200" placeholder="{{commentTips[0]}}" placeholder-class="textarea-placeholder" bindinput="bindCommentInput" data-key="{{commentKey}}" data-id="{{id}}"></textarea>
+            </view>
+            <view class="block widen100">
+                <view class="textarea-tip">
+                    <text>{{comment[commentKey]==0?0:comment[commentKey].length}}/200</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="comment-image">
+    <!--{{comment}} {{commentType}} {{commentKey}} {{commentTips}}-->
+    <view class="comment-wrap" id="{{commentKey}}">
+        <view class="comment image vertical">
+            <view class="block widen100">
+                <view class="title">
+                    <text>{{commentKey}}（长按可删除）</text>
+                </view>
+            </view>
+            <view class="block widen100 horizontal">
+                <image class="image" src="{{imageUrl}}" wx:for="{{comment[commentKey]}}" wx:for-item="imageUrl" wx:for-index="id" wx:key="c-{{commentKey}}-image{{id}}" bindlongpress="bindDeleteImage" data-key="{{commentKey}}" data-id="id"/>
+                <view class="image" bindtap="bindAddImage" data-key="{{commentKey}}" wx:if="{{comment[commentKey]==0||comment[commentKey].length<9}}">
+                    <view class="circle">
+                        <text class="plus">+</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="comment-template">
+    <!--{{comment}} {{commentType}} {{commentKey}} {{commentTips}}-->
+    <view class="comment-wrap" id="{{commentKey}}">
+        <view class="comment vertical">
+            <view class="block widen100">
+                <view class="title">
+                    <text>{{commentKey}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>

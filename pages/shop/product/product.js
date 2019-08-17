@@ -14,7 +14,7 @@ Page({
         currentImage: 1,
         count: 1,
         showSpec: 0,
-        specText: '点击选择量体数据',
+        specText: '点击开始定制',
         //默认属性
         comments: [{
             "userName": "王小明",
@@ -32,7 +32,8 @@ Page({
             "createTime": "2019-01-01 12:00:00",
             "content": "这什么神仙西装，我好喜欢啊！"
         }], //评论
-        isFixedTap: false
+        isFixedTap: false,
+        isAdding: false
     },
     onLoad: function(options) {
         this.getProduct(options.productID)
@@ -111,55 +112,55 @@ Page({
             }
         })
     },
-	getCart: function () {
-		var that = this
-		wx.request({
-			url: app.config.RequestUrl + 'gouwuche/get',
-			method: "GET",
-			header: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			data: {
-				memberID: app.globalData.memberID
-			},
-			success: function (res) {
-				if (res.data.result.status == 200) {
-					var cart = res.data.data.object
-					cart = cart == "" ? [] : JSON.parse(cart)
-					for (var i in cart) {
-						cart[i]["price"] = parseFloat(cart[i]["price"]).toFixed(2)
-					}
-					that.setData({
-						cart: cart
-					})
-				} else {
-					wx.showToast({
-						title: res.data.result.errMsg,
-						icon: 'none',
-						duration: 2000
-					})
-				}
-			},
-			fail: function (e) {
-				wx.showToast({
-					title: e.errMsg,
-					icon: 'none',
-					duration: 2000
-				})
-			},
-			complete: function (e) {
-				wx.hideNavigationBarLoading() //完成停止加载
-				wx.stopPullDownRefresh() //停止下拉刷新
-			}
-		})
-	},
+    getCart: function() {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'gouwuche/get',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    var cart = res.data.data.object
+                    cart = cart == "" ? [] : JSON.parse(cart)
+                    for (var i in cart) {
+                        cart[i]["price"] = parseFloat(cart[i]["price"]).toFixed(2)
+                    }
+                    that.setData({
+                        cart: cart
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function(e) {
+                wx.hideNavigationBarLoading() //完成停止加载
+                wx.stopPullDownRefresh() //停止下拉刷新
+            }
+        })
+    },
     //获取产品规格
     requestProductSpec: function(e) {},
     //点击收藏产品
     bindCollect: function(e) {
         var that = this
         wx.request({
-			url: app.config.RequestUrl + 'shoucangjia/' + (that.data.products[that.data.mainProduct].isCollect ? "delete" : "add"),
+            url: app.config.RequestUrl + 'shoucangjia/' + (that.data.products[that.data.mainProduct].isCollect ? "delete" : "add"),
             method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -271,7 +272,11 @@ Page({
         })
     },
     //添加到购物车
-    addshopcart: function() {
+    submit: function() {
+        if (this.data.isAdding) return
+        this.setData({
+            isAdding: true
+        })
         var cart = this.data.cart
         var product = {
             "productID": this.data.products[this.data.selectProduct].productID,
@@ -281,76 +286,93 @@ Page({
             "price": this.data.products[this.data.selectProduct].price,
             "count": this.data.count
         }
-        cart.push(product)
-        var that = this
-        wx.request({
-            url: app.config.RequestUrl + 'gouwuche/update',
-            method: "GET",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: {
-                memberID: app.globalData.memberID,
-                cart: JSON.stringify(cart)
-            },
-            success: function(res) {
-                if (res.data.result.status == 200) {
-                    that.setData({
-                        cart: cart,
-                        showSpec: 0
-                    })
+
+		/* 对象比较器 */
+        function isObjectValueEqual(a, b) {
+            var aProps = Object.getOwnPropertyNames(a);
+            var bProps = Object.getOwnPropertyNames(b);
+            if (aProps.length != bProps.length) {
+                return false;
+            }
+            for (var i = 0; i < aProps.length; i++) {
+                var propName = aProps[i]
+                var propA = a[propName]
+                var propB = b[propName]
+                if ((typeof(propA) === 'object')) {
+                    if (this.isObjectValueEqual(propA, propB)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else if (propA !== propB && propName != "count") {
+                    return false
                 } else {
+                    return true
+                }
+            }
+        }
+
+        if (this.data.showSpec == 1) {
+            var isInCart = false
+            for (var i in cart) {
+                if (isObjectValueEqual(product, cart[i])) {
+                    cart[i]["count"] += product.count
+                    isInCart = true
+                    break
+                }
+            }
+            if (!isInCart) cart.push(product)
+            var that = this
+            wx.request({
+                url: app.config.RequestUrl + 'gouwuche/update',
+                method: "GET",
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                data: {
+                    memberID: app.globalData.memberID,
+                    cart: JSON.stringify(cart)
+                },
+                success: function(res) {
+                    if (res.data.result.status == 200) {
+                        that.setData({
+                            cart: cart,
+                            showSpec: 0
+                        })
+                    } else {
+                        wx.showToast({
+                            title: res.data.result.errMsg,
+                            icon: 'none',
+                            duration: 2000
+                        })
+                    }
+                },
+                fail: function(e) {
                     wx.showToast({
-                        title: res.data.result.errMsg,
+                        title: e.errMsg,
                         icon: 'none',
                         duration: 2000
                     })
+                },
+                complete: function(e) {
+                    that.setData({
+                        isAdding: false
+                    })
                 }
-            },
-            fail: function(e) {
-                wx.showToast({
-                    title: e.errMsg,
-                    icon: 'none',
-                    duration: 2000
-                })
-            },
-            complete: function(e) {
-                wx.hideNavigationBarLoading() //完成停止加载
-                wx.stopPullDownRefresh() //停止下拉刷新
-            }
-        })
-    },
-    //获取评论
-    getComments: function() {},
-    //点击评论类型
-    etActive: function(e) {},
-
-
-
-
-    onShareAppMessage() {
-        try {
-            let memberId = wx.getStorageSync('memberId');
-            let productId = this.data.productId;
-            console.log(memberId);
-            if (memberId) {
-                return {
-                    title: '苏州美途电商平台',
-                    path: '/pages/goodsDetails/goodsDetails?id=' + memberId,
-                    path: '/pages/goodsDetails/goodsDetails?productId=' + productId + '?id=+ memberId',
-                    imageUrl: '',
-                    success: function(res) {
-                        console.log(res.shareTickets[0]);
-                    },
-                }
-            }
-        } catch (e) {
-            wx.showToast({
-                title: '获取用户id失败',
-                icon: 'none',
             })
-            // Do something when catch error
+        } else if (this.data.showSpec == 2) {
+            wx.navigateTo({
+                url: '/pages/order/operation/confirmOrder?from=product&products=' + JSON.stringify([product])
+            })
         }
+    },
 
+
+    onShareAppMessage: function(res) {
+        return {
+            //title: '自定义转发标题',
+            //path: '/page/user?id=123',
+            //imageUrl: ''
+        }
     }
 })

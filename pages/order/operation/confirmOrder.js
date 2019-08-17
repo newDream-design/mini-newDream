@@ -1,7 +1,10 @@
 const app = getApp();
 Page({
     data: {
+        from: "unknown",
         products: [],
+        selectedProducts: [],
+        cart: [],
         address: {
             "userName": "请选择地址",
             "provinceName": "选择地址后才可以进行结算"
@@ -18,8 +21,14 @@ Page({
     onLoad: function(options) {
         this.setData({
             products: JSON.parse(options.products),
-
+            from: options.from,
         })
+        if (options.from == "cart") {
+            this.setData({
+                selectedProducts: JSON.parse(options.selectedProducts),
+                cart: JSON.parse(options.cart)
+            })
+        }
         this.summary()
     },
     onShow: function() {
@@ -41,8 +50,8 @@ Page({
         var summary = this.data.summary
         for (var i in products) {
             products[i]["price"] = parseFloat(products[i]["price"]).toFixed(2)
-			products[i]["measureID"] = 10001
-			products[i]["color"] = "黑色"
+            products[i]["measureID"] = 10001
+            products[i]["color"] = "黑色"
             summary.allCount += products[i]["count"]
             summary.allPrice += products[i]["count"] * products[i]["price"]
         }
@@ -89,6 +98,10 @@ Page({
             })
             return;
         }
+        wx.showLoading({
+            title: '支付请求中',
+            mask: true
+        })
         var that = this
         wx.request({
             url: app.config.RequestUrl + 'pay/get',
@@ -116,16 +129,60 @@ Page({
                         signType: 'MD5',
                         paySign: data.paySign,
                         success: function(res) {
-                            console.log(res)
+                            wx.redirectTo({
+                                url: '/pages/order/allOrders?currentTab=待发货',
+                            })
                         },
                         fail: function(e) {
-                            console.log(e)
+                            wx.redirectTo({
+                                url: '/pages/order/allOrders?currentTab=待支付',
+                            })
                         },
                         complete: function(res) {
-                            console.log(res)
+                            if (that.data.from == "cart") {
+                                var cart = that.data.cart
+                                var selectedProducts = that.data.selectedProducts
+                                for (var i in cart) {
+                                    i = parseInt(i)
+                                    if (selectedProducts.indexOf(i) != -1) {
+                                        cart.splice(i, 1, -1)
+                                    }
+                                }
+                                cart = cart.filter(function(val) {
+                                    return val != -1
+                                })
+                                wx.request({
+                                    url: app.config.RequestUrl + 'gouwuche/update',
+                                    method: "GET",
+                                    header: {
+                                        "Content-Type": "application/x-www-form-urlencoded"
+                                    },
+                                    data: {
+                                        memberID: app.globalData.memberID,
+                                        cart: JSON.stringify(cart)
+                                    },
+                                    success: function(res) {
+                                        if (res.data.result.status != 200) {
+                                            wx.showToast({
+                                                title: res.data.result.errMsg,
+                                                icon: 'none',
+                                                duration: 2000
+                                            })
+                                        }
+                                    },
+                                    fail: function(e) {
+                                        wx.showToast({
+                                            title: e.errMsg,
+                                            icon: 'none',
+                                            duration: 2000
+                                        })
+                                    }
+                                })
+                            }
                         }
                     })
                 } else {
+					wx.hideLoading()
                     wx.showToast({
                         title: res.data.result.errMsg,
                         icon: 'none',
@@ -134,15 +191,12 @@ Page({
                 }
             },
             fail: function(e) {
+				wx.hideLoading()
                 wx.showToast({
                     title: e.errMsg,
                     icon: 'none',
                     duration: 2000
                 })
-            },
-            complete: function(e) {
-                wx.hideNavigationBarLoading() //完成停止加载
-                wx.stopPullDownRefresh() //停止下拉刷新
             }
         })
     }
