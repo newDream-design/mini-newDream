@@ -9,14 +9,14 @@ Page {
 }
 
 .whiteBanner {
-    background-color: var(--tabColorA);
+    background-color: var(--colorBlue);
 }
 
 .userInfo {
     position: absolute;
     display: flex;
     align-items: center;
-    background-color: var(--tabColorA);
+    background-color: var(--colorBlue);
     padding: 1rem;
 }
 

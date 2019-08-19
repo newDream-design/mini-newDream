@@ -60,8 +60,8 @@
 }
 
 .on {
-    color: var(--tabColorA);
-    border-bottom: 5rpx solid var(--tabColorB);
+    color: var(--colorBlue);
+    border-bottom: 5rpx solid var(--colorGold);
 }
 
 .swiper-box {

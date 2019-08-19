@@ -50,8 +50,8 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "测试界面",
-					"pathName": "pages/order/operation/comment",
+					"name": "pages/yltmeasure/getStarted",
+					"pathName": "pages/yltmeasure/getStarted",
 					"query": "orderItemID=1",
 					"scene": null
 				}

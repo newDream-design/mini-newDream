@@ -287,35 +287,39 @@ Page({
             "count": this.data.count
         }
 
-		/* 对象比较器 */
-        function isObjectValueEqual(a, b) {
+        /* 对象比较器 */
+        function isObjectValueEqual(a, b, debug = false) {
             var aProps = Object.getOwnPropertyNames(a);
             var bProps = Object.getOwnPropertyNames(b);
             if (aProps.length != bProps.length) {
+                if (debug) console.log("长度不符")
                 return false;
             }
             for (var i = 0; i < aProps.length; i++) {
-                var propName = aProps[i]
-                var propA = a[propName]
-                var propB = b[propName]
-                if ((typeof(propA) === 'object')) {
-                    if (this.isObjectValueEqual(propA, propB)) {
-                        return true
-                    } else {
-                        return false
+                var propName = aProps[i];
+                var propA = a[propName];
+                var propB = b[propName];
+                if (typeof propA === "object") {
+                    if (!isObjectValueEqual(propA, propB, debug)) {
+						if (debug) console.log("对象不匹配：", propName, propA, propB)
+                        return false;
                     }
-                } else if (propA !== propB && propName != "count") {
-                    return false
-                } else {
-                    return true
+				} else if (propName == "count" || propName == "price"){
+					continue
+                } else if (propA !== propB) {
+                    if (debug) console.log("对象不匹配：", propName, propA, propB)
+                    return false;
                 }
             }
+			if (debug) console.log("对象匹配：", a, b)
+            return true;
         }
 
         if (this.data.showSpec == 1) {
             var isInCart = false
             for (var i in cart) {
-                if (isObjectValueEqual(product, cart[i])) {
+                if (isObjectValueEqual(product, cart[i], true)) {
+					cart[i]["price"] = product.price
                     cart[i]["count"] += product.count
                     isInCart = true
                     break

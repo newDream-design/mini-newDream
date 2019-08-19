@@ -18,7 +18,8 @@
 		"pages/yltmeasure/pages/client-index/index",
 		"pages/yltmeasure/pages/client-privacy/privacy",
 		"pages/yltmeasure/pages/client-result/result",
-		"pages/yltmeasure/index"
+		"pages/yltmeasure/index",
+		"pages/yltmeasure/getStarted"
 	],
 	"window": {
 		"navigationBarBackgroundColor": "#1F4E79",
@@ -44,7 +45,7 @@
 				"selectedIconPath": "images/menu/menu2-sel.png"
 			},
 			{
-				"pagePath": "pages/yltmeasure/pages/yltmeasure/measure",
+				"pagePath": "pages/yltmeasure/index",
 				"text": "量体",
 				"iconPath": "images/menu/menu4.png",
 				"selectedIconPath": "images/menu/menu4-sel.png"

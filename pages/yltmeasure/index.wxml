@@ -2,14 +2,22 @@
     <!--<view class="left"></view>-->
     <!--<view class="right"></view>-->
     <view class="title-wrap">
-        <view class="title">
-            <text>{{data.measureName}}</text>
+        <view class="left">
+            <view class="title">
+                <text>{{data.measureName}}</text>
+            </view>
+            <view class="dataTag{{measure.defaultMeasureDataID==data.MeasureDataID?' default':''}}" bindtap="bindChangeDefaultMeasureData" data-id="{{data.MeasureDataID}}">
+                <text>{{measure.defaultMeasureDataID==data.MeasureDataID?'默认尺寸':'设为默认'}}</text>
+            </view>
         </view>
-        <view class="dataTag default">
-            <text>设为默认</text>
+        <view class="right">
+            <text class='iconfont icon-icon' bindtap="deleteMeasure" data-id='{{product.id}}'></text>
         </view>
     </view>
     <view class="data-wrap">
         <view class="data" wx:for="{{data.details}}" wx:for-index="key" wx:for-item="value" wx:key="ds">{{key}}：{{value}}</view>
     </view>
 </view>
+<navigator class="addMeasureData" url="getStarted">
+    <text>新建尺寸</text>
+</navigator>

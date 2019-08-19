@@ -17,8 +17,8 @@ page {
     --color: #ff8623;
     --bgblack: #000;
     --bggrey: #555;
-    --tabColorA: #1f4e79;
-    --tabColorB: #cba362;
+    --colorBlue: #1f4e79;
+    --colorGold: #cba362;
 }
 
 /*banner*/

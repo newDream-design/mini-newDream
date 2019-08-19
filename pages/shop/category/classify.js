@@ -21,8 +21,7 @@ Page({
         activeSort: 0,
         sortOrder: 1
     },
-    onLoad: function(options) {
-        //if (options.currentCategory != undefined) this.data.currentCategory = options.currentCategory
+    onShow: function() {
         var that = this
         wx.getStorage({
             key: "currentCategory",
@@ -35,8 +34,6 @@ Page({
                 })
             }
         })
-    },
-    onShow: function() {
         this.request()
     },
     request: function() {
@@ -57,7 +54,7 @@ Page({
                 })
                 that.setData({
                     categories: categories,
-                    products: categories[0]["products"]
+					products: categories[that.data.currentCategory]["products"]
                 })
             },
             fail: function(e) {

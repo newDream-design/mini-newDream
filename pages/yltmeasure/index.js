@@ -12,6 +12,16 @@ Page({
                     "腰围": "100CM",
                     "臀围": "1CM"
                 }
+            }, {
+                "MeasureDataID": 10002,
+                "measureName": "熊伟",
+                "details": {
+                    "身高": "150CM",
+                    "体重": "1KG",
+                    "胸围": "1CM",
+                    "腰围": "100CM",
+                    "臀围": "1CM"
+                }
             }]
         }
     },
@@ -56,4 +66,10 @@ Page({
             }
         })
     },
+	bindChangeDefaultMeasureData: function(e) {
+        var id = e.currentTarget.dataset.id
+        this.setData({
+            "measure.defaultMeasureDataID": id
+        })
+    }
 })

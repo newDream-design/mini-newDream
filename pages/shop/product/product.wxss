@@ -117,8 +117,8 @@
 
 .swiper-tab-list.on {
     font-weight: 700;
-    color: var(--tabColorA);
-    border-bottom: 2px solid var(--tabColorB);
+    color: var(--colorBlue);
+    border-bottom: 2px solid var(--colorGold);
 }
 
 .mask {
@@ -304,11 +304,11 @@
 }
 
 .act-cart {
-    background-color: var(--tabColorB);
+    background-color: var(--colorGold);
 }
 
 .act-buy {
-    background-color: var(--tabColorA);
+    background-color: var(--colorBlue);
 }
 
 .footer-l image {

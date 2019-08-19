@@ -1,0 +1,22 @@
+<view class="input-wrap" wx:for="{{inputs}}" wx:for-item="input" wx:for-index="id" wx:key="md">
+    <view class="title">
+        <text>{{input.title}}{{input.unit==undefined?"":"("+input.unit+")"}}</text>
+    </view>
+    <input wx:if="{{input.mode=='input'}}" type="{{input.type}}" class="input" bindinput="onChange" data-mode="{{input.mode}}" data-id="{{id}}" data-key="{{input.title}}" placeholder="{{input.placeholder}}" />
+    <picker wx:elif="{{input.mode=='select'}}" class="input" bindchange="onChange" data-mode="{{input.mode}}" data-id="{{id}}" data-key="{{input.title}}" range="{{input.choice}}">
+        <text space="nbsp">{{userData[input.title]==undefined?(input.placeholder==undefined?"请选择":input.placeholder):userData[input.title]}} </text>
+    </picker>
+</view>
+<view class="bodyShape-wrap" wx:for="{{bodyShapes[userData['性别']==undefined?'男':userData['性别']]}}" wx:for-item="choice" wx:for-index="bodyShape" wx:key="bs">
+    <view class="title">
+        <text>{{bodyShape}}</text>
+        <text style="color:red;margin-left:0.5rem;">*</text>
+    </view>
+    <view class="image-wrap">
+        <image class="image" wx:for="{{choice}}" wx:for-item="type" wx:key="cs" bindtap="onChange" data-key="{{bodyShape}}" data-value="type" src="https://cdn.newdreamer.cn/BodyShape/{{userData['性别']==undefined?'男':userData['性别']}}/{{bodyShape}}/{{type.key}}.png"
+            lazy-load />
+    </view>
+</view>
+<view class="addMeasureData">
+    <text>新建尺寸</text>
+</view>

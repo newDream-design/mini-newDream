@@ -50,8 +50,8 @@
 
 .classify-scroll .scroll-tab-list.on {
     font-weight: 700;
-    color: var(--tabColorA);
-    border-bottom: 2px solid var(--tabColorB);
+    color: var(--colorBlue);
+    border-bottom: 2px solid var(--colorGold);
 }
 
 .category-block {
@@ -72,12 +72,12 @@
 
 .category-block .category.on {
     font-weight: 700;
-    color: var(--tabColorA);
-    border: 1px solid var(--tabColorB);
+    color: var(--colorBlue);
+    border: 1px solid var(--colorGold);
 }
 
 .allCategory {
-    color: var(--tabColorA);
+    color: var(--colorBlue);
     margin-left: 10px;
 }
 
@@ -216,7 +216,7 @@
 
 .goods-desb {
     /* margin-left: 20rpx; */
-    color: var(--tabColorB);
+    color: var(--colorGold);
     font-size: 24rpx;
 }
 
