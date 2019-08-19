@@ -1,10 +1,10 @@
 <view class='page' style="position:relative; top:{{navigationStyle == 'custom'?statusBarHeight:0}}px;left:0px;">
-  <view wx:if="{{initComplete}}">
-    <ylt-contour camdir="front" canvasW="{{canvasCt.canvasW}}" canvasH="{{canvasCt.canvasH}}" sPathf="{{sPathf}}" sPaths="{{sPaths}}" bindready="ready" drawMosaic = true>
-    </ylt-contour>
-  </view>
+    <view wx:if="{{initComplete}}">
+        <ylt-contour camdir="front" canvasW="{{canvasCt.canvasW}}" canvasH="{{canvasCt.canvasH}}" sPathf="{{sPathf}}" sPaths="{{sPaths}}" bindready="ready" drawMosaic=t rue>
+        </ylt-contour>
+    </view>
 
-  <!-- <cover-view class="{{showTip?'tip_btn_hide':'tip_btn_show'}}" wx:if="{{loadCoverView}}">
+    <!-- <cover-view class="{{showTip?'tip_btn_hide':'tip_btn_show'}}" wx:if="{{loadCoverView}}">
      <cover-view class='tip_btn' bindtap='onChangeTipState'>
       <cover-image src="../../assets/img/tiplogo.png"></cover-image>
       <cover-view>小贴士</cover-view>
@@ -21,11 +21,11 @@
     </cover-view>
   </cover-view> -->
 
-  <view class='flex-row-center-center' style="height:{{btnBoxH}}px;">
-    <view class='btn-container flex-row-center-center'>
-      <view class='btn btn-secondary h3' bindtap='navToPrev'>上一步</view>
-      <view class='btn btn-primary h3' bindtap='navToNext'>下一步</view>
+    <view class='flex-row-center-center' style="height:{{btnBoxH}}px;">
+        <view class='btn-container flex-row-center-center'>
+            <view class='btn btn-secondary h3' bindtap='navToPrev'>上一步</view>
+            <view class='btn btn-primary h3' bindtap='navToNext'>下一步</view>
+        </view>
     </view>
-  </view>
 
 </view>

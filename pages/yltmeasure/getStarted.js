@@ -33,18 +33,27 @@ Page({
             mode: "input",
             type: "digit",
             placeholder: "例如80"
+        }, {
+            title: "下胸围",
+            mode: "select",
+            choice: ["男生就不能有熊伟？", "68-72"]
+        }, {
+            title: "罩杯",
+            mode: "select",
+            choice: ["男生就不能有罩杯？", "A", "B", "C", "D", "E", "F", "G"]
         }],
         bodyShapes: {
             "女": {
-                "穿着习惯": [{
+                "裙装穿着习惯": [{
                     "key": "低腰裙",
                     "remark": "裙腰在肚脐以下，胯骨上下"
                 }, {
-                    "key": "低腰裤",
-                    "remark": "裤腰处于胯骨上方，明显低于腰围线"
-                }, {
                     "key": "高腰裙",
                     "remark": "裙腰在腰围线上方"
+                }],
+                "裤装穿着习惯": [{
+                    "key": "低腰裤",
+                    "remark": "裤腰处于胯骨上方，明显低于腰围线"
                 }, {
                     "key": "高腰裤",
                     "remark": "裤腰高于腰围线"
@@ -180,8 +189,53 @@ Page({
 
     },
     onChange: function(e) {
+        var key = e.currentTarget.dataset.key
+        var valOld = this.data.userData.性别
+        var val = e.detail.value
+        if (e.currentTarget.dataset.mode == "select") val = this.data.inputs[e.currentTarget.dataset.id]["choice"][val]
+        var data = this.data.userData
+        if (key == "性别" && !(valOld == undefined && val == "男") && !(valOld == val)) {
+            var bodyShapes = this.data.bodyShapes
+            var bs = bodyShapes[val == "男" ? "女" : "男"]
+            for (var i in bs) {
+                delete data[i]
+            }
+        }
+        data[key] = val
         this.setData({
-            ["userData." + e.currentTarget.dataset.key]: e.currentTarget.dataset.mode == "select" ? this.data.inputs[e.currentTarget.dataset.id]["choice"][e.detail.value] : e.detail.value
+            userData: data
+        })
+    },
+    onPicChage: function(e) {
+        this.setData({
+            ["userData." + e.currentTarget.dataset.key]: e.currentTarget.dataset.value
+        })
+    },
+    goAIMeasure: function() {
+        var userData = this.data.userData
+        var inputs = this.data.inputs
+        for (var i in inputs) {
+            var t = inputs[i]["title"]
+            if (userData[t] == undefined) {
+                wx.showToast({
+                    title: '请输入' + t,
+                    icon: "none"
+                })
+                return
+            }
+        }
+        var bodyShapes = this.data.bodyShapes[userData["性别"]]
+        for (var i in bodyShapes) {
+            if (userData[i] == undefined) {
+                wx.showToast({
+                    title: '请选择' + i,
+                    icon: "none"
+                })
+                return
+            }
+        }
+        wx.navigateTo({
+            url: "pages/yltmeasure/measure?userData=" + JSON.stringify(this.data.userData),
         })
     }
 })

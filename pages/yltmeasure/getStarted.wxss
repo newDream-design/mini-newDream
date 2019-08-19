@@ -35,12 +35,13 @@ Page {
 .bodyShape-wrap {
     display: flex;
     flex-direction: column;
-	margin: 1rem;
+    margin: 1rem;
 }
 
 .bodyShape-wrap .title {
     font-size: 16px;
-	margin-bottom: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
 }
 
 .bodyShape-wrap .image-wrap {
@@ -49,10 +50,39 @@ Page {
     flex-wrap: wrap;
 }
 
-.bodyShape-wrap .image-wrap .image {
+.bodyShape-wrap .image-wrap .block {
+    width: 5rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0.8rem 0.5rem 0.2rem;
+}
+
+.bodyShape-wrap .image-wrap .block .image {
     width: 5rem;
     height: 7rem;
-    margin: 0 1rem 0.5rem 0;
+    border: 2px solid white;
+    margin-bottom: 0.25rem;
+}
+
+.bodyShape-wrap .image-wrap .block .icon {
+	height:0;
+    position: relative;
+    left: 3.75rem;
+    top: -7.25rem;
+}
+
+.bodyShape-wrap .image-wrap .block .image.selected {
+    border-color: var(--colorGold) !important;
+}
+
+.bodyShape-wrap .image-wrap .block .key {
+    font-size: 14px;
+    color: var(--colorBlue);
+}
+
+.bodyShape-wrap .image-wrap .block .remark {
+    font-size: 12px;
+    color: #ccc;
 }
 
 .addMeasureData {

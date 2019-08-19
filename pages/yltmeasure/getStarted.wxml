@@ -13,10 +13,14 @@
         <text style="color:red;margin-left:0.5rem;">*</text>
     </view>
     <view class="image-wrap">
-        <image class="image" wx:for="{{choice}}" wx:for-item="type" wx:key="cs" bindtap="onChange" data-key="{{bodyShape}}" data-value="type" src="https://cdn.newdreamer.cn/BodyShape/{{userData['性别']==undefined?'男':userData['性别']}}/{{bodyShape}}/{{type.key}}.png"
-            lazy-load />
+        <view class="block" wx:for="{{choice}}" wx:for-item="type" wx:key="cs" bindtap="onPicChage" data-key="{{bodyShape}}" data-value="{{type.key}}">
+            <image class="image{{userData[bodyShape]==type.key?' selected':''}}" lazy-load src="https://cdn.newdreamer.cn/BodyShape/{{userData['性别']==undefined?'男':userData['性别']}}/{{bodyShape}}/{{type.key}}.png" />
+            <icon class="icon" type="success" color="#1f4e79" wx:if="{{userData[bodyShape]==type.key}}"></icon>
+            <text class="key">{{type.key}}</text>
+            <text class="remark">{{type.remark}}</text>
+        </view>
     </view>
 </view>
-<view class="addMeasureData">
+<view class="addMeasureData" bindtap="goAIMeasure">
     <text>新建尺寸</text>
 </view>
