@@ -1,6 +1,6 @@
 <view class='page' style="position:relative; top:{{navigationStyle == 'custom'?statusBarHeight:0}}px;left:0px;">
     <view wx:if="{{initComplete}}">
-        <ylt-contour camdir="front" canvasW="{{canvasCt.canvasW}}" canvasH="{{canvasCt.canvasH}}" sPathf="{{sPathf}}" sPaths="{{sPaths}}" bindready="ready" drawMosaic=t rue>
+        <ylt-contour camdir="front" canvasW="{{canvasCt.canvasW}}" canvasH="{{canvasCt.canvasH}}" sPathf="{{sPathf}}" sPaths="{{sPaths}}" bindready="ready" drawMosaic>
         </ylt-contour>
     </view>
 

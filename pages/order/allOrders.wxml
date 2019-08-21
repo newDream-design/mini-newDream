@@ -46,7 +46,7 @@
                     </block>
                     <block wx:if="{{order.status=='待收货'}}">
                         <text bindtap='express' data-expno='{{order.trafficeno}}' data-exptype='{{order.trafficenote}}' data-expname='{{order.trafficename}}'>查看物流</text>
-                        <text bindtap='receive' data-id='{{order.id}}'>确认收货</text>
+                        <text bindtap='bindReceive' data-id='{{order.orderID}}'>确认收货</text>
                     </block>
                     <block wx:if="{{order.status=='待评价'}}">
                         <navigator class="nav" url="express?deliverID={{order.deliverID}}">查看物流</navigator>

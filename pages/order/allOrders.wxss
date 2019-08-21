@@ -16,7 +16,7 @@
 }
 
 .copy {
-    font-size: 14px;
+    font-size: 12px;
     height: 20px;
     border: 1px solid #aaa;
     border-radius: 50px;

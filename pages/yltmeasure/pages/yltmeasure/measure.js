@@ -1,7 +1,5 @@
 var yltplugin = requirePlugin("yltplugin");
-
 const fileManager = wx.getFileSystemManager();
-
 Page({
     data: {
         corpId: '40e8l0nizjng1wgm5', // for test only
@@ -25,15 +23,11 @@ Page({
         error: false,
         errText: []
     },
-
-
     onLoad: function(options) {
         var that = this;
-
         var inputData;
         inputData = wx.getStorageSync('inputData');
         console.log(inputData);
-
         if (inputData != null && inputData.corpId != null && inputData.userId != null && inputData.userGender != null && inputData.userHeight != null && inputData.userWeight != null) {
             that.setData({
                 coprId: inputData.corpId,
@@ -45,13 +39,11 @@ Page({
         } else {
             console.log('Error: input data invalid');
         }
-
         wx.hideLoading();
         wx.showLoading({
             title: '拼命加载中...',
             mask: true,
         });
-
         try {
             var sysInfo = wx.getSystemInfoSync();
             that.setData({
@@ -69,7 +61,6 @@ Page({
                 content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
             })
         }
-
         if (wx.canIUse('request')) {
             console.log("YLT: Request supported.");
         } else {
@@ -80,7 +71,6 @@ Page({
                 content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
             })
         }
-
         if (wx.canIUse('createCameraContext')) {
             console.log("YLT: Camera supported.");
         } else {
@@ -91,7 +81,6 @@ Page({
                 content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
             })
         }
-
         if (wx.canIUse('onAccelerometerChange')) {
             console.log("YLT: Accelerometer supported.");
         } else {
@@ -102,9 +91,7 @@ Page({
                 content: '当前微信版本过低或不支持重力传感器，无法使用该功能，请升级到最新微信版本后重试。'
             })
         }
-
         wx.hideLoading();
-
         // 调用getUserInfo后用setData赋值
         that.setData({
             userInfo: "wxTest"
@@ -118,7 +105,6 @@ Page({
         // }).catch(function (err) {
         //   console.log(err);
         // });
-
     },
 
     cameraActivate: function(e) {
@@ -289,7 +275,6 @@ Page({
             })
             return;
         };
-
         wx.showLoading({
             title: '轮廓生成中...',
             // mask:true,

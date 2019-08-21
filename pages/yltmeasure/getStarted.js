@@ -36,28 +36,16 @@ Page({
         }, {
             title: "下胸围",
             mode: "select",
-            choice: ["男生就不能有熊伟？", "68-72"]
+            choice: ["男生就不能有熊伟？", "68-72"],
+            genderLimit: "女"
         }, {
             title: "罩杯",
             mode: "select",
-            choice: ["男生就不能有罩杯？", "A", "B", "C", "D", "E", "F", "G"]
+            choice: ["男生就不能有罩杯？", "A", "B", "C", "D", "E", "F", "G"],
+            genderLimit: "女"
         }],
         bodyShapes: {
             "女": {
-                "裙装穿着习惯": [{
-                    "key": "低腰裙",
-                    "remark": "裙腰在肚脐以下，胯骨上下"
-                }, {
-                    "key": "高腰裙",
-                    "remark": "裙腰在腰围线上方"
-                }],
-                "裤装穿着习惯": [{
-                    "key": "低腰裤",
-                    "remark": "裤腰处于胯骨上方，明显低于腰围线"
-                }, {
-                    "key": "高腰裤",
-                    "remark": "裤腰高于腰围线"
-                }],
                 "肩型": [{
                     "key": "常规",
                     "remark": "偶尔挂住单肩包"
@@ -113,19 +101,23 @@ Page({
                 }, {
                     "key": "粗壮",
                     "remark": "腿部肌肉明显突出"
+                }],
+                "裙装穿着习惯": [{
+                    "key": "低腰裙",
+                    "remark": "裙腰在肚脐以下，胯骨上下"
+                }, {
+                    "key": "高腰裙",
+                    "remark": "裙腰在腰围线上方"
+                }],
+                "裤装穿着习惯": [{
+                    "key": "低腰裤",
+                    "remark": "裤腰处于胯骨上方，明显低于腰围线"
+                }, {
+                    "key": "高腰裤",
+                    "remark": "裤腰高于腰围线"
                 }]
             },
             "男": {
-                "穿着习惯": [{
-                    "key": "修身",
-                    "remark": "版型收身，腰部贴合人体"
-                }, {
-                    "key": "宽松",
-                    "remark": "版型宽松，腰围和下摆处肥大"
-                }, {
-                    "key": "正常",
-                    "remark": "正常版型，整体呈现直筒造型"
-                }],
                 "肩型": [{
                     "key": "常规",
                     "remark": "肩部与颈部呈轻微夹角"
@@ -181,7 +173,17 @@ Page({
                 }, {
                     "key": "粗壮",
                     "remark": "腿部肌肉明显突出"
-                }]
+                }],
+                "穿着习惯": [{
+                    "key": "修身",
+                    "remark": "版型收身，腰部贴合人体"
+                }, {
+                    "key": "正常",
+                    "remark": "正常版型，整体呈现直筒造型"
+                }, {
+                    "key": "宽松",
+                    "remark": "版型宽松，腰围和下摆处肥大"
+                }],
             }
         }
     },
@@ -216,7 +218,8 @@ Page({
         var inputs = this.data.inputs
         for (var i in inputs) {
             var t = inputs[i]["title"]
-            if (userData[t] == undefined) {
+            var genderLimit = inputs[i]["genderLimit"]
+            if (userData[t] == undefined && (genderLimit != undefined && genderLimit == userData["性别"])) {
                 wx.showToast({
                     title: '请输入' + t,
                     icon: "none"

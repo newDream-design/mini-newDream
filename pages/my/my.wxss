@@ -154,9 +154,8 @@ Page {
 /* 自定义 */
 
 .ticket {
-	width: 19rem;
     margin: 0.5rem;
-	height: 3.5rem;
+    height: 3.5rem;
     background: linear-gradient(to right, #f8f3eb, #d9c39a);
     display: flex;
     align-items: center;
@@ -186,9 +185,19 @@ Page {
     flex-wrap: wrap;
 }
 
-.server-warp navigator, .server-warp view button {
-    width: 5rem;
-    display: flex;
+.server-warp navigator, .server-warp view {
+    width: 25% !important;
+    height: 5rem !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.server-warp view button {
+    width: 100% !important;
+    height: 5rem !important;
+    display: flex !important;
     flex-direction: column;
     align-items: center;
     margin-bottom: 0.5rem;
@@ -197,7 +206,7 @@ Page {
 .server-warp image {
     width: 3rem;
     height: 3rem;
-    margin-bottom: 0.25rem;
+    margin: 0 1rem 0.25rem 1rem;
 }
 
 .server-warp text {

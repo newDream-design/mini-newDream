@@ -1,4 +1,4 @@
-<view class="input-wrap" wx:for="{{inputs}}" wx:for-item="input" wx:for-index="id" wx:key="md">
+<view class="input-wrap" wx:for="{{inputs}}" wx:for-item="input" wx:for-index="id" wx:key="md" wx:if="{{input.genderLimit==undefined||(userData['性别']!=undefined&&input.genderLimit==userData['性别'])}}">
     <view class="title">
         <text>{{input.title}}{{input.unit==undefined?"":"("+input.unit+")"}}</text>
     </view>
@@ -24,3 +24,4 @@
 <view class="addMeasureData" bindtap="goAIMeasure">
     <text>新建尺寸</text>
 </view>
+<view style="height:2rem;"></view>
