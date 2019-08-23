@@ -7,39 +7,46 @@ Page({
             title: "姓名",
             mode: "input",
             type: "text",
-            placeholder: "此姓名将被用于制作水洗标"
+            placeholder: "此姓名将被用于制作水洗标",
+            isNecessary: true
         }, {
             title: "性别",
             mode: "select",
-            choice: ["男", "女"]
+            choice: ["男", "女"],
+            isNecessary: true
         }, {
             title: "年龄",
             unit: "岁",
             mode: "input",
-            type: "number"
+            type: "number",
+            isNecessary: true
         }, {
             title: "身高",
             unit: "cm",
             mode: "input",
             type: "digit",
-            placeholder: "例如175"
+            placeholder: "例如175",
+            isNecessary: true
         }, {
             title: "体重",
             unit: "kg",
             mode: "input",
             type: "digit",
-            placeholder: "例如60"
+            placeholder: "例如60",
+            isNecessary: true
         }, {
             title: "腰围",
             unit: "cm",
             mode: "input",
             type: "digit",
-            placeholder: "例如80"
+            placeholder: "例如80",
+            isNecessary: false
         }, {
             title: "罩杯",
             mode: "select",
             choice: ["A", "B", "C", "D", "E", "F", "G"],
-            genderLimit: "女"
+            genderLimit: "女",
+            isNecessary: false
         }],
         bodyShapes: {
             "女": {
@@ -234,7 +241,7 @@ Page({
             if (debug) console.log("正在检测：", inputs[i])
             var t = inputs[i]["title"]
             var genderLimit = inputs[i]["genderLimit"]
-            if ((userData[t] == undefined || userData[t] == "") && (genderLimit == undefined || genderLimit == userData["性别"])) {
+            if ((userData[t] == undefined || userData[t] == "") && inputs[i]["isNecessary"] && (genderLimit == undefined || genderLimit == userData["性别"])) {
                 if (debug) console.log(inputs[i], "验证失败")
                 wx.showToast({
                     title: '请输入' + t,
