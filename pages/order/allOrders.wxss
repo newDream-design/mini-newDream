@@ -22,7 +22,7 @@
     border-radius: 50px;
     color: #aaa;
     line-height: 20px;
-    padding: 1px 10px 1px 10px;
+    padding: 0 7px 0 7px;
     margin-left: 15px;
 }
 
@@ -104,4 +104,13 @@
 
 .order-info-bot {
     padding-left: 0;
+}
+
+.button{
+	font-size: 28rpx;
+    height: 50rpx;
+    border: 1px solid var(--colorGold);
+    color: var(--colorGold);
+    line-height: 50rpx;
+    padding: 0 20rpx;
 }

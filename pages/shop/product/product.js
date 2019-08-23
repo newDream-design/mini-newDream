@@ -16,27 +16,13 @@ Page({
         showSpec: 0,
         specText: '点击开始定制',
         //默认属性
-        comments: [{
-            "userName": "王小明",
-            "userAvatar": "",
-            "createTime": "2019-01-01 12:00:00",
-            "content": "这什么神仙西装，我好喜欢啊！"
-        }, {
-            "userName": "王小明",
-            "userAvatar": "",
-            "createTime": "2019-01-01 12:00:00",
-            "content": "这什么神仙西装，我好喜欢啊！"
-        }, {
-            "userName": "王小明",
-            "userAvatar": "",
-            "createTime": "2019-01-01 12:00:00",
-            "content": "这什么神仙西装，我好喜欢啊！"
-        }], //评论
+        comments: [], //评论
         isFixedTap: false,
         isAdding: false
     },
     onLoad: function(options) {
         this.getProduct(options.productID)
+		this.getProductComment(options.productID)
         this.getCart()
     },
     onHide: function() {
@@ -105,10 +91,41 @@ Page({
                     icon: 'none',
                     duration: 2000
                 })
+            }
+        })
+    },
+    //获取商品评价
+    getProductComment: function(productID_Main) {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'pinjia/get',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
             },
-            complete: function(e) {
-                wx.hideNavigationBarLoading() //完成停止加载
-                wx.stopPullDownRefresh() //停止下拉刷新
+            data: {
+                memberID: app.globalData.memberID,
+                productID_Main: productID_Main
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    that.setData({
+                        comments: res.data.data.object
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
             }
         })
     },
@@ -301,17 +318,17 @@ Page({
                 var propB = b[propName];
                 if (typeof propA === "object") {
                     if (!isObjectValueEqual(propA, propB, debug)) {
-						if (debug) console.log("对象不匹配：", propName, propA, propB)
+                        if (debug) console.log("对象不匹配：", propName, propA, propB)
                         return false;
                     }
-				} else if (propName == "count" || propName == "price"){
-					continue
+                } else if (propName == "count" || propName == "price") {
+                    continue
                 } else if (propA !== propB) {
                     if (debug) console.log("对象不匹配：", propName, propA, propB)
                     return false;
                 }
             }
-			if (debug) console.log("对象匹配：", a, b)
+            if (debug) console.log("对象匹配：", a, b)
             return true;
         }
 
@@ -319,7 +336,7 @@ Page({
             var isInCart = false
             for (var i in cart) {
                 if (isObjectValueEqual(product, cart[i], true)) {
-					cart[i]["price"] = product.price
+                    cart[i]["price"] = product.price
                     cart[i]["count"] += product.count
                     isInCart = true
                     break

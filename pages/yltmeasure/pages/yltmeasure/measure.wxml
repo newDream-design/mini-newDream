@@ -97,3 +97,7 @@
         <icon class='clearIcon' type='clear' size='20' color='gray' bindtap='closeTutorial'></icon>
     </view>
 </block>
+
+<navigator open-type="navigateBack">
+    <image src="/images/utils/arrow-left.png" style="position:absolute;top:30px;left:20px;width:14px;height:24px;"></image>
+</navigator>

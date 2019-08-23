@@ -9,14 +9,14 @@ Page {
 }
 
 .product-wrap .product-image {
-    width: 5rem;
+    width: 25%;
     height: 5rem;
-    margin: 0.5rem;
+    margin: 2.5%;
 }
 
 .product-wrap .product-info {
-    width: 13rem;
-    margin: 0.5rem;
+    width: 65%;
+    margin: 2.5%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -42,15 +42,15 @@ Page {
 }
 
 .comment-wrap {
-    width: 20rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     background: #fff;
 }
 
 .comment-wrap .comment {
-    width: 18.5rem;
-    margin: 0.5rem 0.5rem 0.5rem 1rem;
+    width: 95%;
+    margin: 2.5% 2.5% 2.5% 2.5%;
     display: flex;
     flex-direction: row;
 }
@@ -60,8 +60,8 @@ Page {
 }
 
 .comment-wrap .comment .block {
-    width: 1.5rem;
-    margin: 0 0.3rem 0 0.3rem;
+    width: 1.75rem;
+    margin: 0 2% 0 2%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -78,15 +78,15 @@ Page {
 }
 
 .comment-wrap .comment .block.widen3 {
-    width: 3rem !important;
+    width: 14% !important;
 }
 
 .comment-wrap .comment .block.widen4 {
-    width: 4rem !important;
+    width: 20% !important;
 }
 
 .comment-wrap .comment .block.widen100 {
-    width: 17.5rem !important;
+    width: 97.5% !important;
 }
 
 .comment-wrap .comment .block .title {
@@ -106,15 +106,15 @@ Page {
 }
 
 .comment-wrap .comment .block .tip {
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
     color: #aaa;
 }
 
 .comment-wrap .comment .block .textarea {
-    width: 100%;
+    width: 93%;
     height: 7rem;
-    padding: 10px;
+    padding: 2%;
     font-size: 14px;
     line-height: 20px;
     text-align: left;
@@ -124,15 +124,14 @@ Page {
 }
 
 .comment-wrap .comment .block .textarea-tip {
-    width: 100%;
+    width: 93%;
     height: 18px;
-    padding: 10px;
+    padding: 2%;
     font-size: 14px;
     line-height: 20px;
     text-align: right;
     color: #555;
     background: #fafafa;
-    border-radius: 10px;
 }
 
 .comment-wrap .comment .block .textarea-placeholder {
@@ -144,7 +143,7 @@ Page {
 .comment-wrap .comment .score-bar {
     display: flex;
     justify-content: space-between;
-    width: 18rem;
+    width: 95%;
     height: 2rem;
     margin: 0.75rem 0.5rem 0.5rem 0;
     border: 1px solid #888;

@@ -102,36 +102,44 @@ Page({
                                     var sizeId = measureData[i].Name.split("size")[1];
                                     //01_010胸围
                                     if (sizeId == "01_010") {
-                                        resultJSON["01_010"] = measureData[i].Measure.toFixed(1)
+										resultJSON["bust"] = measureData[i].Measure.toFixed(1)
                                     }
                                     //01_030腰围
                                     if (sizeId == "01_030") {
-                                        resultJSON["01_030"] = measureData[i].Measure.toFixed(1)
+										resultJSON["waist"] = measureData[i].Measure.toFixed(1)
                                     }
-                                    //01_060低腰围
-                                    if (sizeId == "01_060") {
-                                        resultJSON["01_060"] = measureData[i].Measure.toFixed(1)
+									//01_040臀围
+									if (sizeId == "01_040") {
+										resultJSON["hip"] = measureData[i].Measure.toFixed(1)
+									}
+                                    //01_050腹围
+                                    if (sizeId == "01_050") {
+										resultJSON["belly"] = measureData[i].Measure.toFixed(1)
                                     }
-                                    //01_040臀圍
-                                    if (sizeId == "01_040") {
-                                        resultJSON["01_040"] = measureData[i].Measure.toFixed(1)
-                                    }
-                                    //11_030裤长(至裤腰线)
-                                    if (sizeId == "11_030") {
-                                        resultJSON["11_030"] = measureData[i].Measure.toFixed(1)
-                                    }
-                                    //03_010肩寛
-                                    if (sizeId == "03_010") {
-                                        resultJSON["03_010"] = measureData[i].Measure.toFixed(1)
-                                    }
+									//01_060低腰围
+									if (sizeId == "01_060") {
+										resultJSON["pants_waist"] = measureData[i].Measure.toFixed(1)
+									}
+									//03_010肩寛
+									if (sizeId == "03_010") {
+										resultJSON["shoulder_width"] = measureData[i].Measure.toFixed(1)
+									}
                                     //04_020颈围
                                     if (sizeId == "04_020") {
-                                        resultJSON["04_020"] = measureData[i].Measure.toFixed(1)
+                                        resultJSON["neck"] = measureData[i].Measure.toFixed(1)
                                     }
+									//08_010袖长
+									if (sizeId == "08_010") {
+										resultJSON["sleeve_length"] = measureData[i].Measure.toFixed(1)
+									}
                                     //09_010大腿根圍
                                     if (sizeId == "09_010") {
-                                        resultJSON["09_010"] = measureData[i].Measure.toFixed(1)
+										resultJSON["thigh"] = measureData[i].Measure.toFixed(1)
                                     }
+									//11_030裤长(至裤腰线)
+									if (sizeId == "11_030") {
+										resultJSON["pants_length"] = measureData[i].Measure.toFixed(1)
+									}
                                 }
                                 console.log(resultJSON);
                                 wx.navigateTo({

@@ -9,7 +9,7 @@ Page {
 }
 
 .input-wrap .title {
-    min-width: 4.5rem;
+    min-width: 5.5rem;
     margin-left: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -85,17 +85,29 @@ Page {
     color: #ccc;
 }
 
-.addMeasureData {
+.button-wrap {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem;
+    justify-content: space-between;
+}
+
+.button-wrap .addMeasureData {
     width: 8rem;
     height: 3rem;
-    margin: 1rem auto;
+    margin:1rem auto;
     background: var(--colorBlue);
     display: flex;
     justify-content: center;
     align-items: center;
+	border-radius: 5rem;
 }
 
-.addMeasureData text {
+.button-wrap .addMeasureData.submit {
+    background: var(--colorGold);
+}
+
+.button-wrap .addMeasureData text {
     font-size: 16px;
     text-align: center;
     color: #fff;

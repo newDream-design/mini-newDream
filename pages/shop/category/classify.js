@@ -45,7 +45,7 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             data: {
-                //memberID: app.globalData.memberID
+                memberID: app.globalData.memberID
             },
             success: function(res) {
                 var categories = res.data.data.object
@@ -54,7 +54,7 @@ Page({
                 })
                 that.setData({
                     categories: categories,
-					products: categories[that.data.currentCategory]["products"]
+					products: categories[that.data.currentCategory]==undefined?[]:categories[that.data.currentCategory]["products"]
                 })
             },
             fail: function(e) {

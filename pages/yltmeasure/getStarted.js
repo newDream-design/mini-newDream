@@ -1,6 +1,8 @@
+const app = getApp()
 Page({
     data: {
         userData: {},
+        AIMeasureData: {},
         inputs: [{
             title: "姓名",
             mode: "input",
@@ -34,14 +36,9 @@ Page({
             type: "digit",
             placeholder: "例如80"
         }, {
-            title: "下胸围",
-            mode: "select",
-            choice: ["男生就不能有熊伟？", "68-72"],
-            genderLimit: "女"
-        }, {
             title: "罩杯",
             mode: "select",
-            choice: ["男生就不能有罩杯？", "A", "B", "C", "D", "E", "F", "G"],
+            choice: ["A", "B", "C", "D", "E", "F", "G"],
             genderLimit: "女"
         }],
         bodyShapes: {
@@ -187,8 +184,19 @@ Page({
             }
         }
     },
-    onLoad: function(options) {
-
+    onShow: function(options) {
+        var that = this
+        wx.getStorage({
+            key: 'AIMeasureData',
+            success: function(res) {
+                that.setData({
+                    AIMeasureData: res.data
+                })
+                wx.removeStorage({
+                    key: 'AIMeasureData'
+                })
+            },
+        })
     },
     onChange: function(e) {
         var key = e.currentTarget.dataset.key
@@ -213,20 +221,48 @@ Page({
             ["userData." + e.currentTarget.dataset.key]: e.currentTarget.dataset.value
         })
     },
-    goAIMeasure: function() {
+    disabledTip: function() {
+        wx.showToast({
+            title: "进行AI量体后不能修改数据",
+            icon: "none"
+        })
+    },
+    checkInput: function(debug = false) {
         var userData = this.data.userData
         var inputs = this.data.inputs
         for (var i in inputs) {
+            if (debug) console.log("正在检测：", inputs[i])
             var t = inputs[i]["title"]
             var genderLimit = inputs[i]["genderLimit"]
-            if (userData[t] == undefined && (genderLimit != undefined && genderLimit == userData["性别"])) {
+            if ((userData[t] == undefined || userData[t] == "") && (genderLimit == undefined || genderLimit == userData["性别"])) {
+                if (debug) console.log(inputs[i], "验证失败")
                 wx.showToast({
                     title: '请输入' + t,
                     icon: "none"
                 })
-                return
+                return false
             }
         }
+        return true
+    },
+    goAIMeasure: function() {
+        var that = this
+        if (!this.checkInput()) return
+        wx.showModal({
+            title: 'AI量体提示',
+            content: 'AI量体将使用您填写的个人数据，请确保您填写的数据正确。\nAI量体完成后，您将不能修改个人数据，但穿着习惯和体形特征仍可以进行修改。',
+            success(res) {
+                if (res.confirm) {
+                    wx.navigateTo({
+                        url: "pages/yltmeasure/measure?userGender=" + (that.data.userData.性别 == "男" ? 1 : 0) + "&userHeight=" + that.data.userData.身高 + "&userWeight=" + that.data.userData.体重 + "&userName" + that.data.姓名
+                    })
+                }
+            }
+        })
+    },
+    submit: function() {
+        if (!this.checkInput()) return
+        var userData = this.data.userData
         var bodyShapes = this.data.bodyShapes[userData["性别"]]
         for (var i in bodyShapes) {
             if (userData[i] == undefined) {
@@ -237,8 +273,68 @@ Page({
                 return
             }
         }
-        wx.navigateTo({
-            url: "pages/yltmeasure/measure?userData=" + JSON.stringify(this.data.userData),
+        if (this.data.AIMeasureData.recordId == undefined) {
+            var that = this
+            wx.showModal({
+                title: '提示',
+                content: '您还没有进行AI量体，使用AI量体功能有助于我们获取更精确的尺寸，要不要试一试？',
+                cancelText: "我想试试",
+                confirmText: "我不要！",
+                success(res) {
+                    if (res.confirm) {
+                        this.upload()
+                    } else if (res.cancel) {
+                        wx.navigateTo({
+                            url: "pages/yltmeasure/measure?userGender=" + (that.data.userData.性别 == "男" ? 1 : 0) + "&userHeight=" + that.data.userData.身高 + "&userWeight=" + that.data.userData.体重 + "&userName" + that.data.姓名
+                        })
+                    }
+                }
+            })
+        } else {
+            wx.showModal({
+                title: '提示',
+                content: '请核对您的尺寸数据，一经提交不能修改，只能重新填写！',
+                cancelText: "我再看看",
+                confirmText: "确认提交",
+                success(res) {
+                    if (res.confirm) {
+                        this.upload()
+                    }
+                }
+            })
+        }
+    },
+    upload: function() {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'chicun/add',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID,
+                bodyShapeData: that.data.userData,
+                bodyShapeDataAI: that.data.AIMeasureData
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    console.log("成功啦")
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
         })
     }
 })

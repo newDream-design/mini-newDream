@@ -95,7 +95,7 @@
 
 .single-hot image {
     width: 9rem;
-    height: 9rem;
+    height: 11.7rem;
     display: block;
 }
 
@@ -138,6 +138,7 @@
     display: block;
     font-size: 28rpx;
     color: #333;
+	margin-top: 10rpx;
 }
 
 .all-price {

@@ -1,10 +1,12 @@
+<view style="height:0.5rem;"></view>
 <view class="input-wrap" wx:for="{{inputs}}" wx:for-item="input" wx:for-index="id" wx:key="md" wx:if="{{input.genderLimit==undefined||(userData['性别']!=undefined&&input.genderLimit==userData['性别'])}}">
     <view class="title">
-        <text>{{input.title}}{{input.unit==undefined?"":"("+input.unit+")"}}</text>
+        <text>{{input.title}}{{input.unit==undefined?"":"("+input.unit+")"}}<text style="color:red;margin-left:5px;">*</text></text>
     </view>
-    <input wx:if="{{input.mode=='input'}}" type="{{input.type}}" class="input" bindinput="onChange" data-mode="{{input.mode}}" data-id="{{id}}" data-key="{{input.title}}" placeholder="{{input.placeholder}}" />
-    <picker wx:elif="{{input.mode=='select'}}" class="input" bindchange="onChange" data-mode="{{input.mode}}" data-id="{{id}}" data-key="{{input.title}}" range="{{input.choice}}">
-        <text space="nbsp">{{userData[input.title]==undefined?(input.placeholder==undefined?"请选择":input.placeholder):userData[input.title]}} </text>
+    <input wx:if="{{input.mode=='input'}}" type="{{input.type}}" class="input" bindinput="onChange" data-mode="{{input.mode}}" data-id="{{id}}" data-key="{{input.title}}" placeholder="{{input.placeholder}}" value="{{userData[input.title]}}" disabled="{{AIMeasureData.recordId==undefined?false:true}}"
+        bindtap="{{AIMeasureData.recordId==undefined?'':'disabledTip'}}" />
+    <picker wx:elif="{{input.mode=='select'}}" class="input" bindchange="onChange" data-mode="{{input.mode}}" data-id="{{id}}" data-key="{{input.title}}" range="{{input.choice}}" disabled="{{AIMeasureData.recordId==undefined?false:true}}" bindtap="{{AIMeasureData.recordId==undefined?'':'disabledTip'}}">
+        <text space="nbsp">{{userData[input.title]==undefined?(input.placeholder==undefined?"请选择":input.placeholder):userData[input.title]}}</text>
     </picker>
 </view>
 <view class="bodyShape-wrap" wx:for="{{bodyShapes[userData['性别']==undefined?'男':userData['性别']]}}" wx:for-item="choice" wx:for-index="bodyShape" wx:key="bs">
@@ -21,7 +23,12 @@
         </view>
     </view>
 </view>
-<view class="addMeasureData" bindtap="goAIMeasure">
-    <text>新建尺寸</text>
+<view class="button-wrap">
+    <view class="addMeasureData" bindtap="goAIMeasure">
+        <text>AI量体</text>
+    </view>
+    <view class="addMeasureData submit" bindtap="submit">
+        <text>提交尺寸</text>
+    </view>
 </view>
-<view style="height:2rem;"></view>
+<view style="height:1rem;"></view>

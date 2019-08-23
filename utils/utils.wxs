@@ -9,6 +9,7 @@ var split = function(str, key) {
 }
 
 var defineArray = function(length) {
+    length = Math.round(length)
     var arr = []
     for (var i = 0; i < length; i++) {
         arr.push(i + 1)
@@ -20,8 +21,16 @@ var round = function(num) {
     return Math.round(num)
 }
 
-var abs = function (num) {
-	return Math.abs(num)
+var abs = function(num) {
+    return Math.abs(num)
+}
+
+var JSONstringify = function(obj) {
+    return JSON.stringify(obj)
+}
+
+var hideName = function(name) {
+    return name[0] + "**"
 }
 
 module.exports = {
@@ -29,5 +38,7 @@ module.exports = {
     split: split,
     defineArray: defineArray,
     round: round,
-	abs: abs
+    abs: abs,
+    JSONstringify: JSONstringify,
+	hideName: hideName
 }

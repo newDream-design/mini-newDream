@@ -4,7 +4,7 @@ Page({
         index: {}
     },
 
-    onLoad: function(options) {
+    onShow: function(options) {
         this.request()
     },
 

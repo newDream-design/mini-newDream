@@ -23,7 +23,7 @@ Page({
             },
             data: {
                 "memberID": app.globalData.memberID,
-                "status": status
+                "status": status == "待评价" ? "完成" : status
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
@@ -91,20 +91,20 @@ Page({
                             "orderID": id
                         },
                         success: function(res) {
-							if (res.data.result.status == 200) {
-								wx.showToast({
-									title: "取消成功",
-									icon: 'success',
-									duration: 2000
-								})
-								that.getOrder(that.data.currentTab);
-							} else {
-								wx.showToast({
-									title: res.data.result.errMsg,
-									icon: 'none',
-									duration: 2000
-								})
-							}
+                            if (res.data.result.status == 200) {
+                                wx.showToast({
+                                    title: "取消成功",
+                                    icon: 'success',
+                                    duration: 2000
+                                })
+                                that.getOrder(that.data.currentTab);
+                            } else {
+                                wx.showToast({
+                                    title: res.data.result.errMsg,
+                                    icon: 'none',
+                                    duration: 2000
+                                })
+                            }
                         },
                         fail: function(e) {
                             wx.showToast({
@@ -122,52 +122,52 @@ Page({
     },
     //确认收货
     bindReceive: function(e) {
-		var that = this;
-		var id = e.target.dataset.id;
-		wx.showModal({
-			title: '确认收货',
-			content: '是否确认收货',
-			success: function (res) {
-				if (res.confirm) {
-					wx.request({
-						url: app.config.RequestUrl + 'dingdan/shouhuo',
-						method: "GET",
-						header: {
-							"Content-Type": "application/x-www-form-urlencoded"
-						},
-						data: {
-							"memberID": app.globalData.memberID,
-							"orderID": id
-						},
-						success: function (res) {
-							if (res.data.result.status == 200) {
-								wx.showToast({
-									title: "收货成功",
-									icon: 'success',
-									duration: 2000
-								})
-								that.getOrder(that.data.currentTab);
-							} else {
-								wx.showToast({
-									title: res.data.result.errMsg,
-									icon: 'none',
-									duration: 2000
-								})
-							}
-						},
-						fail: function (e) {
-							wx.showToast({
-								title: e.errMsg,
-								icon: 'none',
-								duration: 2000
-							})
-						}
-					})
-				} else if (res.cancel) {
-					console.log('用户点击取消')
-				}
-			}
-		})
+        var that = this;
+        var id = e.target.dataset.id;
+        wx.showModal({
+            title: '确认收货',
+            content: '是否确认收货',
+            success: function(res) {
+                if (res.confirm) {
+                    wx.request({
+                        url: app.config.RequestUrl + 'dingdan/shouhuo',
+                        method: "GET",
+                        header: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        data: {
+                            "memberID": app.globalData.memberID,
+                            "orderID": id
+                        },
+                        success: function(res) {
+                            if (res.data.result.status == 200) {
+                                wx.showToast({
+                                    title: "收货成功",
+                                    icon: 'success',
+                                    duration: 2000
+                                })
+                                that.getOrder(that.data.currentTab);
+                            } else {
+                                wx.showToast({
+                                    title: res.data.result.errMsg,
+                                    icon: 'none',
+                                    duration: 2000
+                                })
+                            }
+                        },
+                        fail: function(e) {
+                            wx.showToast({
+                                title: e.errMsg,
+                                icon: 'none',
+                                duration: 2000
+                            })
+                        }
+                    })
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
     },
     //立即支付
     bindPay: function(e) {

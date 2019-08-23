@@ -1,9 +1,10 @@
+<wxs module="utils" src="../../../utils/utils.wxs"></wxs>
 <view class='container'>
     <scroll-view scroll-y="true" style="height:100%;" bindScroll="bindScrollListen" enable-back-to-top>
         <view class='goods-gallery'>
-            <swiper indicator-dots autoplay circular interval="3000" duration="500" style='height:20rem;' bindchange="bindSwiper">
+            <swiper indicator-dots autoplay circular interval="3000" duration="500" style='height:26rem;' bindchange="bindSwiper">
                 <swiper-item wx:for="{{products[mainProduct].image}}" wx:key="key" wx:for-item="img">
-                    <image src='{{products[mainProduct].productID==undefined?"":("https://cdn.newdreamer.cn/products/"+products[mainProduct].productID+"/%E4%B8%BB%E5%9B%BE/"+img+".jpg")}}' class='goods-gallery-img' lazy-load='true' />
+                    <image src='{{products[mainProduct].productID==undefined?"":("https://cdn.newdreamer.cn/products/"+products[mainProduct].productID+"/%E4%B8%BB%E5%9B%BE/"+img+".jpg")}}' class='goods-gallery-img' lazy-load='true' mode="aspectFill" />
                 </swiper-item>
             </swiper>
             <text class="swiperCount">{{currentImage}}/{{products[mainProduct].image.length}}</text>
@@ -18,7 +19,7 @@
             </view>
             <view class='goods-info1'>
                 <view class='goods-price'>
-                    <text>￥{{price.min}}-{{price.max}}</text>
+                    <text>￥{{price.min==price.max?price.max:(price.min+"-"+price.max)}}</text>
                 </view>
                 <view class='goods-sales'>月销量：{{products[mainProduct].sale}}</view>
             </view>
@@ -29,27 +30,23 @@
                 <text class="value">{{products[mainProduct].productID}}</text>
             </view>
             <view>
-                <text class="title">面料成分：</text>
-                <text class="value">？</text>
+                <text class="title">面料颜色：</text>
+                <text class="value">{{products[mainProduct].color}}</text>
             </view>
             <view>
-                <text class="title">面料厚度：</text>
-                <text class="value">？</text>
+                <text class="title">产品款式：</text>
+                <text class="value">{{products[mainProduct].model}}</text>
             </view>
             <view>
-                <text class="title">面料弹力：</text>
-                <text class="value">？</text>
+                <text class="title">产品版型：</text>
+                <text class="value">{{products[mainProduct].type}}</text>
             </view>
             <view>
-                <text class="title">面料克重：</text>
-                <text class="value">？</text>
-            </view>
-            <view>
-                <text class="title">适合季节：</text>
-                <text class="value">？</text>
+                <text class="title">面料材质：</text>
+                <text class="value">{{products[mainProduct].material}}</text>
             </view>
         </view>
-		<!--
+        <!--
         <view class='chooseSpec' bindtap='bindChooseSpec' data-buynow="3">
             <view>
                 <text>定制西装：{{specText}}</text>
@@ -81,12 +78,18 @@
                             <view class='comment' wx:for="{{comments}}" wx:key="id" wx:for-item="comment">
                                 <view class='comment-user'>
                                     <view style="display:flex;align-items:center;margin-bottom:5px;">
-                                        <image class='avatar' src='{{comment.userAvatar}}'></image>
-                                        <text class='nickname'>{{comment.userName}}</text>
+                                        <!--<image class='avatar' src='{{comment.userAvatar}}'></image>-->
+                                        <text class='nickname'>{{utils.hideName(comment.mingcheng)}}</text>
+                                        <block wx:for="{{utils.defineArray(comment.xingji)}}" wx:key="1">
+                                            <image class="img" src="https://cdn.newdreamer.cn/icon/comment/comment star active.png" mode="aspectFit" />
+                                        </block>
+                                        <block wx:for="{{utils.defineArray(5-comment.xingji)}}" wx:key="2">
+                                            <image class="img" src="https://cdn.newdreamer.cn/icon/comment/comment star.png" mode="aspectFit" />
+                                        </block>
                                     </view>
-                                    <text class='comment-time'>{{comment.createTime}}</text>
+                                    <text class='comment-time'>{{comment.shijian}}</text>
                                 </view>
-                                <text class='comment-content'>{{comment.content}}</text>
+                                <text class='comment-content'>{{comment.wenzi_pingjia}}</text>
                                 <view style="height:15px;" />
                             </view>
                         </view>
@@ -103,7 +106,7 @@
     <view class="spec-wrap {{showSpec==0?'hidden':''}}">
         <view class='goods-house-wrap'>
             <view class='goods-house'>
-                <image src='{{products[mainProduct].images[0]}}' class='goods-img'></image>
+                <image src='{{products[mainProduct].productID==undefined?"":("https://cdn.newdreamer.cn/products/"+products[mainProduct].productID+"/%E4%B8%BB%E5%9B%BE/"+products[selectProduct].image[0]+".jpg")}}' class='goods-img' mode="aspectFill"></image>
                 <view class='goods-house1'>
                     <text class='goods-price'>￥{{products[selectProduct].price}}</text>
                     <view class='goods-house2'>
@@ -115,9 +118,11 @@
         </view>
         <view>
             <view class='type'>
-                <text>产品:</text>
+                <view class="key">
+                    <text>产品</text>
+                </view>
                 <view class='type-list'>
-                    <text wx:for="{{products}}" wx:for-item="product" wx:for-index="pid" class="{{pid==selectProduct?'sel':''}}" bindtap='choseProduct' data-pid='{{pid}}' wx:key="ps">{{product.productName}}</text>
+                    <text wx:for="{{products}}" wx:for-item="product" wx:for-index="pid" class="{{pid==selectProduct?'sel':''}}" bindtap='choseProduct' data-pid='{{pid}}' wx:key="ps">{{product.productName}}{{product.mark=="定制"?"(定制)":""}}</text>
                 </view>
             </view>
             <view class='type' wx:for="{{products[mainProduct].productSpec}}" wx:key="productSpec" wx:for-item="specItem">
@@ -128,7 +133,9 @@
                 </view>
             </view>
             <view class='amount-wrap'>
-                <text>数量</text>
+                <view class="key">
+                    <text>数量</text>
+                </view>
                 <view class='amount-box'>
                     <text class='amount-minus' bindtap='onProductCountChange' data-delta="-1">-</text>
                     <text class='amount-num'>{{count}}</text>

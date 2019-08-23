@@ -73,7 +73,7 @@
         </view>
 
         <view class="server-warp">
-            <navigator>
+            <navigator url='/pages/yltmeasure/index' open-type="switchTab">
                 <image src="/images/icon/mySize.png" mode="aspectFit" />
                 <text>我的尺寸</text>
             </navigator>

@@ -1,19 +1,20 @@
 <wxs module="utils" src="../../../utils/utils.wxs"></wxs>
 <form bindsubmit="submit">
     <view class="product-wrap">
-        <image class="product-image" src='{{product.productID_Main==undefined?"":("https://cdn.newdreamer.cn/products/"+product.productID_Main+"/%E4%B8%BB%E5%9B%BE/"+product.image+".jpg")}}' />
+        <image class="product-image" src='{{product.productID_Main==undefined?"":("https://cdn.newdreamer.cn/products/"+product.productID_Main+"/%E4%B8%BB%E5%9B%BE/"+utils.split(product.image," ")[0]+".jpg")}}' />
         <view class="product-info">
             <view class="row">
                 <text class="productName">{{product.productName}}</text>
             </view>
             <view class="row">
-                <text class="productData">￥{{product.price}}</text>
+                <text class="productData">￥{{product.priceFinal}}</text>
                 <text class="productData">x{{product.count}}</text>
             </view>
         </view>
     </view>
     <template is="comment-{{commentObject.commentType}}" data="{{comment:comment,...commentObject}}" wx:for="{{commentList}}" wx:for-item="commentObject" wx:key="c-{{commentKey}}" />
     <button form-type='submit' class='submit'>提交</button>
+    <view style="height:2rem;" />
 </form>
 
 <template name="comment-face">
@@ -26,9 +27,14 @@
                 </view>
             </view>
             <view class="block" wx:for='{{[[commentTips[0],0],[commentTips[1],1],[commentTips[2],2],[commentTips[3],1],[commentTips[4],0]]}}' wx:for-index="id" wx:for-item="ci" wx:key="c-{{commentKey}}-face{{id+1}}" bindtap="bindCommentSelect" data-key="{{commentKey}}"
-                data-id="{{(ci[1]+1)*2-1+(id==2?0:((id-2)/utils.abs(id-2))/10)}}">
+                data-id="{{ci[0]}}">
                 <view class="tip">{{ci[0]}}</view>
-                <image class="icon" src="/images/icon/comment/comment {{ci[1]}}{{comment[commentKey]==id+1?' active':''}}.png" mode="aspectFit"></image>
+                <image class="icon" src="https://cdn.newdreamer.cn/icon/comment/comment {{ci[1]}}{{comment[commentKey]==ci[0]?' active':''}}.png" mode="aspectFit"></image>
+            </view>
+			<view class="block widen4">
+                <view class="tip">
+                    <text></text>
+                </view>
             </view>
         </view>
     </view>
@@ -45,11 +51,11 @@
             </view>
             <view class="block" wx:for="{{utils.defineArray(comment[commentKey])}}" wx:for-index="id" wx:key="c-{{commentKey}}-star{{id+1}}" bindtap="bindCommentSelect" data-key="{{commentKey}}" data-id="{{id+1}}">
                 <view class="tip">{{ci[0]}}</view>
-                <image class="icon" src="/images/icon/comment/comment star active.png" mode="aspectFit"></image>
+                <image class="icon" src="https://cdn.newdreamer.cn/icon/comment/comment star active.png" mode="aspectFit"></image>
             </view>
             <view class="block" wx:for="{{utils.defineArray(5-comment[commentKey])}}" wx:for-index="id" wx:key="c-{{commentKey}}-star{{comment[commentKey]+id+1}}" bindtap="bindCommentSelect" data-key="{{commentKey}}" data-id="{{comment[commentKey]+id+1}}">
                 <view class="tip">{{ci[0]}}</view>
-                <image class="icon" src="/images/icon/comment/comment star.png" mode="aspectFit"></image>
+                <image class="icon" src="https://cdn.newdreamer.cn/icon/comment/comment star.png" mode="aspectFit"></image>
             </view>
             <view class="block widen4">
                 <view class="tip">
@@ -95,7 +101,7 @@
                     <text>{{commentKey}}</text>
                 </view>
             </view>
-            <view class="block widen100">
+            <view class="block widen100" style="margin-top:20px;">
                 <textarea class="textarea" maxlength="200" placeholder="{{commentTips[0]}}" placeholder-class="textarea-placeholder" bindinput="bindCommentInput" data-key="{{commentKey}}" data-id="{{id}}"></textarea>
             </view>
             <view class="block widen100">
@@ -117,7 +123,7 @@
                 </view>
             </view>
             <view class="block widen100 horizontal">
-                <image class="image" src="{{imageUrl}}" wx:for="{{comment[commentKey]}}" wx:for-item="imageUrl" wx:for-index="id" wx:key="c-{{commentKey}}-image{{id}}" bindlongpress="bindDeleteImage" data-key="{{commentKey}}" data-id="id"/>
+                <image class="image" src="{{imageUrl}}" wx:for="{{comment[commentKey]}}" wx:for-item="imageUrl" wx:for-index="id" wx:key="c-{{commentKey}}-image{{id}}" bindlongpress="bindDeleteImage" data-key="{{commentKey}}" data-id="{{id}}" />
                 <view class="image" bindtap="bindAddImage" data-key="{{commentKey}}" wx:if="{{comment[commentKey]==0||comment[commentKey].length<9}}">
                     <view class="circle">
                         <text class="plus">+</text>

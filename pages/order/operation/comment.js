@@ -1,53 +1,46 @@
 const app = getApp();
 Page({
     data: {
-        orderItemID: 10001,
-        product: {
-            "productID": "ND1M621T",
-            "productID_Main": "ND1M621T",
-            "productName": "男士西服",
-            "image": "1",
-            "price": "0.01",
-            "count": 1,
-            "measureID": 10001,
-            "color": "黑色"
-        },
+        orderItemID: 0,
+        product: {},
         commentList: [{
-            "commentKey": "尺寸",
-            "commentType": "face",
-            "commentTips": ["很小", "偏小", "合身", "偏大", "很大"]
-        }, {
-            "commentKey": "面料",
-            "commentType": "star",
-            "commentTips": ["辣鸡玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
-        }, {
-            "commentKey": "做工",
-            "commentType": "star",
-            "commentTips": ["辣鸡玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
-        }, {
-            "commentKey": "物流",
-            "commentType": "star",
-            "commentTips": ["辣鸡玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
-        }, {
-            "commentKey": "您有多大可能再次使用新梦想家商场？",
-            "commentType": "score",
-            "commentTips": ["再也不来了", "真香", "我是铁杆粉"]
-        }, {
-            "commentKey": "文字评价",
-            "commentType": "textArea",
-            "commentTips": ["面料不满意？可以反馈给我们"]
-        }, {
-            "commentKey": "图片评价",
-            "commentType": "image"
-        }],
+                "commentKey": "尺寸",
+                "commentType": "face",
+                "commentTips": ["很小", "偏小", "合身", "偏大", "很大"]
+            }, {
+                "commentKey": "面料",
+                "commentType": "star",
+                "commentTips": ["什么玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
+            }, {
+                "commentKey": "做工",
+                "commentType": "star",
+                "commentTips": ["什么玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
+            }, {
+                "commentKey": "物流",
+                "commentType": "star",
+                "commentTips": ["什么玩意", "不如人意", "平平无奇", "OJBK", "卧槽牛逼"]
+            }, {
+                "commentKey": "文字评价",
+                "commentType": "textArea",
+                "commentTips": ["面料不满意？可以反馈给我们"]
+            }
+            /*{
+                        "commentKey": "您有多大可能再次使用新梦想家商场？",
+                        "commentType": "score",
+                        "commentTips": ["再也不来了", "真香", "我是铁杆粉"]
+                    }, {
+                        "commentKey": "图片评价",
+                        "commentType": "image"
+                    }*/
+        ],
         comment: {}
     },
     onLoad: function(options) {
-        var orderItemID = options.orderItemID;
+		var product=JSON.parse(options.product)
         this.setData({
-            orderItemID: orderItemID
+            orderItemID: product.orderItemID,
+            product: product
         })
-        //this.getOrderItem(orderItemID);
         this.initComments()
     },
     //自动生成评价页
@@ -61,11 +54,6 @@ Page({
             comment: comment
         })
     },
-    //获取订单信息
-    getOrderItem: function(orderItemID) {},
-    //提交评价
-    submitComment: function(e) {},
-
     //选择评价
     bindCommentSelect: function(e) {
         var key = e.currentTarget.dataset.key
@@ -119,6 +107,59 @@ Page({
                         comment: comment
                     })
                 }
+            }
+        })
+    },
+    //提交评价
+    submit: function(e) {
+        var comment = this.data.comment
+        wx.showLoading({
+            title: '评价上传中...',
+            mask: true
+        })
+        for (var i in comment) {
+            if (comment[i] == 0) {
+                wx.showToast({
+                    title: i + "不能为空",
+                    icon: 'none',
+                    duration: 2000
+                })
+                wx.hideLoading()
+                return
+            }
+        }
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'pinjia/add',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                "memberID": app.globalData.memberID,
+                "orderItemID": that.data.orderItemID,
+				"productID_Main": that.data.product.productID_Main,
+                "data": JSON.stringify(that.data.comment)
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    wx.navigateBack()
+                } else {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.hideLoading()
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
             }
         })
     }

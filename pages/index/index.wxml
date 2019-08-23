@@ -8,7 +8,7 @@
             <swiper indicator-dots autoplay circular interval="3000" duration="500" class="scroll-banner {{index.banners==''?'hidden':''}}">
                 <swiper-item wx:for="{{index.banners}}" wx:for-item="banner" wx:key='b'>
                     <!-- <navigator url='{{banner.linkurl}}'>-->
-                    <image src="{{index.banner.image}}" class="slide-image banner" />
+                    <image src="https://cdn.newdreamer.cn/index/{{banner.image}}.jpg" class="slide-image banner" mode="aspectFill"/>
                     <!-- </navigator>-->
                 </swiper-item>
             </swiper>
