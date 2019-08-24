@@ -125,13 +125,21 @@
                     <text wx:for="{{products}}" wx:for-item="product" wx:for-index="pid" class="{{pid==selectProduct?'sel':''}}" bindtap='choseProduct' data-pid='{{pid}}' wx:key="ps">{{product.productName}}{{product.mark=="定制"?"(定制)":""}}</text>
                 </view>
             </view>
-            <view class='type'>
+            <view class='type' wx:if="{{products[selectProduct]['mark']=='定制'}}">
                 <view class="key">
                     <text>尺寸</text>
                 </view>
                 <view class='type-list'>
-                    <text wx:for="{{measureData}}" wx:for-item="data" wx:for-index="did" class="{{did==selectSize?'sel':''}}" bindtap='choseSize' data-did='{{did}}' wx:key="ps">{{data.liangti_mingcheng}}</text>
+                    <text wx:for="{{measureData}}" wx:for-item="data" class="{{data.liangti_bianhao==selectSize?'sel':''}}" bindtap='choseSize' data-did='{{data.liangti_bianhao}}' data-name="{{data.liangti_mingcheng}}" wx:key="ps">{{data.liangti_mingcheng}}</text>
                     <text bindtap='addSize' class="special">新增尺寸 ></text>
+                </view>
+            </view>
+            <view class='type' wx:else>
+                <view class="key">
+                    <text>尺寸</text>
+                </view>
+                <view class='type-list'>
+                    <text wx:for="{{products[selectProduct]['size']}}" wx:for-item="data" class="{{data==selectSize?'sel':''}}" bindtap='choseSize' data-did='{{data}}' data-name='{{data}}' wx:key="ps">{{data}}</text>
                 </view>
             </view>
             <view class='type' wx:for="{{products[mainProduct].productSpec}}" wx:key="productSpec" wx:for-item="specItem">

@@ -13,6 +13,7 @@ Page({
         mainProduct: 0,
         selectProduct: 0,
         selectSize: -1,
+		selectSizeName: "无尺寸",
         currentImage: 1,
         count: 1,
         showSpec: 0,
@@ -102,6 +103,8 @@ Page({
                     for (var i in products) {
                         if (productID == products[i]["productID"]) mainProduct = i
                         products[i]["image"] = products[i]["image"].split(" ")
+                        products[i]["size"] = "160 165 170 175 180 185"
+                        products[i]["size"] = products[i]["size"].split(" ")
                         if (price.min == undefined || products[i]["price"] < price.min) price.min = products[i]["price"]
                         if (price.max == undefined || products[i]["price"] > price.max) price.max = products[i]["price"]
                     }
@@ -289,7 +292,8 @@ Page({
     //选择尺寸
     choseSize: function(e) {
         this.setData({
-            selectSize: e.currentTarget.dataset.did
+            selectSize: e.currentTarget.dataset.did,
+			selectSizeName: e.currentTarget.dataset.name
         })
     },
     //跳转
@@ -344,7 +348,7 @@ Page({
             })
             return
         }
-        if (this.data.selectSize == -1) {
+        if (this.data.selectSize == -1 && this.data.products[this.data.selectProduct].mark == "定制") {
             wx.showToast({
                 title: '请选择尺寸',
                 icon: "none"
@@ -362,8 +366,8 @@ Page({
             "image": this.data.products[this.data.selectProduct].image[0],
             "price": this.data.products[this.data.selectProduct].price,
             "count": this.data.count,
-            "measureID": this.data.measureData[this.data.selectSize].liangti_bianhao,
-            "measureName": this.data.measureData[this.data.selectSize].liangti_mingcheng
+            "measureID": this.data.selectSize,
+			"measureName": this.data.selectSizeName
         }
 
         /* 对象比较器 */

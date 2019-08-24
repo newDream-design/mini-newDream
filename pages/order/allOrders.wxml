@@ -27,13 +27,14 @@
                             <text class='product-amount'>x{{product.count}}</text>
                         </view>
                         <view class='order-info-bot'>
+                            <text class='product-desb'>尺寸：{{product.measureName}}</text>
                             <view class='product-price'>￥{{product.priceFinal}}</view>
                             <navigator class="button" url='operation/comment?product={{utils.JSONstringify(product)}}' wx:if="{{product.zhuangtai=='待评价'}}">去评价</navigator>
                         </view>
                     </view>
                 </view>
                 <view class='order-info' style="justify-content:flex-end;">
-                    <view class='product-desb'>
+                    <view class='product-sum'>
                         <text space="nbsp" style="text-align:right;">共计{{order.products.length}}件商品   合计:￥{{order.pricePay}}</text>
                     </view>
                 </view>

@@ -50,8 +50,7 @@ Page({
         var summary = this.data.summary
         for (var i in products) {
             products[i]["price"] = parseFloat(products[i]["price"]).toFixed(2)
-            products[i]["measureID"] = 10001
-            products[i]["color"] = "黑色"
+            products[i]["color"] = "默认"
             summary.allCount += products[i]["count"]
             summary.allPrice += products[i]["count"] * products[i]["price"]
         }

@@ -1,3 +1,10 @@
+<view class='noMeasureData' hidden="{{measure.measureData.length!=0}}">
+    <image src='/images/utils/noOrder.png' class='noMeasureDataImg'></image>
+    <text class='noMeasureDataText'>无量体数据</text>
+    <navigator class="addMeasureData" url="getStarted">
+        <text>新建尺寸</text>
+    </navigator>
+</view>
 <view class="measureData-wrap" wx:for="{{measure.measureData}}" wx:for-item="data" wx:key="md">
     <!--<view class="left"></view>-->
     <!--<view class="right"></view>-->
@@ -16,13 +23,13 @@
     </view>
     <view class="data-wrap">
         <!--<view class="data" wx:for="{{data.details}}" wx:for-index="key" wx:for-item="value" wx:key="ds">{{key}}：{{value}}</view>-->
-		<view class="data">身高：{{data.shenggao}}</view>
-		<view class="data">体重：{{data.tizhong}}</view>
-		<view class="data">熊伟：{{data.xiongwei}}</view>
-		<view class="data">腰围：{{data.yaowei}}</view>
-		<view class="data">臀围：{{data.tunwei}}</view>
+        <view class="data">身高：{{data.shenggao}}</view>
+        <view class="data">体重：{{data.tizhong}}</view>
+        <view class="data">熊伟：{{data.xiongwei}}</view>
+        <view class="data">腰围：{{data.yaowei}}</view>
+        <view class="data">臀围：{{data.tunwei}}</view>
     </view>
 </view>
-<navigator class="addMeasureData" url="getStarted">
+<navigator class="addMeasureData" url="getStarted" hidden="{{measure.measureData.length==0}}">
     <text>新建尺寸</text>
 </navigator>
