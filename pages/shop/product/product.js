@@ -5,12 +5,14 @@ Page({
         tabID: 0,
         cart: [], //购物车
         products: {},
+        measureData: {},
         price: {
             "min": 0,
             "max": 0
         },
         mainProduct: 0,
         selectProduct: 0,
+        selectSize: -1,
         currentImage: 1,
         count: 1,
         showSpec: 0,
@@ -22,8 +24,44 @@ Page({
     },
     onLoad: function(options) {
         this.getProduct(options.productID)
-		this.getProductComment(options.productID)
+        this.getProductComment(options.productID)
+    },
+    onShow: function() {
         this.getCart()
+        this.getMeasureData()
+    },
+    getMeasureData: function() {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'chicun/get',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    that.setData({
+                        ["measureData"]: res.data.data.object
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
+        })
     },
     onHide: function() {
         this.setData({
@@ -39,11 +77,6 @@ Page({
         this.setData({
             tabID: e.currentTarget.dataset.tab
         });
-    },
-    bindChooseSpec: function(e) {
-        this.setData({
-            showSpec: e.currentTarget.dataset.buynow
-        })
     },
     //获取商品
     getProduct: function(productID) {
@@ -171,8 +204,6 @@ Page({
             }
         })
     },
-    //获取产品规格
-    requestProductSpec: function(e) {},
     //点击收藏产品
     bindCollect: function(e) {
         var that = this
@@ -220,8 +251,6 @@ Page({
             url: '/pages/my/cart',
         })
     },
-    //选择评论
-    swichNav: function(e) {},
     //选择规格商品加减
     onProductCountChange: function(e) {
         var delta = parseInt(e.currentTarget.dataset.delta);
@@ -255,6 +284,23 @@ Page({
     choseProduct: function(e) {
         this.setData({
             selectProduct: e.currentTarget.dataset.pid
+        })
+    },
+    //选择尺寸
+    choseSize: function(e) {
+        this.setData({
+            selectSize: e.currentTarget.dataset.did
+        })
+    },
+    //跳转
+    addSize: function() {
+        wx.switchTab({
+            url: '/pages/yltmeasure/index',
+        })
+    },
+    bindChooseSpec: function(e) {
+        this.setData({
+            showSpec: e.currentTarget.dataset.buynow
         })
     },
     //选择属性
@@ -291,6 +337,20 @@ Page({
     //添加到购物车
     submit: function() {
         if (this.data.isAdding) return
+        if (this.data.selectProduct == -1) {
+            wx.showToast({
+                title: '请选择产品',
+                icon: "none"
+            })
+            return
+        }
+        if (this.data.selectSize == -1) {
+            wx.showToast({
+                title: '请选择尺寸',
+                icon: "none"
+            })
+            return
+        }
         this.setData({
             isAdding: true
         })
@@ -301,7 +361,11 @@ Page({
             "productName": this.data.products[this.data.selectProduct].productName,
             "image": this.data.products[this.data.selectProduct].image[0],
             "price": this.data.products[this.data.selectProduct].price,
-            "count": this.data.count
+            "count": this.data.count,
+            "size": {
+                id: this.data.measureData[this.data.selectSize].liangti_bianhao,
+                name: this.data.measureData[this.data.selectSize].liangti_mingcheng
+            }
         }
 
         /* 对象比较器 */

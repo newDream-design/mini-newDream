@@ -45,7 +45,7 @@
                         <text class='goods-price'>￥{{product.price}}</text>
                     </view>
                     <view class='goods-info-bot'>
-                        <text class='goods-spec'>{{product.property}}</text>
+                        <text class='goods-spec'>尺寸：{{product.size.name}}</text>
                         <text class='goods-amount'>x{{product.count}}</text>
                     </view>
                 </view>

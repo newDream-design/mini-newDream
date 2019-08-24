@@ -397,6 +397,8 @@
 	border-radius: 50rpx;
     padding: 0 20rpx;
     text-align: center;
+	font-size: 14px;
+	line-height: 26px;
     display: inline-block;
     background-color: #eee;
     margin-right: 20rpx;
@@ -405,7 +407,12 @@
 
 .type-list text.sel {
     color: #fff;
-    background-color: var(--bgcolor);
+    background-color: var(--colorGold);
+}
+
+.type-list text.special {
+    color: #fff;
+    background-color: var(--colorBlue);
 }
 
 .type-list text.nomel {
@@ -449,7 +456,7 @@
     text-align: center;
     font-size: 36rpx;
     color: #fff;
-    background-color: var(--bgcolor);
+    background-color: var(--colorBlue);
     line-height: 80rpx;
     border-radius: 40rpx;
 }

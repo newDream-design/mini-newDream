@@ -17,6 +17,7 @@
                                 <view class="goods-title">
                                     <navigator url="/pages/shop/product/product?productID={{product.productID}}" hover-class="none">
                                         <text class='goods-name'>{{product.productName}}</text>
+										<text class='goods-size'>尺寸：{{product.size.name}}</text>
                                     </navigator>
                                     <view class="del-cart">
                                         <!-- <image src='/images/del.png' bindtap="delCart" data-id='{{product.id}}' data-index='{{index}}'></image> -->

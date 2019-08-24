@@ -1,38 +1,18 @@
+const app = getApp()
 Page({
     data: {
         measure: {
-            "defaultMeasureDataID": 10001,
-            "measureData": [{
-                "MeasureDataID": 10001,
-                "measureName": "熊伟",
-                "details": {
-                    "身高": "150CM",
-                    "体重": "1KG",
-                    "胸围": "1CM",
-                    "腰围": "100CM",
-                    "臀围": "1CM"
-                }
-            }, {
-                "MeasureDataID": 10002,
-                "measureName": "熊伟",
-                "details": {
-                    "身高": "150CM",
-                    "体重": "1KG",
-                    "胸围": "1CM",
-                    "腰围": "100CM",
-                    "臀围": "1CM"
-                }
-            }]
+            "defaultMeasureDataID": 0,
+            "measureData": []
         }
     },
-    onLoad: function(options) {
-
+    onShow: function(options) {
+		this.getMeasureData()
     },
-    //获取商品
-    getMeasureData: function(productID) {
+    getMeasureData: function() {
         var that = this
         wx.request({
-            url: app.config.RequestUrl + 'liangti/get',
+            url: app.config.RequestUrl + 'chicun/get',
             method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -43,7 +23,7 @@ Page({
             success: function(res) {
                 if (res.data.result.status == 200) {
                     that.setData({
-                        measureData: res.data.data.object
+                        ["measure.measureData"]: res.data.data.object
                     })
                 } else {
                     wx.showToast({
@@ -59,10 +39,6 @@ Page({
                     icon: 'none',
                     duration: 2000
                 })
-            },
-            complete: function(e) {
-                wx.hideNavigationBarLoading() //完成停止加载
-                wx.stopPullDownRefresh() //停止下拉刷新
             }
         })
     },
@@ -71,5 +47,9 @@ Page({
         this.setData({
             "measure.defaultMeasureDataID": id
         })
+		wx.showToast({
+			title: '暂时不需要默认尺寸，你就随便点点吧',
+			icon:"none"
+		})
     }
 })

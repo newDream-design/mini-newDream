@@ -101,14 +101,14 @@ Page {
 	width:100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .goods-img {
     margin-left: 10rpx;
     margin-right: 20rpx;
     width: 160rpx;
-    height: 160rpx;
+    height: 210rpx;
     flex-shrink: 0;
 }
 
@@ -131,6 +131,22 @@ Page {
     -webkit-line-clamp: 2;
     font-size: 28rpx;
     color: #333;
+    flex-shrink: 0;
+    margin-left: 0;
+}
+
+.goods-size {
+    align-self: flex-start;
+    width: 100%;
+    display: -webkit-box !important;
+    word-break: break-all;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 24rpx;
+    color: #888;
     flex-shrink: 0;
     margin-left: 0;
 }

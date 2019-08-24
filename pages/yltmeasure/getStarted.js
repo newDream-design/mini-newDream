@@ -252,6 +252,42 @@ Page({
         }
         return true
     },
+    addSize: function() {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'chicun/add',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID,
+                bodyShapeData: that.data.userData,
+                bodyShapeDataAI: that.data.AIMeasureData
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    console.log("成功啦")
+                    wx.navigateBack({
+                        delta: 1
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
+        })
+    },
     goAIMeasure: function() {
         var that = this
         if (!this.checkInput()) return
@@ -280,8 +316,8 @@ Page({
                 return
             }
         }
+        var that = this
         if (this.data.AIMeasureData.recordId == undefined) {
-            var that = this
             wx.showModal({
                 title: '提示',
                 content: '您还没有进行AI量体，使用AI量体功能有助于我们获取更精确的尺寸，要不要试一试？',
@@ -289,7 +325,7 @@ Page({
                 confirmText: "我不要！",
                 success(res) {
                     if (res.confirm) {
-                        this.upload()
+                        that.addSize()
                     } else if (res.cancel) {
                         wx.navigateTo({
                             url: "pages/yltmeasure/measure?userGender=" + (that.data.userData.性别 == "男" ? 1 : 0) + "&userHeight=" + that.data.userData.身高 + "&userWeight=" + that.data.userData.体重 + "&userName" + that.data.姓名
@@ -305,43 +341,10 @@ Page({
                 confirmText: "确认提交",
                 success(res) {
                     if (res.confirm) {
-                        this.upload()
+                        that.addSize()
                     }
                 }
             })
         }
-    },
-    upload: function() {
-        var that = this
-        wx.request({
-            url: app.config.RequestUrl + 'chicun/add',
-            method: "GET",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: {
-                memberID: app.globalData.memberID,
-                bodyShapeData: that.data.userData,
-                bodyShapeDataAI: that.data.AIMeasureData
-            },
-            success: function(res) {
-                if (res.data.result.status == 200) {
-                    console.log("成功啦")
-                } else {
-                    wx.showToast({
-                        title: res.data.result.errMsg,
-                        icon: 'none',
-                        duration: 2000
-                    })
-                }
-            },
-            fail: function(e) {
-                wx.showToast({
-                    title: e.errMsg,
-                    icon: 'none',
-                    duration: 2000
-                })
-            }
-        })
     }
 })

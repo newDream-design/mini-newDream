@@ -4,9 +4,9 @@
     <view class="title-wrap">
         <view class="left">
             <view class="title">
-                <text>{{data.measureName}}</text>
+                <text>{{data.liangti_mingcheng}}</text>
             </view>
-            <view class="dataTag{{measure.defaultMeasureDataID==data.MeasureDataID?' default':''}}" bindtap="bindChangeDefaultMeasureData" data-id="{{data.MeasureDataID}}">
+            <view class="dataTag{{measure.defaultMeasureDataID==data.MeasureDataID?' default':''}}" bindtap="bindChangeDefaultMeasureData" data-id="{{data.liangti_bianhao}}">
                 <text>{{measure.defaultMeasureDataID==data.MeasureDataID?'默认尺寸':'设为默认'}}</text>
             </view>
         </view>
@@ -15,7 +15,12 @@
         </view>
     </view>
     <view class="data-wrap">
-        <view class="data" wx:for="{{data.details}}" wx:for-index="key" wx:for-item="value" wx:key="ds">{{key}}：{{value}}</view>
+        <!--<view class="data" wx:for="{{data.details}}" wx:for-index="key" wx:for-item="value" wx:key="ds">{{key}}：{{value}}</view>-->
+		<view class="data">身高：{{data.shenggao}}</view>
+		<view class="data">体重：{{data.tizhong}}</view>
+		<view class="data">熊伟：{{data.xiongwei}}</view>
+		<view class="data">腰围：{{data.yaowei}}</view>
+		<view class="data">臀围：{{data.tunwei}}</view>
     </view>
 </view>
 <navigator class="addMeasureData" url="getStarted">
