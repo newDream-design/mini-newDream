@@ -362,10 +362,8 @@ Page({
             "image": this.data.products[this.data.selectProduct].image[0],
             "price": this.data.products[this.data.selectProduct].price,
             "count": this.data.count,
-            "size": {
-                id: this.data.measureData[this.data.selectSize].liangti_bianhao,
-                name: this.data.measureData[this.data.selectSize].liangti_mingcheng
-            }
+            "measureID": this.data.measureData[this.data.selectSize].liangti_bianhao,
+            "measureName": this.data.measureData[this.data.selectSize].liangti_mingcheng
         }
 
         /* 对象比较器 */
