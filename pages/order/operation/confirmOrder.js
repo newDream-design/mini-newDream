@@ -89,7 +89,7 @@ Page({
             })
         } else {
             var ticket = this.data.tickets[e.detail.value]
-            var ticketID = ticket.quan_id
+            var ticketID = ticket.id
             var discount = +ticket.youhui.toFixed(2)
             this.setData({
                 ticketID: ticketID,
