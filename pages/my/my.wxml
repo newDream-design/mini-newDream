@@ -55,7 +55,7 @@
             </view>
         </view>
 
-        <view class="ticket">
+        <navigator class="ticket" url="ticket">
             <view>
                 <image class="icon" src="/images/icon/ticket.png" mode="aspectFit"></image>
                 <text>我的优惠券</text>
@@ -64,7 +64,7 @@
                 <text>查看全部</text>
                 <text class="arrow-right" />
             </view>
-        </view>
+        </navigator>
 
         <view class='nav-wrap'>
             <view class='weui-cell weui-cell_access allOrder' hover-class='weui-cell_active'>
@@ -87,16 +87,18 @@
                     <text>我的地址</text>
                 </button>
             </view>
+            <!--
             <navigator>
                 <image src="/images/icon/myGroup.png" mode="aspectFit" />
                 <text>我的拼团</text>
             </navigator>
+            -->
             <navigator url='collection'>
-                <image src="/images/icon/myContact.png" mode="aspectFit" />
+                <image src="/images/icon/myCollection.png" mode="aspectFit" />
                 <text>我的收藏</text>
             </navigator>
             <navigator url='/pages/saler/index'>
-                <image src="/images/icon/myContact.png" mode="aspectFit" />
+                <image src="/images/icon/mySale.png" mode="aspectFit" />
                 <text>分销员中心</text>
             </navigator>
             <view>

@@ -46,7 +46,15 @@ Page({
             mode: "select",
             choice: ["A", "B", "C", "D", "E", "F", "G"],
             genderLimit: "女",
-            isNecessary: false
+            isNecessary: true
+        }, {
+            title: "下胸围",
+            unit: "cm",
+            mode: "input",
+            type: "digit",
+            placeholder: "例如32",
+            genderLimit: "女",
+            isNecessary: true
         }],
         bodyShapes: {
             "女": {
@@ -319,17 +327,17 @@ Page({
         var that = this
         if (this.data.AIMeasureData.recordId == undefined) {
             wx.showModal({
-                title: '提示',
-                content: '您还没有进行AI量体，使用AI量体功能有助于我们获取更精确的尺寸，要不要试一试？',
-                cancelText: "我想试试",
-                confirmText: "我不要！",
+                title: '新人福利',
+                content: '您还没有进行AI量体，如果您完成AI量体，我们将赠送您100元的优惠券！！100元！！！',
+                cancelText: "我不爱省钱",
+                confirmText: "我要100元",
                 success(res) {
                     if (res.confirm) {
-                        that.addSize()
-                    } else if (res.cancel) {
                         wx.navigateTo({
                             url: "pages/yltmeasure/measure?userGender=" + (that.data.userData.性别 == "男" ? 1 : 0) + "&userHeight=" + that.data.userData.身高 + "&userWeight=" + that.data.userData.体重 + "&userName" + that.data.姓名
                         })
+                    } else if (res.cancel) {
+                        that.addSize()
                     }
                 }
             })

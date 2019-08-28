@@ -155,7 +155,7 @@ Page {
 
 .ticket {
     margin: 0.5rem;
-    height: 3.5rem;
+    height: 4rem;
     background: linear-gradient(to right, #f8f3eb, #d9c39a);
     display: flex;
     align-items: center;

@@ -13,8 +13,11 @@ Page({
             allCount: 0, //总件数
             allPrice: 0, //商品总价
             deliverPrice: 0, //运费
+            discount: -0, //使用的优惠券金额
             price: 0 //用户需要支付的价格
         },
+        tickets: [],
+        ticketID: -1,
         remark: "",
         AddressAccess: true
     },
@@ -29,10 +32,71 @@ Page({
                 cart: JSON.parse(options.cart)
             })
         }
-        this.summary()
+        this.summary(true)
     },
     onShow: function() {
         this.checkAddressAccess()
+        this.getTicket()
+    },
+    getTicket: function() {
+        var that = this
+        wx.request({
+            url: app.config.RequestUrl + 'youhuiquan/get',
+            method: "GET",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                memberID: app.globalData.memberID
+            },
+            success: function(res) {
+                if (res.data.result.status == 200) {
+                    var tickets = res.data.data.object
+                    var summary = that.data.summary
+                    for (var i in tickets) {
+                        tickets[i]["check"] = true
+                        tickets[i]["msg"] = "可用"
+                        if (summary.allPrice < tickets[i]["xianzhi_manjian"]) {
+                            tickets[i]["check"] = false
+                            tickets[i]["msg"] = "不满足满减金额"
+                        }
+                    }
+                    that.setData({
+                        tickets: tickets
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function(e) {
+                wx.showToast({
+                    title: e.errMsg,
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
+        })
+    },
+    onTicketChange: function(e) {
+        if (e.detail.value == -1) {
+            this.setData({
+                ticketID: -1,
+                ["summary.discount"]: 0
+            })
+        } else {
+            var ticket = this.data.tickets[e.detail.value]
+            var ticketID = ticket.quan_id
+            var discount = +ticket.youhui.toFixed(2)
+            this.setData({
+                ticketID: ticketID,
+                ["summary.discount"]: discount
+            })
+        }
+        this.summary()
     },
     checkAddressAccess: function() {
         var that = this
@@ -45,21 +109,25 @@ Page({
             }
         })
     },
-    summary: function() {
-        var products = this.data.products
+    summary: function(initial = false) {
         var summary = this.data.summary
-        for (var i in products) {
-            products[i]["price"] = parseFloat(products[i]["price"]).toFixed(2)
-            products[i]["color"] = "默认"
-            summary.allCount += products[i]["count"]
-            summary.allPrice += products[i]["count"] * products[i]["price"]
+        if (initial) {
+            var products = this.data.products
+            for (var i in products) {
+                products[i]["price"] = parseFloat(products[i]["price"]).toFixed(2)
+                products[i]["color"] = "默认"
+                summary.allCount += products[i]["count"]
+                summary.allPrice += products[i]["count"] * products[i]["price"]
+            }
+            this.setData({
+                products: products
+            })
         }
-        summary.price = summary.allPrice + summary.deliverPrice
+        summary.price = summary.allPrice + summary.deliverPrice - summary.discount
         for (var p in summary) {
-            if (p != "allCount") summary[p] = summary[p].toFixed(2)
+            if (p != "allCount") summary[p] = +parseFloat(summary[p]).toFixed(2)
         }
         this.setData({
-            products: products,
             summary: summary
         })
     },
@@ -116,7 +184,8 @@ Page({
                     address: that.data.address,
                     summary: that.data.summary,
                     remark: that.data.remark
-                }
+                },
+                tid: that.data.ticketID
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
@@ -181,7 +250,7 @@ Page({
                         }
                     })
                 } else {
-					wx.hideLoading()
+                    wx.hideLoading()
                     wx.showToast({
                         title: res.data.result.errMsg,
                         icon: 'none',
@@ -190,7 +259,7 @@ Page({
                 }
             },
             fail: function(e) {
-				wx.hideLoading()
+                wx.hideLoading()
                 wx.showToast({
                     title: e.errMsg,
                     icon: 'none',

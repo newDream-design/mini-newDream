@@ -485,7 +485,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     width: 2.5rem;
     height: 2.5rem;
     background: #fff;
-    border: solid 2px rgb(255, 255, 255);
+    border: solid 0.1rem rgb(255, 255, 255);
     z-index: 999;
     /*display: flex;
     justify-content: center;
@@ -494,7 +494,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 
 .fixed-icon image {
     margin: auto;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.3rem;
+    height: 2.3rem;
     overflow: hidden;
 }

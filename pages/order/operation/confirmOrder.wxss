@@ -187,6 +187,22 @@
     padding: 0 30rpx;
 }
 
+.radio-group {
+    background-color: #fff;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.radio-group .radio {
+    margin: 0.5rem;
+}
+
+.radio-group .radio text {
+    margin-left: 0.5rem;
+}
+
 .payMoney {
     color: #ec5c53;
 }

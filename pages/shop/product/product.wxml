@@ -21,7 +21,7 @@
                 <view class='goods-price'>
                     <text>￥{{price.min==price.max?price.max:(price.min+"-"+price.max)}}</text>
                 </view>
-                <view class='goods-sales'>月销量：{{products[mainProduct].sale}}</view>
+                <view class='goods-sales'>月销量 : {{sales}}</view>
             </view>
         </view>
         <view class='goods-specInfo'>

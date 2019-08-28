@@ -20,30 +20,40 @@ Page({
                 //OpenID: app.globalData.OpenID
             },
             success: function(res) {
-                var index = res.data.data.object
-                index["icon"] = [{
-                    "image": "/images/example.png",
-                    "linkUrl": "客服"
-                }, {
-                    "image": "/images/example.png",
-                    "linkUrl": "/pages/shop/product/product?productID=ND1M621T"
-                }]
-                index["classify"] = [{
-                    "id": 0,
-                    "text": "西服"
-                }, {
-                    "id": 1,
-                    "text": "衬衫"
-                }, {
-                    "id": 2,
-                    "text": "裤子"
-                }, {
-                    "id": 4,
-                    "text": "配饰"
-                }]
-                that.setData({
-                    index: index
-                })
+                if (res.data.result.status == 200) {
+                    var index = res.data.data.object
+                    index["icon"] = [{
+                        "image": "/images/icon/myContact.png",
+                        "linkUrl": "客服",
+                        "background": "#f1de2f"
+                    }, {
+                        "image": "/images/icon/mySale.png",
+                        "linkUrl": "/pages/saler/index",
+                        "background": "#cba362"
+                    }]
+                    index["classify"] = [{
+                        "id": 0,
+                        "text": "西服"
+                    }, {
+                        "id": 1,
+                        "text": "衬衫"
+                    }, {
+                        "id": 2,
+                        "text": "裤子"
+                    }, {
+                        "id": 4,
+                        "text": "配饰"
+                    }]
+                    that.setData({
+                        index: index
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.result.errMsg,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
             },
             fail: function(e) {
                 wx.showToast({

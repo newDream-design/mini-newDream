@@ -21,7 +21,8 @@ Page({
         //默认属性
         comments: [], //评论
         isFixedTap: false,
-        isAdding: false
+        isAdding: false,
+		sales:"无"
     },
     onLoad: function(options) {
         this.getProduct(options.productID)
@@ -94,7 +95,7 @@ Page({
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
-                    var products = res.data.data.object
+                    var products = res.data.data.object.products
                     var mainProduct = 0
                     var price = {
                         "min": undefined,
@@ -109,6 +110,7 @@ Page({
                         if (price.max == undefined || products[i]["price"] > price.max) price.max = products[i]["price"]
                     }
                     that.setData({
+						sales: res.data.data.object.sale_count,
                         mainProduct: mainProduct,
                         products: products,
                         price: price

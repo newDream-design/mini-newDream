@@ -8,7 +8,7 @@
             <swiper indicator-dots autoplay circular interval="3000" duration="500" class="scroll-banner {{index.banners==''?'hidden':''}}">
                 <swiper-item wx:for="{{index.banners}}" wx:for-item="banner" wx:key='b'>
                     <!-- <navigator url='{{banner.linkurl}}'>-->
-                    <image src="https://cdn.newdreamer.cn/index/{{banner.image}}.jpg" class="slide-image banner" mode="aspectFill"/>
+                    <image src="https://cdn.newdreamer.cn/index/{{banner.image}}.jpg" class="slide-image banner" mode="aspectFill" />
                     <!-- </navigator>-->
                 </swiper-item>
             </swiper>
@@ -85,10 +85,10 @@
 <view class="fixed-icon">
     <block wx:for="{{index.icon}}" wx:for-item="icon" wx:key="i">
         <button class="ButtonCover" open-type='contact' session-from="新梦想家商场（微信小程序）" show-message-card wx:if="{{icon.linkUrl=='客服'}}">
-            <image src="{{icon.image}}" mode="aspectFit" />
+            <image src="{{icon.image}}" mode="aspectFit" style="background:{{icon.background}};" />
         </button>
         <button class="ButtonCover" bindtap="fixedIconTap" data-url="{{icon.linkUrl}}" wx:else>
-            <image src="{{icon.image}}" mode="aspectFit" />
+            <image src="{{icon.image}}" mode="aspectFit" style="background:{{icon.background}};" />
         </button>
     </block>
 </view>

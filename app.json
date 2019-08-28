@@ -19,7 +19,8 @@
 		"pages/yltmeasure/pages/client-privacy/privacy",
 		"pages/yltmeasure/pages/client-result/result",
 		"pages/yltmeasure/index",
-		"pages/yltmeasure/getStarted"
+		"pages/yltmeasure/getStarted",
+		"pages/my/ticket"
 	],
 	"window": {
 		"navigationBarBackgroundColor": "#1F4E79",

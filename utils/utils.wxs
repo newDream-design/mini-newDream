@@ -40,5 +40,5 @@ module.exports = {
     round: round,
     abs: abs,
     JSONstringify: JSONstringify,
-	hideName: hideName
+    hideName: hideName
 }

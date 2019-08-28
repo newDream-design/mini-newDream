@@ -2,6 +2,7 @@ const app = getApp();
 Page({
     data: {
         currentTab: "全部",
+		hasOrder:false,
         orderList: []
     },
     onLoad: function(options) {
@@ -27,9 +28,18 @@ Page({
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
-                    that.setData({
-                        orderList: res.data.data.object
-                    })
+                    var orderList = res.data.data.object
+                    var hasOrder = false
+                    for (var i in orderList) {
+                        if (orderList[i]["products"].length > 0) {
+                            hasOrder = true
+							break
+                        }
+                    }
+					that.setData({
+						hasOrder: hasOrder,
+						orderList: orderList
+					})
                 } else {
                     wx.showToast({
                         title: res.data.result.errMsg,
@@ -88,7 +98,8 @@ Page({
                         },
                         data: {
                             "memberID": app.globalData.memberID,
-                            "orderID": id
+                            "orderID": id,
+                            "tid": e.target.dataset.tid
                         },
                         success: function(res) {
                             if (res.data.result.status == 200) {

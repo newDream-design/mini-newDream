@@ -50,8 +50,8 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "pages/yltmeasure/pages/yltmeasure/measure",
-					"pathName": "pages/yltmeasure/pages/yltmeasure/measure",
+					"name": "pages/my/ticket",
+					"pathName": "pages/my/ticket",
 					"query": "orderItemID=1",
 					"scene": null
 				}
