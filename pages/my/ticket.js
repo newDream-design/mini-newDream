@@ -15,13 +15,14 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             data: {
-                memberID:app.globalData.memberID
+                memberID: app.globalData.memberID
             },
             success: function(res) {
                 if (res.data.result.status == 200) {
                     var tickets = res.data.data.object
                     for (var i in tickets) {
-                        var date = new Date(tickets[i]["huoqu_shijian"]);
+                        var arr = tickets[i]["huoqu_shijian"].split(/[- :]/);
+                        let date = new Date(arr[0], arr[1] - 1, arr[2], arr[3], arr[4], arr[5]);
                         date.setHours(date.getHours() + tickets[i]["youxiao_shijian"])
                         tickets[i]["d"] = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + date.getHours() + "时"
                     }
