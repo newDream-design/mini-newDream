@@ -55,7 +55,7 @@
                 <radio class="radio" value="-1" checked="{{ticketID==-1}}">
                     <text>不使用优惠券</text>
                 </radio>
-                <radio class="radio" wx:for="{{tickets}}" wx:for-item="ticket" wx:for-index="id" wx:key="t" value="{{id}}" data-discount="{{ticket.youhui}}" checked="{{ticketID==ticket.id}}" disabled="{{!ticket.check}}">
+                <radio class="radio" wx:for="{{tickets}}" wx:for-item="ticket" wx:for-index="idx" wx:key="t" value="{{idx}}" checked="{{ticketID==ticket.id}}" disabled="{{!ticket.check}}">
                     <text>{{ticket.check?"":("【"+ticket.msg+"】")}}{{ticket.mingcheng}}（{{ticket.pinlei}}）满{{ticket.xianzhi_manjian}}减{{ticket.youhui}}</text>
                 </radio>
             </radio-group>
