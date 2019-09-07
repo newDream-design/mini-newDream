@@ -25,7 +25,7 @@
 </view>
 <view class="button-wrap">
     <view class="addMeasureData" bindtap="goAIMeasure">
-        <text>AI量体</text>
+        <text>拍照量体</text>
     </view>
     <view class="addMeasureData submit" bindtap="submit">
         <text>提交尺寸</text>

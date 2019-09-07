@@ -300,8 +300,8 @@ Page({
         var that = this
         if (!this.checkInput()) return
         wx.showModal({
-            title: 'AI量体提示',
-            content: 'AI量体将使用您填写的个人数据，请确保您填写的数据正确。\nAI量体完成后，您将不能修改个人数据，但穿着习惯和体形特征仍可以进行修改。',
+			title: '拍照量体提示',
+            content: '拍照量体将使用您填写的个人数据，请确保您填写的数据正确。\n拍照量体完成后，您将不能修改个人数据，但穿着习惯和体形特征仍可以进行修改。',
             success(res) {
                 if (res.confirm) {
                     wx.navigateTo({
@@ -328,9 +328,9 @@ Page({
         if (this.data.AIMeasureData.recordId == undefined) {
             wx.showModal({
                 title: '新人福利',
-                content: '您还没有进行AI量体，如果您完成AI量体，我们将赠送您100元的优惠券！！100元！！！',
-                cancelText: "我不爱省钱",
-                confirmText: "我要100元",
+                content: '您还没有进行拍照量体，如果您完成拍照量体，将获得更准确的量体数据！',
+                cancelText: "不用了",
+                confirmText: "我想试试",
                 success(res) {
                     if (res.confirm) {
                         wx.navigateTo({
