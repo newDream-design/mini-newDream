@@ -52,7 +52,7 @@
                         <image src='https://cdn.newdreamer.cn/products/{{product.productID}}/%E4%B8%BB%E5%9B%BE/{{utils.split(product.image," ")[0]}}.jpg' class='goods-img' mode="aspectFill"></image>
                         <view class='goods-info'>
                             <text class='goods-name'>{{product.productName}}</text>
-                            <text class='goods-desb'>200%羊毛，300%猪毛</text>
+                            <text class='goods-desb'></text>
                             <view class='goods-info-b'>
                                 <text class='goods-price'>￥{{product.price}}</text>
                                 <!-- <image src='/images/goods-cart.png' class='cart-img' lazy-load='true'></image> -->
